@@ -1,3 +1,5 @@
+<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/318b6b23-d395-4039-83c4-465f21e06e6e" />
+
 🩺 MedBook - Medical Appointment Booking App
 
 MedBook is an Android application that connects patients with healthcare providers, allowing users to easily search for doctors and book medical appointments seamlessly.
@@ -46,7 +48,7 @@ MedBook/
 
 📸 Screenshots
 
-(Add your app screenshots here)
+(screenshots will be added soon!)
 
 · Home Screen with Search
 · Doctor List View
