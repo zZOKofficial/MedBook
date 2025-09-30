@@ -1,0 +1,49 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	<LinearLayout
+		android:id="@+id/linear1"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:padding="8dp"
+		android:orientation="vertical">
+		<TextView
+			android:id="@+id/medbook_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="8dp"
+			android:gravity="center_horizontal|center_vertical"
+			android:text="MedBook"
+			android:textSize="20sp"
+			android:textStyle="bold"
+			android:textColor="#000000" />
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/test_button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:padding="8dp"
+			android:gravity="center_horizontal|center_vertical"
+			android:text="Test"
+			android:textSize="12sp"
+			android:textStyle="bold"
+			android:textColor="#FFFFFF"
+			android:layout_gravity="center_horizontal"
+			android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+			app:backgroundTint="@color/colorPrimary"
+			app:cornerRadius="8dp"
+			style="@style/Widget.MaterialComponents.Button" />
+		<TextView
+			android:id="@+id/thanks"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:padding="8dp"
+			android:gravity="bottom"
+			android:text="This application is under construction. Thanks for your support.\n\n©️zZOK, 2025"
+			android:textSize="12sp"
+			android:textColor="#000000" />
+	</LinearLayout>
+</LinearLayout>
