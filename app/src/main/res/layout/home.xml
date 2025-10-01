@@ -6,44 +6,35 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical">
 	<LinearLayout
-		android:id="@+id/linear1"
+		android:id="@+id/linear_bg_home"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:padding="8dp"
+		android:paddingLeft="16dp"
+		android:paddingRight="16dp"
+		android:background="?colorSurface"
 		android:orientation="vertical">
 		<TextView
-			android:id="@+id/medbook_title"
+			android:id="@+id/medbook_logo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="8dp"
+			android:padding="8dp"
+			android:text="@string/app_name"
+			android:textSize="20sp"
+			android:textColor="?colorPrimary" />
+		<SearchView
+			android:id="@+id/search_docs"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:padding="8dp"
-			android:gravity="center_horizontal|center_vertical"
-			android:text="MedBook"
-			android:textSize="20sp"
-			android:textStyle="bold"
-			android:textColor="#000000" />
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/test_button"
+			android:background="?colorPrimary" />
+		<TextView
+			android:id="@+id/search_result_subtitle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
 			android:padding="8dp"
-			android:gravity="center_horizontal|center_vertical"
-			android:text="Test"
-			android:textSize="12sp"
-			android:textStyle="bold"
-			android:textColor="#FFFFFF"
-			android:layout_gravity="center_horizontal"
-			android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-			app:backgroundTint="@color/colorPrimary"
-			app:cornerRadius="8dp"
-			style="@style/Widget.MaterialComponents.Button" />
-		<TextView
-			android:id="@+id/thanks"
-			android:layout_width="wrap_content"
-			android:layout_height="match_parent"
-			android:padding="8dp"
-			android:gravity="bottom"
-			android:text="This application is under construction. Thanks for your support.\n\n©️zZOK, 2025"
-			android:textSize="12sp"
-			android:textColor="#000000" />
+			android:text="&quot;0 Doctors found in General Physician&quot;"
+			android:textSize="14sp"
+			android:textColor="?colorSecondary" />
 	</LinearLayout>
 </LinearLayout>
