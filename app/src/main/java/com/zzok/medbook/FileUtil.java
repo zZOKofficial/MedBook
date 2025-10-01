@@ -19,6 +19,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -252,18 +253,26 @@ public class FileUtil {
                     path = Environment.getExternalStorageDirectory() + "/" + split[1];
                 }
             } else if (isDownloadsDocument(uri)) {
-                final String id = DocumentsContract.getDocumentId(uri);
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
 
-                if (!TextUtils.isEmpty(id)) {
-                    if (id.startsWith("raw:")) {
-                        return id.replaceFirst("raw:", "");
-                    }
+                if ("raw".equalsIgnoreCase(type)) {
+                    return split[1];
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && "msf".equalsIgnoreCase(type)) {
+                    final String selection = "_id=?";
+                    final String[] selectionArgs = new String[]{
+                            split[1]
+                    };
+
+                    path = getDataColumn(context, MediaStore.Downloads.EXTERNAL_CONTENT_URI, selection, selectionArgs);
+                } else {
+
+                    final Uri contentUri = ContentUris
+                            .withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
+
+                    path = getDataColumn(context, contentUri, null, null);
                 }
-
-                final Uri contentUri = ContentUris
-                        .withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-
-                path = getDataColumn(context, contentUri, null, null);
             } else if (isMediaDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");

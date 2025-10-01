@@ -6,18 +6,26 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical">
 	<LinearLayout
-		android:id="@+id/linear1"
+		android:id="@+id/linear_bg_main"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:padding="8dp"
-		android:background="#FFFFFF"
+		android:background="?colorSurface"
 		android:gravity="center_horizontal|center_vertical"
-		android:orientation="horizontal">
+		android:orientation="vertical">
 		<ImageView
 			android:id="@+id/medbook_icon"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:src="@drawable/medbook_icon"
 			android:scaleType="fitCenter" />
+		<TextView
+			android:id="@+id/medbook_logo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:padding="8dp"
+			android:text="@string/app_name"
+			android:textSize="25sp"
+			android:textColor="#3FA3AC" />
 	</LinearLayout>
 </LinearLayout>

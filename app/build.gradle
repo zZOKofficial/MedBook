@@ -3,16 +3,17 @@ plugins {
 }
 
 android {
-	compileSdkVersion 28
+	compileSdk 34
 	
 	useLibrary 'org.apache.http.legacy'
 	
 	defaultConfig {
 		applicationId "com.zzok.medbook"
+		namespace "com.zzok.medbook"
 		minSdkVersion 21
-		targetSdkVersion 28
-		versionCode 1
-		versionName "0.0.1 alpha"
+		targetSdkVersion 34
+		versionCode 13
+		versionName "0.0.2 pre_alpha"
 	}
 	
 	buildTypes {
@@ -21,10 +22,13 @@ android {
 			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 		}
 	}
+	buildFeatures {
+		viewBinding true
+	}
 }
 
 dependencies {
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
-	implementation 'androidx.appcompat:appcompat:1.2.0'
-	implementation 'com.google.android.material:material:1.4.0'
+	implementation 'androidx.appcompat:appcompat:1.7.1'
+	implementation 'com.google.android.material:material:1.12.0'
 }
