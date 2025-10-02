@@ -24,7 +24,6 @@
 			android:layout_width="200dp"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="8dp"
-			android:padding="8dp"
 			android:gravity="center_horizontal|center_vertical"
 			android:text="@string/app_name"
 			android:textSize="30sp"
@@ -34,7 +33,7 @@
 			android:id="@+id/tagline"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="আপনার ডাক্তার খুঁজুন "
+			android:text="Your Health, Your Schedule."
 			android:textSize="16sp"
 			android:textColor="?colorOnSurfaceVariant" />
 	</LinearLayout>
