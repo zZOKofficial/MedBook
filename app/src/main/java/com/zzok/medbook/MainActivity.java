@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 		};
 		_timer.schedule(timer, (int)(1000));
 		binding.medbookLogo.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/sf_pro_display_bold.ttf"), 0);
-		binding.tagline.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/kohinoor_bangla_regular.ttf"), 1);
+		binding.tagline.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/sf_pro_display_regular.ttf"), 1);
 	}
 	
 }

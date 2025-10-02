@@ -371,7 +371,7 @@
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
-					android:id="@+id/Neurosurgery"
+					android:id="@+id/neurosurgery"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_marginTop="8dp"
@@ -407,7 +407,7 @@
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
-					android:id="@+id/materialbutton12"
+					android:id="@+id/ophthalmology"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_marginTop="8dp"
