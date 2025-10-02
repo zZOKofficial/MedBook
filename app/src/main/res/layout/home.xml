@@ -33,8 +33,8 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="12dp"
 			android:padding="8dp"
-			android:text="&quot;0 Doctors found in General Physician&quot;"
-			android:textSize="14sp"
+			android:text="No doctors found, try searching another department."
+			android:textSize="12sp"
 			android:textColor="?colorOnSurface"
 			android:alpha="0.5" />
 		<ScrollView
