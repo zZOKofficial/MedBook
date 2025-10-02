@@ -15,17 +15,19 @@
 		android:orientation="vertical">
 		<ImageView
 			android:id="@+id/medbook_icon"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_width="180dp"
+			android:layout_height="180dp"
 			android:src="@drawable/medbook_icon"
 			android:scaleType="fitCenter" />
 		<TextView
 			android:id="@+id/medbook_logo"
-			android:layout_width="wrap_content"
+			android:layout_width="200dp"
 			android:layout_height="wrap_content"
 			android:padding="8dp"
+			android:gravity="center_horizontal|center_vertical"
 			android:text="@string/app_name"
-			android:textSize="25sp"
+			android:textSize="40sp"
+			android:textStyle="bold"
 			android:textColor="#3FA3AC" />
 	</LinearLayout>
 </LinearLayout>
