@@ -23,11 +23,19 @@
 			android:id="@+id/medbook_logo"
 			android:layout_width="200dp"
 			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
 			android:padding="8dp"
 			android:gravity="center_horizontal|center_vertical"
 			android:text="@string/app_name"
-			android:textSize="40sp"
+			android:textSize="30sp"
 			android:textStyle="bold"
 			android:textColor="#3FA3AC" />
+		<TextView
+			android:id="@+id/tagline"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="আপনার ডাক্তার খুঁজুন "
+			android:textSize="16sp"
+			android:textColor="?colorOnSurfaceVariant" />
 	</LinearLayout>
 </LinearLayout>

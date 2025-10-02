@@ -52,9 +52,7 @@ public class HomeActivity extends AppCompatActivity {
 	private void initializeLogic() {
 		binding.medbookLogo.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/sf_pro_display_bold.ttf"), 0);
 		binding.searchResultSubtitle.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/sf_pro_display_regular.ttf"), 0);
-		binding.searchDocs.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b, int c, int d) { this.setCornerRadius(a); this.setStroke(b, c); this.setColor(d); return this; } }.getIns((int)50, (int)0, Color.TRANSPARENT, SketchwareUtil.getMaterialColor(HomeActivity.this, R.attr.colorSecondaryContainer)));
-		binding.accidentAndEmegerency.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/sf_pro_display_regular.ttf"), 1);
-		binding.accidentAndEmegerency.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b, int c, int d) { this.setCornerRadius(a); this.setStroke(b, c); this.setColor(d); return this; } }.getIns((int)50, (int)0, Color.TRANSPARENT, SketchwareUtil.getMaterialColor(HomeActivity.this, R.attr.colorSecondaryContainer)));
+		binding.searchDocs.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)50, SketchwareUtil.getMaterialColor(HomeActivity.this, R.attr.colorSurfaceVariant)));
 	}
 	
 }
