@@ -1,38 +1,74 @@
 <resources>
+
+	<!--
+	  Typography is defined once here as a scale, not applied per view at runtime.
+	  Each role names a concrete font file, so no weight is ever synthesised.
+
+	    Display   Gabarito ExtraBold 800   34sp   wordmark
+	    Title     Hind Siliguri Bold 700   20sp   section headers
+	    Label     Hind Siliguri SemiBold   15sp   department buttons
+	    Body      Hind Siliguri Regular    16sp   descriptions, tagline
+	    Caption   Hind Siliguri Regular    13sp   empty state, hints
+	-->
+
 	<style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
 		<item name="android:statusBarColor">@android:color/transparent</item>
 		<item name="android:navigationBarColor">@android:color/transparent</item>
 		<item name="android:windowLightStatusBar">?attr/isLightTheme</item>
 
-		<!-- Inter, applied once here instead of 48 setTypeface calls at runtime.
-		     Both attributes are set: the AppCompat one resolves @font on API 21-25,
-		     the android one is used natively from API 26. -->
-		<item name="fontFamily">@font/inter</item>
-		<item name="android:fontFamily">@font/inter</item>
+		<!-- Interface face. The family declares 400/600/700, so textStyle="bold"
+		     resolves to the real Bold file. -->
+		<item name="fontFamily">@font/hind_siliguri</item>
+		<item name="android:fontFamily">@font/hind_siliguri</item>
 
 		<!-- Material 3 components read the type scale rather than the theme's
-		     fontFamily, so the scales the app actually uses are overridden too. -->
-		<item name="textAppearanceLabelLarge">@style/TextAppearance.MedBook.LabelLarge</item>
-		<item name="textAppearanceBodyLarge">@style/TextAppearance.MedBook.BodyLarge</item>
-		<item name="textAppearanceBodyMedium">@style/TextAppearance.MedBook.BodyMedium</item>
-		<item name="textAppearanceTitleLarge">@style/TextAppearance.MedBook.TitleLarge</item>
+		     fontFamily, so the scale itself has to be overridden. -->
+		<item name="textAppearanceDisplaySmall">@style/TextAppearance.MedBook.Display</item>
+		<item name="textAppearanceHeadlineSmall">@style/TextAppearance.MedBook.Display</item>
+		<item name="textAppearanceTitleLarge">@style/TextAppearance.MedBook.Title</item>
+		<item name="textAppearanceTitleMedium">@style/TextAppearance.MedBook.Title</item>
+		<item name="textAppearanceLabelLarge">@style/TextAppearance.MedBook.Label</item>
+		<item name="textAppearanceBodyLarge">@style/TextAppearance.MedBook.Body</item>
+		<item name="textAppearanceBodyMedium">@style/TextAppearance.MedBook.Body</item>
+		<item name="textAppearanceBodySmall">@style/TextAppearance.MedBook.Caption</item>
 	</style>
 
-	<style name="TextAppearance.MedBook.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
-		<item name="fontFamily">@font/inter</item>
-		<item name="android:fontFamily">@font/inter</item>
+	<style name="TextAppearance.MedBook.Display" parent="TextAppearance.Material3.DisplaySmall">
+		<item name="fontFamily">@font/gabarito_extrabold</item>
+		<item name="android:fontFamily">@font/gabarito_extrabold</item>
+		<item name="android:textSize">34sp</item>
+		<item name="android:letterSpacing">-0.02</item>
 	</style>
-	<style name="TextAppearance.MedBook.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
-		<item name="fontFamily">@font/inter</item>
-		<item name="android:fontFamily">@font/inter</item>
+
+	<style name="TextAppearance.MedBook.Wordmark" parent="TextAppearance.MedBook.Display">
+		<item name="android:textSize">26sp</item>
 	</style>
-	<style name="TextAppearance.MedBook.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
-		<item name="fontFamily">@font/inter</item>
-		<item name="android:fontFamily">@font/inter</item>
+
+	<style name="TextAppearance.MedBook.Title" parent="TextAppearance.Material3.TitleLarge">
+		<item name="fontFamily">@font/hind_siliguri_bold</item>
+		<item name="android:fontFamily">@font/hind_siliguri_bold</item>
+		<item name="android:textSize">20sp</item>
+		<item name="android:letterSpacing">0</item>
 	</style>
-	<style name="TextAppearance.MedBook.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
-		<item name="fontFamily">@font/inter</item>
-		<item name="android:fontFamily">@font/inter</item>
+
+	<style name="TextAppearance.MedBook.Label" parent="TextAppearance.Material3.LabelLarge">
+		<item name="fontFamily">@font/hind_siliguri_semibold</item>
+		<item name="android:fontFamily">@font/hind_siliguri_semibold</item>
+		<item name="android:textSize">15sp</item>
+		<item name="android:letterSpacing">0.01</item>
+		<item name="android:textAllCaps">false</item>
+	</style>
+
+	<style name="TextAppearance.MedBook.Body" parent="TextAppearance.Material3.BodyLarge">
+		<item name="fontFamily">@font/hind_siliguri_regular</item>
+		<item name="android:fontFamily">@font/hind_siliguri_regular</item>
+		<item name="android:textSize">16sp</item>
+	</style>
+
+	<style name="TextAppearance.MedBook.Caption" parent="TextAppearance.Material3.BodySmall">
+		<item name="fontFamily">@font/hind_siliguri_regular</item>
+		<item name="android:fontFamily">@font/hind_siliguri_regular</item>
+		<item name="android:textSize">13sp</item>
 	</style>
 
 	<style name="AppTheme.FullScreen" parent="AppTheme">

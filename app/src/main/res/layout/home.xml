@@ -20,7 +20,7 @@
 			android:layout_marginBottom="8dp"
 			android:padding="8dp"
 			android:text="@string/app_name"
-			android:textSize="20sp"
+			android:textAppearance="@style/TextAppearance.MedBook.Wordmark"
 			android:textColor="?colorPrimary" />
 		<androidx.appcompat.widget.SearchView
 			android:id="@+id/search_docs"
@@ -36,7 +36,7 @@
 			android:layout_marginTop="12dp"
 			android:padding="8dp"
 			android:text="No doctors found, try searching another department."
-			android:textSize="12sp"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
 			android:textColor="?colorOnSurface"
 			android:alpha="0.5" />
 		<ScrollView

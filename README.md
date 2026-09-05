@@ -55,7 +55,7 @@ Urology. Typography is applied at runtime from the bundled SF Pro Display faces.
 | Toolchain | JDK 25, resolved automatically by the Gradle daemon |
 | UI | Material Components 1.12.0 · AndroidX AppCompat 1.7.1 |
 | Theme | Material 3 DayNight, edge-to-edge, no action bar |
-| Typography | Inter (SIL OFL 1.1), applied via the theme |
+| Typography | Gabarito + Hind Siliguri (both SIL OFL 1.1), as a type scale |
 | Window insets | Handled on the home screen; required from API 35 |
 | View access | View Binding |
 
@@ -75,7 +75,7 @@ MedBook/
 │       │   ├── MainActivity.java     # Splash; forwards to HomeActivity
 │       │   └── HomeActivity.java     # Department list and search field
 │       └── res/
-│           ├── font/                 # Inter (subsetted), declared as a family
+│           ├── font/                 # Gabarito + Hind Siliguri, subsetted
 │           ├── layout/               # main.xml, home.xml
 │           ├── drawable-xhdpi/       # App and splash imagery
 │           ├── mipmap-xhdpi/         # Launcher icon
@@ -166,15 +166,24 @@ instead of opening a public issue.
 
 ## Fonts
 
-The interface is set in **Inter**, licensed under the
-[SIL Open Font License 1.1](licenses/Inter-OFL.txt).
+MedBook uses two typefaces, both under the
+[SIL Open Font License 1.1](https://scripts.sil.org/OFL):
 
-Only a Latin subset is redistributed here — `res/font/inter_regular.ttf` and
-`inter_bold.ttf`, about 35 KB each rather than ~400 KB for the full faces. The
-subset was verified to cover every character the app renders.
+| Role | Face | Weights | Licence |
+| --- | --- | --- | --- |
+| Wordmark | **Gabarito** ExtraBold | 800 | [OFL](licenses/Gabarito-OFL.txt) |
+| Interface | **Hind Siliguri** | Regular 400, SemiBold 600, Bold 700 | [OFL](licenses/HindSiliguri-OFL.txt) |
 
-Bangla text uses **Noto Sans Bengali**, which Android has shipped since API 21,
-so no Bengali font is bundled.
+Hind Siliguri draws Latin and Bengali as one family, so Bangla localisation
+needs no second face and no visual mismatch. It comes from Indian Type Foundry,
+and the subsets here retain the full Indic layout-feature set, without which
+Bengali conjuncts would not form.
+
+Only subsets are redistributed — 195 KB for all four files, against ~890 KB for
+the full faces. Coverage is verified against every character the app renders.
+
+Typography is defined once as a scale in `values/styles.xml`, and each role
+names a concrete font file, so no weight is ever synthesised.
 
 ## License
 

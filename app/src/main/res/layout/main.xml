@@ -21,20 +21,19 @@
 			android:scaleType="fitCenter" />
 		<TextView
 			android:id="@+id/medbook_logo"
-			android:layout_width="200dp"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="8dp"
 			android:gravity="center_horizontal|center_vertical"
 			android:text="@string/app_name"
-			android:textSize="30sp"
-			android:textStyle="bold"
+			android:textAppearance="@style/TextAppearance.MedBook.Display"
 			android:textColor="#3FA3AC" />
 		<TextView
 			android:id="@+id/tagline"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="Your Health, Your Schedule."
-			android:textSize="16sp"
+			android:textAppearance="@style/TextAppearance.MedBook.Body"
 			android:textColor="?colorOnSurfaceVariant" />
 	</LinearLayout>
 </LinearLayout>
