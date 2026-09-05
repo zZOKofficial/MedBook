@@ -93,10 +93,16 @@ activity and are retained for upcoming work.
 
 ## Requirements
 
-- **Android Studio** Ladybug (2024.2.1) or newer, for AGP 9 support
-- **JDK 25** — the Gradle daemon provisions this automatically via the
-  Foojay toolchain resolver; no manual install is needed
-- **Android SDK Platform 36**
+- **Android Studio** — a release that supports **Android Gradle Plugin 9.4**.
+  Check the [AGP compatibility table](https://developer.android.com/studio/releases#android_gradle_plugin_and_android_studio_compatibility)
+  for the matching version; older releases will refuse to sync this project.
+- **A JVM on `PATH` or `JAVA_HOME`** to start the Gradle wrapper. Android
+  Studio's bundled JetBrains Runtime satisfies this. If you build from a
+  terminal and hit `JAVA_HOME is not set`, point it at that runtime.
+  Gradle then provisions the **JDK 25** toolchain itself via the Foojay
+  resolver — see `gradle/gradle-daemon-jvm.properties`.
+- **Android SDK Platform 36** — Gradle downloads it on first build if the
+  SDK licences are already accepted.
 - A device or emulator running **Android 5.0 (API 21)** or newer
 
 ## Building
