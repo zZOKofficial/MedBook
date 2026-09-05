@@ -50,11 +50,12 @@ Urology. Typography is applied at runtime from the bundled SF Pro Display faces.
 | --- | --- |
 | Language | Java |
 | Min SDK | 21 (Android 5.0 Lollipop) |
-| Compile / Target SDK | 34 (Android 14) |
+| Compile / Target SDK | 36 (Android 16) |
 | Build | Gradle 9.7.1 · Android Gradle Plugin 9.4.0 |
 | Toolchain | JDK 25, resolved automatically by the Gradle daemon |
 | UI | Material Components 1.12.0 · AndroidX AppCompat 1.7.1 |
 | Theme | Material 3 DayNight, edge-to-edge, no action bar |
+| Window insets | Handled on the home screen; required from API 35 |
 | View access | View Binding |
 
 The project has no backend, no analytics, and no third-party SDKs beyond
@@ -95,7 +96,7 @@ activity and are retained for upcoming work.
 - **Android Studio** Ladybug (2024.2.1) or newer, for AGP 9 support
 - **JDK 25** — the Gradle daemon provisions this automatically via the
   Foojay toolchain resolver; no manual install is needed
-- **Android SDK Platform 34**
+- **Android SDK Platform 36**
 - A device or emulator running **Android 5.0 (API 21)** or newer
 
 ## Building

@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-	compileSdk 34
+	compileSdk 36
 	
 	defaultConfig {
 		applicationId "com.zzok.medbook"
 		namespace "com.zzok.medbook"
 		minSdkVersion 21
-		targetSdkVersion 34
+		targetSdkVersion 36
 		versionCode 52
 		versionName "0.0.5 pre_alpha"
 	}
