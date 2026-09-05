@@ -5,7 +5,7 @@
 **Your Health, Your Schedule.**
 
 [![Status](https://img.shields.io/badge/status-alpha-orange)](#project-status)
-[![Version](https://img.shields.io/badge/version-0.1.0--alpha.2-blue)](app/build.gradle)
+[![Version](https://img.shields.io/badge/version-0.1.0--alpha.3-blue)](app/build.gradle)
 [![Platform](https://img.shields.io/badge/platform-Android%205.0%2B-3DDC84?logo=android&logoColor=white)](#requirements)
 [![License](https://img.shields.io/badge/license-AGPL--3.0-lightgrey)](LICENSE)
 
@@ -24,9 +24,10 @@ what they are looking at.
 
 | Area | State |
 | --- | --- |
-| Splash screen | Working — the system splash screen, with no artificial delay |
+| Splash screen | Working — a vector mark, held 800ms, with a fade hand-off |
 | Home screen | Working — 46 medical departments, light and dark |
-| Department buttons | Working — tappable, but say doctors are coming soon |
+| Department rows | Working — tappable, but say doctors are coming soon |
+| Grouping | Working — the 46 sit under twelve headings, by body system |
 | Search | Working — filters departments, debounced, `&` matches `and` |
 | **Doctor directory** | **Not built — the app contains no doctors** |
 | Doctor profiles | Not built |
@@ -39,9 +40,11 @@ Everything in [Roadmap](#roadmap) is planned work, not shipped work.
 ## Screens
 
 **Home** (`HomeActivity`) — the MedBook wordmark, a search field, and a
-scrolling list of 46 medical departments, from Accident & Emergency through
-Urology. Typography comes from the type scale in `values/styles.xml` — Gabarito
-for the wordmark, Hind Siliguri for everything else.
+scrolling list of 46 medical departments grouped under twelve headings by
+the part of the body involved, from Urgent & critical care through General &
+diagnostic services. Typography comes from the type scale in
+`values/styles.xml` — Gabarito for the wordmark, Hind Siliguri for everything
+else.
 
 ## Tech Stack
 
@@ -54,6 +57,7 @@ for the wordmark, Hind Siliguri for everything else.
 | Toolchain | JDK 25, resolved automatically by the Gradle daemon |
 | UI | Material Components 1.12.0 · AndroidX AppCompat 1.7.1 |
 | Theme | Material 3 DayNight, edge-to-edge, no action bar |
+| Colour | One scheme generated from the `#1976D2` seed, day and night |
 | Typography | Gabarito + Hind Siliguri (both SIL OFL 1.1), as a type scale |
 | Window insets | Handled on the home screen; required from API 35 |
 | View access | View Binding |
@@ -75,9 +79,10 @@ MedBook/
 │       └── res/
 │           ├── font/                 # Gabarito + Hind Siliguri, subsetted
 │           ├── layout/               # home.xml
-│           ├── drawable-xhdpi/       # App and splash imagery
+│           ├── drawable/             # Splash mark, search and divider shapes
 │           ├── mipmap-xhdpi/         # Launcher icon
-│           └── values/               # colors.xml, strings.xml, styles.xml
+│           ├── values/               # colors.xml, colors_m3.xml, styles.xml
+│           └── values-night/         # Dark overrides for both colour files
 ├── gradle/wrapper/                   # Pinned Gradle distribution
 ├── build.gradle                      # Root build script
 ├── settings.gradle                   # Module and repository declarations
