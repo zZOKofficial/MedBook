@@ -1,14 +1,42 @@
 <resources>
 	<string name="app_name" translatable="false">MedBook</string>
 
-	<string name="search_hint">Search departments</string>
+	<string name="search_hint">Search doctors or departments</string>
 
 	<!-- Shown only when a search of at least 2 characters matches nothing.
 	     %1$s is the text the user typed. -->
-	<string name="search_no_results">No departments match \"%1$s\"</string>
+	<string name="search_no_results">Nothing matches \"%1$s\"</string>
 	<string name="search_no_results_help">Check the spelling, or try a broader word such as heart, child or skin.</string>
 	<string name="browse_all_departments">Browse all departments</string>
 
-	<!-- Placeholder until the doctor directory lands. %1$s is a department. -->
-	<string name="department_coming_soon">Doctors for %1$s are coming soon</string>
+	<!-- Headings above each kind of search result. -->
+	<string name="results_departments">Departments</string>
+	<string name="results_doctors">Doctors</string>
+
+	<!-- First launch, while the directory is unpacked. -->
+	<string name="directory_preparing">Preparing the directory…</string>
+	<!-- Shown when the build shipped no directory data at all, which is what a
+	     checkout without dataset.properties produces. Deliberately not phrased as an
+	     error: building without the private dataset is supported. -->
+	<string name="directory_unavailable">The doctor directory is not available in this build.</string>
+
+	<!-- Department screen. %1$d is a number of doctors. -->
+	<plurals name="department_doctor_count">
+		<item quantity="one">%1$d doctor</item>
+		<item quantity="other">%1$d doctors</item>
+	</plurals>
+	<string name="department_empty">No doctors are listed under this department yet.</string>
+
+	<!-- Doctor detail. -->
+	<string name="doctor_chambers">Chambers</string>
+	<string name="doctor_about">About</string>
+	<string name="doctor_bmdc">BMDC registration %1$s</string>
+	<string name="doctor_verified">Verified</string>
+	<!-- %1$.2f is the average rating, %2$d the number of reviews it is drawn from. -->
+	<string name="doctor_rating">%1$.2f from %2$d reviews</string>
+	<string name="chamber_call">Call</string>
+	<string name="chamber_closed">Closed: %1$s</string>
+	<string name="portrait_of">Portrait of %1$s</string>
+	<string name="back">Back</string>
+	<string name="no_dialer">No app on this device can make calls.</string>
 </resources>

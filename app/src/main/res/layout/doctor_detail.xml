@@ -1,0 +1,152 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/doctor_root"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="?colorSurface"
+	android:clipToPadding="false"
+	android:scrollbars="none">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:paddingLeft="16dp"
+		android:paddingRight="16dp"
+		android:paddingBottom="24dp">
+		<!-- Deliberately not an ActionBar: the theme is NoActionBar and the chrome-free
+		     look is the point. This is the smallest thing that still gives a visible way
+		     back, for people who never learned the system gesture. -->
+		<ImageButton
+			android:id="@+id/back_button"
+			android:layout_width="44dp"
+			android:layout_height="44dp"
+			android:layout_marginTop="4dp"
+			android:background="?attr/selectableItemBackgroundBorderless"
+			android:contentDescription="@string/back"
+			android:scaleType="center"
+			android:src="@drawable/ic_back" />
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:orientation="horizontal">
+			<ImageView
+				android:id="@+id/doctor_portrait"
+				android:layout_width="96dp"
+				android:layout_height="96dp"
+				android:scaleType="centerCrop" />
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="14dp"
+				android:layout_weight="1"
+				android:orientation="vertical">
+				<TextView
+					android:id="@+id/doctor_name"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:textAppearance="@style/TextAppearance.MedBook.Title"
+					android:textColor="?colorOnSurface"
+					tools:text="@tools:sample/full_names" />
+				<TextView
+					android:id="@+id/doctor_specialty"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="3dp"
+					android:textAppearance="@style/TextAppearance.MedBook.Caption"
+					android:textColor="?colorOnSurfaceVariant"
+					tools:text="Cardiology (Heart Diseases) Specialist" />
+				<TextView
+					android:id="@+id/doctor_rating"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="6dp"
+					android:textAppearance="@style/TextAppearance.MedBook.Caption"
+					android:textColor="?colorPrimary"
+					tools:text="4.50 from 100 reviews" />
+			</LinearLayout>
+		</LinearLayout>
+
+		<TextView
+			android:id="@+id/doctor_degrees"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="14dp"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOnSurface"
+			tools:text="MBBS, BCS (Health), FCPS (Medicine)" />
+		<TextView
+			android:id="@+id/doctor_designation"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="6dp"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOnSurfaceVariant"
+			tools:text="Assistant Professor (Cardiology)" />
+		<TextView
+			android:id="@+id/doctor_institution"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="2dp"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOnSurfaceVariant"
+			tools:text="Example Medical College Hospital" />
+		<TextView
+			android:id="@+id/doctor_experience"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="2dp"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOnSurfaceVariant"
+			tools:text="12+ Years of Experience" />
+		<TextView
+			android:id="@+id/doctor_bmdc"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="2dp"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOutline"
+			tools:text="BMDC registration A-00000" />
+
+		<TextView
+			android:id="@+id/chambers_heading"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="22dp"
+			android:text="@string/doctor_chambers"
+			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
+			android:textColor="?colorPrimary" />
+		<LinearLayout
+			android:id="@+id/chamber_container"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical" />
+
+		<TextView
+			android:id="@+id/about_heading"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="22dp"
+			android:text="@string/doctor_about"
+			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
+			android:textColor="?colorPrimary" />
+		<TextView
+			android:id="@+id/doctor_about"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="6dp"
+			android:lineSpacingMultiplier="1.15"
+			android:textAppearance="@style/TextAppearance.MedBook.Body"
+			android:textColor="?colorOnSurface" />
+		<!-- Bengali as published. Never a translation of the English biography above,
+		     and shown in addition to it rather than instead of it. -->
+		<TextView
+			android:id="@+id/doctor_about_bn"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="10dp"
+			android:lineSpacingMultiplier="1.2"
+			android:textAppearance="@style/TextAppearance.MedBook.Body"
+			android:textColor="?colorOnSurface" />
+	</LinearLayout>
+</ScrollView>

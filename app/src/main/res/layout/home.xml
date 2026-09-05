@@ -1,10 +1,15 @@
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical">
+	<!--
+	  focusableInTouchMode on the container, so it takes initial focus instead of the
+	  SearchView. Without it the field is focused on launch and the soft keyboard opens
+	  over the department list before the user has asked for it - visible on API 21,
+	  where the keyboard covered everything below Cardiology Care Centre.
+	-->
 	<LinearLayout
 		android:id="@+id/linear_bg_home"
 		android:layout_width="match_parent"
@@ -12,6 +17,8 @@
 		android:paddingLeft="16dp"
 		android:paddingRight="16dp"
 		android:background="?colorSurface"
+		android:focusable="true"
+		android:focusableInTouchMode="true"
 		android:orientation="vertical">
 		<TextView
 			android:id="@+id/medbook_logo"
@@ -53,8 +60,8 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="8dp"
-				android:gravity="center_horizontal"
 				android:text="@string/search_no_results_help"
+				android:gravity="center_horizontal"
 				android:textAppearance="@style/TextAppearance.MedBook.Caption"
 				android:textColor="?colorOnSurfaceVariant" />
 			<com.google.android.material.button.MaterialButton
@@ -65,534 +72,49 @@
 				android:layout_marginTop="12dp"
 				android:text="@string/browse_all_departments" />
 		</LinearLayout>
-		<ScrollView
-			android:id="@+id/vscroll_specialty"
+		<!--
+		  Shown while the directory is unpacked on first launch. That is a one-time
+		  ~2s decrypt and decompress of a 12MB database on the emulator, and it only
+		  repeats when the app or the dataset is updated. Without something here the
+		  screen is an empty list for two seconds, which reads as a broken app.
+		-->
+		<LinearLayout
+			android:id="@+id/loading_state"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="center"
+			android:orientation="vertical">
+			<ProgressBar
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:indeterminate="true" />
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				android:text="@string/directory_preparing"
+				android:textAppearance="@style/TextAppearance.MedBook.Caption"
+				android:textColor="?colorOnSurfaceVariant" />
+		</LinearLayout>
+		<!--
+		  The 46 departments, grouped by the part of the body involved, because that
+		  is what a patient knows before they know which specialty they need.
+
+		  The grouping rule and the three families that break it on purpose are
+		  documented alongside the data now, in pipeline/departments.json in the
+		  dataset archive - the same file that maps each department onto the source's
+		  specialty vocabulary. Keeping the rule next to the mapping it governs is the
+		  point of having moved this out of the layout.
+
+		  Dividers moved onto the rows themselves (see item_department.xml), because a
+		  RecyclerView has no equivalent of showDividers="middle".
+		-->
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/department_list"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:clipToPadding="false"
-			android:scrollbars="none">
-			<!--
-			  The 46 departments, grouped by the part of the body involved, because
-			  that is what a patient knows before they know which specialty they need.
-			  One rule, applied consistently, which is what keeps Neurology with
-			  Neurosurgery, Nephrology with Kidney Transplant and Hepatology with
-			  Liver Transplant.
-
-			  Three families break the rule on purpose:
-			    Women and children  a life stage. Every paediatric department lands
-			                        here, Paediatric Cardiology included, because "is
-			                        this for my child?" is a more reliable question
-			                        than "which organ?".
-			    Cancer              a disease, but the Cancer Care Centre is a place
-			                        people look for by name.
-			    Urgent and critical a mode of care. Nobody browses to Accident and
-			                        Emergency by body part.
-
-			  Each family is its own container so the dividers between rows stay inside
-			  a group instead of running under its heading, and so a family can be
-			  hidden whole when a search empties it.
-
-			  Stage 2 moves all of this out of the layout and into data behind a
-			  RecyclerView; see the roadmap in the README.
-			-->
-			<LinearLayout
-				android:id="@+id/linear_specialty"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="vertical">
-				<TextView
-					android:id="@+id/header_urgent_critical_care"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="14dp"
-					android:layout_marginBottom="2dp"
-					android:paddingStart="12dp"
-					android:paddingEnd="12dp"
-					android:text="Urgent &amp; critical care"
-					android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-					android:textColor="?colorPrimary" />
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:divider="@drawable/divider_department"
-					android:showDividers="middle"
-					android:orientation="vertical">
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/accident_and_emegerency"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Accident &amp; Emergency" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/critical_care_units"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Critical Care Units" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/anesthesia_and_pain_medicine"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Anesthesia and Pain Medicine" />
-				</LinearLayout>
-				<TextView
-					android:id="@+id/header_heart_lungs_blood"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="26dp"
-					android:layout_marginBottom="2dp"
-					android:paddingStart="12dp"
-					android:paddingEnd="12dp"
-					android:text="Heart, lungs &amp; blood"
-					android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-					android:textColor="?colorPrimary" />
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:divider="@drawable/divider_department"
-					android:showDividers="middle"
-					android:orientation="vertical">
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/cardiology_care_centre"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Cardiology Care Centre" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/cardiothoracic_and_vascular_surgery"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Cardiothoracic &amp; Vascular Surgery" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/cardiothoracic_anaesthesia"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Cardiothoracic Anaesthesia" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/thoracic_surgery"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Thoracic Surgery" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/respiratory_medicine"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Respiratory Medicine" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/haematology_and_stem_cell_transplant"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Haematology &amp; Stem Cell Transplant" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/transfusion_medicine"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Transfusion Medicine" />
-				</LinearLayout>
-				<TextView
-					android:id="@+id/header_brain_nerves_mind"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="26dp"
-					android:layout_marginBottom="2dp"
-					android:paddingStart="12dp"
-					android:paddingEnd="12dp"
-					android:text="Brain, nerves &amp; mind"
-					android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-					android:textColor="?colorPrimary" />
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:divider="@drawable/divider_department"
-					android:showDividers="middle"
-					android:orientation="vertical">
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/neurology"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Neurology" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/neurosurgery"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Neurosurgery" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/psychiatry"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Psychiatry" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/counselling_centre"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Counselling Centre" />
-				</LinearLayout>
-				<TextView
-					android:id="@+id/header_digestive_system_liver"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="26dp"
-					android:layout_marginBottom="2dp"
-					android:paddingStart="12dp"
-					android:paddingEnd="12dp"
-					android:text="Digestive system &amp; liver"
-					android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-					android:textColor="?colorPrimary" />
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:divider="@drawable/divider_department"
-					android:showDividers="middle"
-					android:orientation="vertical">
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/gastroenterology_and_hepatology"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Gastroenterology &amp; Hepatology" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/hepatobiliary_pancreatic_and_liver_transplant"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Hepatobiliary, Pancreatic and Liver Transplant" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/general_and_laparoscopic_surgery"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="General &amp; Laparoscopic Surgery" />
-				</LinearLayout>
-				<TextView
-					android:id="@+id/header_kidneys_urinary"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="26dp"
-					android:layout_marginBottom="2dp"
-					android:paddingStart="12dp"
-					android:paddingEnd="12dp"
-					android:text="Kidneys &amp; urinary"
-					android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-					android:textColor="?colorPrimary" />
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:divider="@drawable/divider_department"
-					android:showDividers="middle"
-					android:orientation="vertical">
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/nephrology"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Nephrology" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/kidney_transplant_program"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Kidney Transplant Program" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/urology"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Urology" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/lithotripsy"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Lithotripsy" />
-				</LinearLayout>
-				<TextView
-					android:id="@+id/header_hormones_metabolism"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="26dp"
-					android:layout_marginBottom="2dp"
-					android:paddingStart="12dp"
-					android:paddingEnd="12dp"
-					android:text="Hormones &amp; metabolism"
-					android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-					android:textColor="?colorPrimary" />
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:divider="@drawable/divider_department"
-					android:showDividers="middle"
-					android:orientation="vertical">
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/diabetology_and_endocrinology"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Diabetology &amp; Endocrinology" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/thyroid_and_head_neck_oncosurgery"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Thyroid and Head-Neck Oncosurgery" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/dietetics_and_nutrition"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Dietetics &amp; Nutrition" />
-				</LinearLayout>
-				<TextView
-					android:id="@+id/header_bones_joints_movement"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="26dp"
-					android:layout_marginBottom="2dp"
-					android:paddingStart="12dp"
-					android:paddingEnd="12dp"
-					android:text="Bones, joints &amp; movement"
-					android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-					android:textColor="?colorPrimary" />
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:divider="@drawable/divider_department"
-					android:showDividers="middle"
-					android:orientation="vertical">
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/orthopaedics"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Orthopaedics" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/rheumatology"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Rheumatology" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/physical_medicine_and_rehabilitation"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Physical Medicine &amp; Rehabilitation" />
-				</LinearLayout>
-				<TextView
-					android:id="@+id/header_eyes_ears_teeth_throat"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="26dp"
-					android:layout_marginBottom="2dp"
-					android:paddingStart="12dp"
-					android:paddingEnd="12dp"
-					android:text="Eyes, ears, teeth &amp; throat"
-					android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-					android:textColor="?colorPrimary" />
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:divider="@drawable/divider_department"
-					android:showDividers="middle"
-					android:orientation="vertical">
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/ophthalmology"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Ophthalmology" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/ENT_and_head_neck_surgery"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="ENT &amp; Head Neck Surgery" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/dental_and_maxillofacial_surgery"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Dental &amp; Maxillofacial Surgery" />
-				</LinearLayout>
-				<TextView
-					android:id="@+id/header_skin"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="26dp"
-					android:layout_marginBottom="2dp"
-					android:paddingStart="12dp"
-					android:paddingEnd="12dp"
-					android:text="Skin"
-					android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-					android:textColor="?colorPrimary" />
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:divider="@drawable/divider_department"
-					android:showDividers="middle"
-					android:orientation="vertical">
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/dermatology_and_venereology"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Dermatology &amp; Venereology" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/plastic_reconstructive_and_cosmetic_surgery"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Plastic, Reconstructive &amp; Cosmetic Surgery" />
-				</LinearLayout>
-				<TextView
-					android:id="@+id/header_women_children"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="26dp"
-					android:layout_marginBottom="2dp"
-					android:paddingStart="12dp"
-					android:paddingEnd="12dp"
-					android:text="Women &amp; children"
-					android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-					android:textColor="?colorPrimary" />
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:divider="@drawable/divider_department"
-					android:showDividers="middle"
-					android:orientation="vertical">
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/obstetrics_and_gynaecology"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Obstetrics and Gynaecology" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/fertility_centre"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Fertility Centre" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/paediatrics"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Paediatrics" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/paediatrics_and_neonatology"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Paediatrics &amp; Neonatology" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/neonatology"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Neonatology" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/child_development_centre"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Child Development Centre" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/paediatric_surgery_and_urology"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Paediatric Surgery &amp; Urology" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/paediatric_cardiology"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Paediatric Cardiology" />
-				</LinearLayout>
-				<TextView
-					android:id="@+id/header_cancer"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="26dp"
-					android:layout_marginBottom="2dp"
-					android:paddingStart="12dp"
-					android:paddingEnd="12dp"
-					android:text="Cancer"
-					android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-					android:textColor="?colorPrimary" />
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:divider="@drawable/divider_department"
-					android:showDividers="middle"
-					android:orientation="vertical">
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/cancer_care_centre"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Cancer Care Centre" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/medical_oncology"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Medical Oncology" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/radiation_oncology"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Radiation Oncology" />
-				</LinearLayout>
-				<TextView
-					android:id="@+id/header_general_diagnostic_services"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="26dp"
-					android:layout_marginBottom="2dp"
-					android:paddingStart="12dp"
-					android:paddingEnd="12dp"
-					android:text="General &amp; diagnostic services"
-					android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-					android:textColor="?colorPrimary" />
-				<LinearLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:divider="@drawable/divider_department"
-					android:showDividers="middle"
-					android:orientation="vertical">
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/internal_medicine"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Internal Medicine" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/diagnostic_and_interventional_radiology"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Diagnostic &amp; Interventional Radiology" />
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/nuclear_medicine"
-						style="@style/Widget.MedBook.Department.Row"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Nuclear Medicine" />
-				</LinearLayout>
-			</LinearLayout>
-		</ScrollView>
+			android:scrollbars="none"
+			android:visibility="gone" />
 	</LinearLayout>
 </LinearLayout>

@@ -1,12 +1,11 @@
 package com.zzok.medbook;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
@@ -15,13 +14,18 @@ import androidx.core.splashscreen.SplashScreenViewProvider;
 import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import com.google.android.material.button.MaterialButton;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import com.zzok.medbook.data.DoctorRepository;
+import com.zzok.medbook.data.PortraitLoader;
+import com.zzok.medbook.data.model.Department;
+import com.zzok.medbook.data.model.DoctorSummary;
 import com.zzok.medbook.databinding.*;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.Listener {
 
 	/** Below this, searching is more noise than signal, so the full list stays. */
 	private static final int MIN_QUERY_LENGTH = 2;
@@ -37,16 +41,21 @@ public class HomeActivity extends AppCompatActivity {
 	private static final float SPLASH_EXIT_SCALE = 1.08f;
 
 	private HomeBinding binding;
+	private DirectoryAdapter adapter;
 
-	/** The 46 department buttons, collected from the layout rather than named. */
-	private final List<MaterialButton> departmentButtons = new ArrayList<>();
-
-	/** Each clinical family's heading and the container holding its departments. */
-	private final List<View[]> familySections = new ArrayList<>();
+	private DoctorRepository repository;
+	private List<Department> departments = Collections.emptyList();
 
 	private final Handler searchHandler = new Handler(Looper.getMainLooper());
+	private final ExecutorService worker = Executors.newSingleThreadExecutor();
 	private Runnable pendingSearch;
 	private String query = "";
+
+	/**
+	 * Bumped on every search. A result whose token is stale is dropped, so a fast
+	 * typist cannot have an earlier, slower query overwrite a later one.
+	 */
+	private int searchToken;
 
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -58,7 +67,6 @@ public class HomeActivity extends AppCompatActivity {
 		setContentView(binding.getRoot());
 		applyWindowInsets();
 		flattenSearchField();
-		collectDepartmentButtons();
 		wireSearch();
 		binding.browseAll.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -70,7 +78,45 @@ public class HomeActivity extends AppCompatActivity {
 		if (_savedInstanceState != null) {
 			query = _savedInstanceState.getString(STATE_QUERY, "");
 		}
-		applyFilter();
+
+		adapter = new DirectoryAdapter(PortraitLoader.get(this), this);
+		binding.departmentList.setLayoutManager(new LinearLayoutManager(this));
+		binding.departmentList.setAdapter(adapter);
+
+		loadDirectory();
+	}
+
+	/**
+	 * Opens the directory off the main thread and shows it when it is ready.
+	 *
+	 * The first launch after an install or a dataset change has to decrypt and
+	 * decompress a 12MB database, which measured about 1.9s on the emulator. Every
+	 * launch after that is a file open. Doing it on the main thread would be an ANR
+	 * on a slow device, so the list stays behind a spinner until this returns.
+	 */
+	private void loadDirectory() {
+		worker.execute(new Runnable() {
+			@Override
+			public void run() {
+				final DoctorRepository _repository = DoctorRepository.open(HomeActivity.this);
+				final List<Department> _departments = _repository == null
+					? Collections.<Department>emptyList()
+					: _repository.departments();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						if (isFinishing() || isDestroyed()) {
+							return;
+						}
+						repository = _repository;
+						departments = _departments;
+						binding.loadingState.setVisibility(View.GONE);
+						binding.departmentList.setVisibility(View.VISIBLE);
+						applyFilter();
+					}
+				});
+			}
+		});
 	}
 
 	/**
@@ -136,7 +182,7 @@ public class HomeActivity extends AppCompatActivity {
 	 * The bottom inset deliberately does not go on the root. Padding the root
 	 * ends the list above the navigation bar and leaves a dead band of surface
 	 * with the gesture pill floating in it, which reads as the list running out
-	 * rather than continuing. It goes on the scroller instead, with
+	 * rather than continuing. It goes on the list instead, with
 	 * clipToPadding="false", so rows scroll under the translucent bar and the
 	 * last one can still be brought clear of it.
 	 */
@@ -145,17 +191,17 @@ public class HomeActivity extends AppCompatActivity {
 		final int baseTop = binding.linearBgHome.getPaddingTop();
 		final int baseRight = binding.linearBgHome.getPaddingRight();
 		final int baseBottom = binding.linearBgHome.getPaddingBottom();
-		final int baseScrollBottom = binding.vscrollSpecialty.getPaddingBottom();
+		final int baseListBottom = binding.departmentList.getPaddingBottom();
 		ViewCompat.setOnApplyWindowInsetsListener(binding.linearBgHome, new OnApplyWindowInsetsListener() {
 			@Override
 			public WindowInsetsCompat onApplyWindowInsets(View _view, WindowInsetsCompat _insets) {
 				Insets _bars = _insets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
 				_view.setPadding(baseLeft + _bars.left, baseTop + _bars.top, baseRight + _bars.right, baseBottom);
-				binding.vscrollSpecialty.setPadding(
-					binding.vscrollSpecialty.getPaddingLeft(),
-					binding.vscrollSpecialty.getPaddingTop(),
-					binding.vscrollSpecialty.getPaddingRight(),
-					baseScrollBottom + _bars.bottom);
+				binding.departmentList.setPadding(
+					binding.departmentList.getPaddingLeft(),
+					binding.departmentList.getPaddingTop(),
+					binding.departmentList.getPaddingRight(),
+					baseListBottom + _bars.bottom);
 				return _insets;
 			}
 		});
@@ -177,67 +223,20 @@ public class HomeActivity extends AppCompatActivity {
 		}
 	}
 
-	/**
-	 * Walks the layout instead of referencing 46 generated binding fields, so
-	 * adding or removing a department needs no change here. Stage 2 replaces the
-	 * container with a RecyclerView and this method goes with it.
-	 *
-	 * It recurses because the departments are nested one level down, inside a
-	 * container per clinical family, so that the dividers between rows stay
-	 * inside a group and do not run under its heading.
-	 */
-	private void collectDepartmentButtons() {
-		collectDepartmentButtons(binding.linearSpecialty);
-		collectFamilySections();
+	// -- navigation ---------------------------------------------------------------
+
+	@Override
+	public void onDepartmentSelected(Department _department) {
+		startActivity(DepartmentDoctorsActivity.intentFor(
+			this, _department.id, _department.name, _department.doctorCount));
 	}
 
-	/**
-	 * Pairs each heading with the container that follows it, so a family can be
-	 * hidden whole. Without this, filtering hides the departments but leaves
-	 * every heading behind, and a search for "cardio" reads as twelve empty
-	 * sections above three results.
-	 */
-	private void collectFamilySections() {
-		View _heading = null;
-		for (int _i = 0; _i < binding.linearSpecialty.getChildCount(); _i++) {
-			View _child = binding.linearSpecialty.getChildAt(_i);
-			if (_child instanceof ViewGroup) {
-				if (_heading != null) {
-					familySections.add(new View[] { _heading, _child });
-					_heading = null;
-				}
-			} else {
-				_heading = _child;
-			}
-		}
+	@Override
+	public void onDoctorSelected(DoctorSummary _doctor) {
+		startActivity(DoctorDetailActivity.intentFor(this, _doctor.id));
 	}
 
-	private void collectDepartmentButtons(ViewGroup _parent) {
-		for (int _i = 0; _i < _parent.getChildCount(); _i++) {
-			View _child = _parent.getChildAt(_i);
-			if (_child instanceof ViewGroup) {
-				collectDepartmentButtons((ViewGroup) _child);
-				continue;
-			}
-			if (!(_child instanceof MaterialButton)) {
-				continue;
-			}
-			final MaterialButton _button = (MaterialButton) _child;
-			final String _name = _button.getText().toString();
-			_button.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View _view) {
-					onDepartmentSelected(_name);
-				}
-			});
-			departmentButtons.add(_button);
-		}
-	}
-
-	private void onDepartmentSelected(String _department) {
-		// Placeholder until the doctor directory exists; see the roadmap in README.
-		Toast.makeText(this, getString(R.string.department_coming_soon, _department), Toast.LENGTH_SHORT).show();
-	}
+	// -- search -------------------------------------------------------------------
 
 	private void wireSearch() {
 		binding.searchDocs.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -283,55 +282,62 @@ public class HomeActivity extends AppCompatActivity {
 	/**
 	 * Four states, not two: an empty or too-short query shows every department and
 	 * no message; a matching query shows the matches; only a real query with no
-	 * match shows the empty state.
+	 * match shows the empty state. The fourth is this build having no directory data
+	 * at all, which a checkout without dataset.properties produces.
 	 */
 	private void applyFilter() {
-		boolean _searching = query.length() >= MIN_QUERY_LENGTH;
-		int _matches = 0;
+		if (repository == null) {
+			showEmptyState(getString(R.string.directory_unavailable), false);
+			return;
+		}
+		if (query.length() < MIN_QUERY_LENGTH) {
+			adapter.showDepartments(departments);
+			showList();
+			return;
+		}
+		runSearch(query);
+	}
 
-		for (MaterialButton _button : departmentButtons) {
-			boolean _visible = !_searching || matches(_button.getText().toString(), query);
-			_button.setVisibility(_visible ? View.VISIBLE : View.GONE);
-			if (_visible && _searching) {
-				_matches++;
+	private void runSearch(final String _query) {
+		final int _token = ++searchToken;
+		worker.execute(new Runnable() {
+			@Override
+			public void run() {
+				final List<Department> _departments = repository.searchDepartments(_query);
+				final List<DoctorSummary> _doctors = repository.searchDoctors(_query);
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						if (_token != searchToken || isFinishing() || isDestroyed()) {
+							return;
+						}
+						if (_departments.isEmpty() && _doctors.isEmpty()) {
+							showEmptyState(getString(R.string.search_no_results, _query), true);
+							return;
+						}
+						adapter.showResults(_departments, _doctors,
+							getString(R.string.results_departments),
+							getString(R.string.results_doctors));
+						binding.departmentList.scrollToPosition(0);
+						showList();
+					}
+				});
 			}
-		}
-
-		for (View[] _section : familySections) {
-			boolean _any = hasVisibleDepartment((ViewGroup) _section[1]);
-			_section[0].setVisibility(_any ? View.VISIBLE : View.GONE);
-			_section[1].setVisibility(_any ? View.VISIBLE : View.GONE);
-		}
-
-		boolean _empty = _searching && _matches == 0;
-		binding.emptyState.setVisibility(_empty ? View.VISIBLE : View.GONE);
-		binding.vscrollSpecialty.setVisibility(_empty ? View.GONE : View.VISIBLE);
-		if (_empty) {
-			binding.searchResultSubtitle.setText(getString(R.string.search_no_results, query));
-		}
+		});
 	}
 
-	private static boolean hasVisibleDepartment(ViewGroup _container) {
-		for (int _i = 0; _i < _container.getChildCount(); _i++) {
-			View _child = _container.getChildAt(_i);
-			if (_child instanceof MaterialButton && _child.getVisibility() == View.VISIBLE) {
-				return true;
-			}
-		}
-		return false;
+	private void showList() {
+		binding.emptyState.setVisibility(View.GONE);
+		binding.departmentList.setVisibility(View.VISIBLE);
 	}
 
-	/**
-	 * Case-insensitive substring match, with "&" and "and" treated as the same
-	 * thing so typing "cardiothoracic and vascular" finds
-	 * "Cardiothoracic &amp; Vascular Surgery".
-	 */
-	private static boolean matches(String _name, String _query) {
-		return normalise(_name).contains(normalise(_query));
-	}
-
-	private static String normalise(String _text) {
-		return _text.toLowerCase(Locale.ROOT).replace("&", "and").replaceAll("\\s+", " ").trim();
+	private void showEmptyState(String _subtitle, boolean _offerBrowseAll) {
+		binding.searchResultSubtitle.setText(_subtitle);
+		binding.searchResultHelp.setVisibility(_offerBrowseAll ? View.VISIBLE : View.GONE);
+		binding.browseAll.setVisibility(_offerBrowseAll ? View.VISIBLE : View.GONE);
+		binding.emptyState.setVisibility(View.VISIBLE);
+		binding.departmentList.setVisibility(View.GONE);
+		binding.loadingState.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -344,9 +350,8 @@ public class HomeActivity extends AppCompatActivity {
 	protected void onDestroy() {
 		if (pendingSearch != null) {
 			searchHandler.removeCallbacks(pendingSearch);
-			pendingSearch = null;
 		}
+		worker.shutdown();
 		super.onDestroy();
 	}
-
 }
