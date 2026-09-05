@@ -16,10 +16,11 @@
 		<item name="android:navigationBarColor">@android:color/transparent</item>
 		<item name="android:windowLightStatusBar">?attr/isLightTheme</item>
 
-		<!-- Interface face. The family declares 400/600/700, so textStyle="bold"
-		     resolves to the real Bold file. -->
-		<item name="fontFamily">@font/hind_siliguri</item>
-		<item name="android:fontFamily">@font/hind_siliguri</item>
+		<!-- Deliberately no theme-level fontFamily. Setting one here overrides
+		     the fontFamily declared by each textAppearance below, including on
+		     views that name a face directly, which silently flattened the whole
+		     app back to Hind Siliguri Regular. Type comes from the scale and the
+		     widget styles instead. -->
 
 		<!-- Material 3 components read the type scale rather than the theme's
 		     fontFamily, so the scale itself has to be overridden. -->
@@ -31,6 +32,18 @@
 		<item name="textAppearanceBodyLarge">@style/TextAppearance.MedBook.Body</item>
 		<item name="textAppearanceBodyMedium">@style/TextAppearance.MedBook.Body</item>
 		<item name="textAppearanceBodySmall">@style/TextAppearance.MedBook.Caption</item>
+
+		<!-- MaterialButton resolves its font from its widget style, which the
+		     theme fontFamily above would otherwise flatten back to Regular. -->
+		<item name="materialButtonStyle">@style/Widget.MedBook.Button</item>
+	</style>
+
+	<style name="Widget.MedBook.Button" parent="Widget.Material3.Button">
+		<item name="fontFamily">@font/hind_siliguri_semibold</item>
+		<item name="android:fontFamily">@font/hind_siliguri_semibold</item>
+		<item name="android:textSize">15sp</item>
+		<item name="android:letterSpacing">0.01</item>
+		<item name="android:textAllCaps">false</item>
 	</style>
 
 	<style name="TextAppearance.MedBook.Display" parent="TextAppearance.Material3.DisplaySmall">
@@ -69,6 +82,16 @@
 		<item name="fontFamily">@font/hind_siliguri_regular</item>
 		<item name="android:fontFamily">@font/hind_siliguri_regular</item>
 		<item name="android:textSize">13sp</item>
+	</style>
+
+
+	<!-- Shown by the system while the process starts, replacing the old
+	     MainActivity that sat on a 500ms Timer. postSplashScreenTheme hands
+	     over to AppTheme once HomeActivity is ready to draw. -->
+	<style name="Theme.MedBook.Splash" parent="Theme.SplashScreen">
+		<item name="windowSplashScreenBackground">@color/splash_background</item>
+		<item name="windowSplashScreenAnimatedIcon">@drawable/medbook_icon</item>
+		<item name="postSplashScreenTheme">@style/AppTheme</item>
 	</style>
 
 	<style name="AppTheme.FullScreen" parent="AppTheme">

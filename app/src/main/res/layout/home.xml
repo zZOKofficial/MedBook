@@ -19,6 +19,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="8dp"
 			android:padding="8dp"
+			android:fontFamily="@font/gabarito_extrabold"
 			android:text="@string/app_name"
 			android:textAppearance="@style/TextAppearance.MedBook.Wordmark"
 			android:textColor="?colorPrimary" />
@@ -27,18 +28,43 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:background="@drawable/bg_search"
-			android:queryHint="@string/search_hint"
+			app:queryHint="@string/search_hint"
 			app:iconifiedByDefault="false" />
-		<TextView
-			android:id="@+id/search_result_subtitle"
-			android:layout_width="wrap_content"
+		<!-- Only shown when a search of at least 2 characters matches nothing.
+		     It used to be a permanently visible "No doctors found" line sitting
+		     above 46 visible departments. -->
+		<LinearLayout
+			android:id="@+id/empty_state"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="12dp"
-			android:padding="8dp"
-			android:text="No doctors found, try searching another department."
-			android:textAppearance="@style/TextAppearance.MedBook.Caption"
-			android:textColor="?colorOnSurface"
-			android:alpha="0.5" />
+			android:layout_marginTop="32dp"
+			android:gravity="center_horizontal"
+			android:orientation="vertical"
+			android:visibility="gone">
+			<TextView
+				android:id="@+id/search_result_subtitle"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal"
+				android:textAppearance="@style/TextAppearance.MedBook.Title"
+				android:textColor="?colorOnSurface" />
+			<TextView
+				android:id="@+id/search_result_help"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:gravity="center_horizontal"
+				android:text="@string/search_no_results_help"
+				android:textAppearance="@style/TextAppearance.MedBook.Caption"
+				android:textColor="?colorOnSurfaceVariant" />
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/browse_all"
+				style="@style/Widget.Material3.Button.TextButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="12dp"
+				android:text="@string/browse_all_departments" />
+		</LinearLayout>
 		<ScrollView
 			android:id="@+id/vscroll_specialty"
 			android:layout_width="match_parent"
@@ -57,7 +83,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Accident &amp; Emergency"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -69,7 +94,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Anesthesia and Pain Medicine"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -81,7 +105,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Cancer Care Centre"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -93,7 +116,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Cardiology Care Centre"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -105,7 +127,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Cardiothoracic &amp; Vascular Surgery"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -117,7 +138,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Cardiothoracic Anaesthesia"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -129,7 +149,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Child Development Centre"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -141,7 +160,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Counselling Centre"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -153,7 +171,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Critical Care Units"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -165,7 +182,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Dental &amp; Maxillofacial Surgery"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -177,7 +193,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Dermatology &amp; Venereology"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -189,7 +204,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Diabetology &amp; Endocrinology"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -201,7 +215,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Diagnostic &amp; Interventional Radiology"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -213,7 +226,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Dietetics &amp; Nutrition"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -225,7 +237,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="ENT &amp; Head Neck Surgery"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -237,7 +248,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Fertility Centre"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -249,7 +259,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Gastroenterology &amp; Hepatology"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -261,7 +270,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="General &amp; Laparoscopic Surgery"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -273,7 +281,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Haematology &amp; Stem Cell Transplant"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -285,7 +292,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Hepatobiliary, Pancreatic and Liver Transplant"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -297,7 +303,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Internal Medicine"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -309,7 +314,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Kidney Transplant Program"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -321,7 +325,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Lithotripsy"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -333,7 +336,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Medical Oncology"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -345,7 +347,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Neonatology"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -357,7 +358,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Nephrology"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -369,7 +369,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Neurology"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -381,7 +380,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Neurosurgery"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -393,7 +391,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Nuclear Medicine"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -405,7 +402,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Obstetrics and Gynaecology"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -417,7 +413,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Ophthalmology"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -429,7 +424,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Orthopaedics"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -441,7 +435,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Paediatrics"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -453,7 +446,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Paediatric Cardiology"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -465,7 +457,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Paediatric Surgery &amp; Urology"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -477,7 +468,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Paediatrics &amp; Neonatology"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -489,7 +479,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Physical Medicine &amp; Rehabilitation"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -501,7 +490,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Plastic, Reconstructive &amp; Cosmetic Surgery"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -513,7 +501,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Psychiatry"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -525,7 +512,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Radiation Oncology"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -537,7 +523,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Respiratory Medicine"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -549,7 +534,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Rheumatology"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -561,7 +545,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Thoracic Surgery"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -573,7 +556,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Thyroid and Head-Neck Oncosurgery"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -585,7 +567,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Transfusion Medicine"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 				<com.google.android.material.button.MaterialButton
@@ -597,7 +578,6 @@
 					app:backgroundTint="?colorSecondaryContainer"
 					android:gravity="center_horizontal|center_vertical"
 					android:text="Urology"
-					android:textSize="16sp"
 					android:textColor="?colorOnSecondaryContainer"
 					app:cornerRadius="8dp" />
 			</LinearLayout>

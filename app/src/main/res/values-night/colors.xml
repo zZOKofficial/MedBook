@@ -1,0 +1,5 @@
+<resources>
+	<!-- The splash background is resolved before the theme, so it cannot use
+	     ?attr/colorSurface and needs an explicit dark-mode value. -->
+	<color name="splash_background">#1C1B1F</color>
+</resources>
