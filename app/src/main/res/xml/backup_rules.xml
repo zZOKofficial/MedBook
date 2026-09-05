@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Keep the doctor directory out of backups. It is rebuilt from the APK's own asset on
+  first launch, so backing it up would upload 12MB of doctor records to the user's
+  Drive to restore something the app can regenerate for free - and it would put the
+  directory somewhere neither the app nor the user controls.
+
+  Used on API 23-30; API 31 and above read data_extraction_rules.xml instead.
+-->
+<full-backup-content>
+	<exclude domain="database" path="medbook.db" />
+	<exclude domain="sharedpref" path="dataset.xml" />
+</full-backup-content>
