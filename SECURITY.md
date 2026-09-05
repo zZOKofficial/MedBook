@@ -2,13 +2,13 @@
 
 ## Supported Versions
 
-MedBook is pre-alpha software and has no released builds. Security fixes are
+MedBook is alpha software and has no released builds. Security fixes are
 applied to the `main` branch only, and there are no maintained release
 branches or backports.
 
 | Version | Supported |
 | --- | --- |
-| `main` (0.0.5 pre_alpha) | :white_check_mark: |
+| `release/0.1` (0.1.0-alpha.1) | :white_check_mark: |
 | Any earlier snapshot | :x: |
 
 Because the application currently ships no network, storage, or authentication

@@ -4,8 +4,8 @@
 
 **Your Health, Your Schedule.**
 
-[![Status](https://img.shields.io/badge/status-pre--alpha-orange)](#project-status)
-[![Version](https://img.shields.io/badge/version-0.0.5%20pre__alpha-blue)](app/build.gradle)
+[![Status](https://img.shields.io/badge/status-alpha-orange)](#project-status)
+[![Version](https://img.shields.io/badge/version-0.1.0--alpha.1-blue)](app/build.gradle)
 [![Platform](https://img.shields.io/badge/platform-Android%205.0%2B-3DDC84?logo=android&logoColor=white)](#requirements)
 [![License](https://img.shields.io/badge/license-AGPL--3.0-lightgrey)](LICENSE)
 
@@ -152,12 +152,10 @@ consultation payments, and telemedicine.
 Contributions are welcome, and the roadmap above is the best place to start —
 item 1 is self-contained and needs no backend.
 
-1. Fork the repository and branch from `main`
-2. Keep changes focused; one concern per pull request
-3. Match the existing style — tabs for indentation, and the `binding.*`
-   accessors rather than `findViewById`
-4. Confirm `./gradlew assembleDebug` succeeds before opening the pull request
-5. Describe what you changed and how you verified it
+Development happens on release branches — **`release/0.1`** is the current one,
+so branch from there rather than from `main`. See
+[CONTRIBUTING.md](CONTRIBUTING.md) for the branching model, the versioning
+scheme, and the code style.
 
 Bug reports and feature requests belong in
 [Issues](https://github.com/zZOKofficial/MedBook/issues); templates are

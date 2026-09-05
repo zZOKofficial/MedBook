@@ -10,8 +10,8 @@ android {
 		namespace "com.zzok.medbook"
 		minSdkVersion 21
 		targetSdkVersion 36
-		versionCode 52
-		versionName "0.0.5 pre_alpha"
+		versionCode 53
+		versionName "0.1.0-alpha.1"
 	}
 	
 	buildTypes {
