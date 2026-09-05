@@ -5,8 +5,6 @@ plugins {
 android {
 	compileSdk 34
 	
-	useLibrary 'org.apache.http.legacy'
-	
 	defaultConfig {
 		applicationId "com.zzok.medbook"
 		namespace "com.zzok.medbook"
@@ -28,7 +26,6 @@ android {
 }
 
 dependencies {
-	implementation fileTree(dir: 'libs', include: ['*.jar'])
 	implementation 'androidx.appcompat:appcompat:1.7.1'
 	implementation 'com.google.android.material:material:1.12.0'
 }

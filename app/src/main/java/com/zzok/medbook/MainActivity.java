@@ -22,7 +22,6 @@ import android.webkit.*;
 import android.widget.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import com.zzok.medbook.databinding.*;
@@ -69,9 +68,9 @@ public class MainActivity extends AppCompatActivity {
 				});
 			}
 		};
-		_timer.schedule(timer, (int)(500));
-		binding.medbookLogo.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/sf_pro_display_bold.ttf"), 0);
-		binding.tagline.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/sf_pro_display_regular.ttf"), 1);
+		_timer.schedule(timer, 500);
+		binding.medbookLogo.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/sf_pro_display_bold.ttf"), Typeface.NORMAL);
+		binding.tagline.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/sf_pro_display_regular.ttf"), Typeface.BOLD);
 	}
 	
-}
+}
