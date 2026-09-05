@@ -69,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
 			}
 		};
 		_timer.schedule(timer, 500);
-		binding.medbookLogo.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/sf_pro_display_bold.ttf"), Typeface.NORMAL);
-		binding.tagline.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/sf_pro_display_regular.ttf"), Typeface.BOLD);
 	}
 	
 }

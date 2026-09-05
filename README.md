@@ -55,6 +55,7 @@ Urology. Typography is applied at runtime from the bundled SF Pro Display faces.
 | Toolchain | JDK 25, resolved automatically by the Gradle daemon |
 | UI | Material Components 1.12.0 · AndroidX AppCompat 1.7.1 |
 | Theme | Material 3 DayNight, edge-to-edge, no action bar |
+| Typography | Inter (SIL OFL 1.1), applied via the theme |
 | Window insets | Handled on the home screen; required from API 35 |
 | View access | View Binding |
 
@@ -70,13 +71,11 @@ MedBook/
 │   ├── proguard-rules.pro
 │   └── src/main/
 │       ├── AndroidManifest.xml
-│       ├── assets/fonts/             # SF Pro Display and Kohinoor Bangla faces
 │       ├── java/com/zzok/medbook/
 │       │   ├── MainActivity.java     # Splash; forwards to HomeActivity
-│       │   ├── HomeActivity.java     # Department list and search field
-│       │   ├── FileUtil.java         # File I/O helpers
-│       │   └── SketchwareUtil.java   # Toast, display metrics, sorting helpers
+│       │   └── HomeActivity.java     # Department list and search field
 │       └── res/
+│           ├── font/                 # Inter (subsetted), declared as a family
 │           ├── layout/               # main.xml, home.xml
 │           ├── drawable-xhdpi/       # App and splash imagery
 │           ├── mipmap-xhdpi/         # Launcher icon
@@ -86,10 +85,6 @@ MedBook/
 ├── settings.gradle                   # Module and repository declarations
 └── gradle.properties
 ```
-
-`FileUtil` and `SketchwareUtil` are general-purpose helpers carried over from
-the project's Sketchware origins. They are not currently called from either
-activity and are retained for upcoming work.
 
 ## Requirements
 
@@ -168,6 +163,18 @@ Bug reports and feature requests belong in
 [Issues](https://github.com/zZOKofficial/MedBook/issues); templates are
 provided for both. For security matters, follow [SECURITY.md](SECURITY.md)
 instead of opening a public issue.
+
+## Fonts
+
+The interface is set in **Inter**, licensed under the
+[SIL Open Font License 1.1](licenses/Inter-OFL.txt).
+
+Only a Latin subset is redistributed here — `res/font/inter_regular.ttf` and
+`inter_bold.ttf`, about 35 KB each rather than ~400 KB for the full faces. The
+subset was verified to cover every character the app renders.
+
+Bangla text uses **Noto Sans Bengali**, which Android has shipped since API 21,
+so no Bengali font is bundled.
 
 ## License
 

@@ -22,11 +22,13 @@
 			android:text="@string/app_name"
 			android:textSize="20sp"
 			android:textColor="?colorPrimary" />
-		<SearchView
+		<androidx.appcompat.widget.SearchView
 			android:id="@+id/search_docs"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="?colorSurfaceVariant" />
+			android:background="@drawable/bg_search"
+			android:queryHint="@string/search_hint"
+			app:iconifiedByDefault="false" />
 		<TextView
 			android:id="@+id/search_result_subtitle"
 			android:layout_width="wrap_content"

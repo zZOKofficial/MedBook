@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Replaces the runtime GradientDrawable subclass HomeActivity used to build,
+     which was the last caller of SketchwareUtil. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+	android:shape="rectangle">
+	<corners android:radius="50dp" />
+	<solid android:color="?attr/colorSurfaceVariant" />
+</shape>

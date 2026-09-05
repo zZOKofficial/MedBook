@@ -3,15 +3,42 @@
 		<item name="android:statusBarColor">@android:color/transparent</item>
 		<item name="android:navigationBarColor">@android:color/transparent</item>
 		<item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+
+		<!-- Inter, applied once here instead of 48 setTypeface calls at runtime.
+		     Both attributes are set: the AppCompat one resolves @font on API 21-25,
+		     the android one is used natively from API 26. -->
+		<item name="fontFamily">@font/inter</item>
+		<item name="android:fontFamily">@font/inter</item>
+
+		<!-- Material 3 components read the type scale rather than the theme's
+		     fontFamily, so the scales the app actually uses are overridden too. -->
+		<item name="textAppearanceLabelLarge">@style/TextAppearance.MedBook.LabelLarge</item>
+		<item name="textAppearanceBodyLarge">@style/TextAppearance.MedBook.BodyLarge</item>
+		<item name="textAppearanceBodyMedium">@style/TextAppearance.MedBook.BodyMedium</item>
+		<item name="textAppearanceTitleLarge">@style/TextAppearance.MedBook.TitleLarge</item>
 	</style>
+
+	<style name="TextAppearance.MedBook.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+		<item name="fontFamily">@font/inter</item>
+		<item name="android:fontFamily">@font/inter</item>
+	</style>
+	<style name="TextAppearance.MedBook.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+		<item name="fontFamily">@font/inter</item>
+		<item name="android:fontFamily">@font/inter</item>
+	</style>
+	<style name="TextAppearance.MedBook.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+		<item name="fontFamily">@font/inter</item>
+		<item name="android:fontFamily">@font/inter</item>
+	</style>
+	<style name="TextAppearance.MedBook.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+		<item name="fontFamily">@font/inter</item>
+		<item name="android:fontFamily">@font/inter</item>
+	</style>
+
 	<style name="AppTheme.FullScreen" parent="AppTheme">
 		<item name="android:windowFullscreen">true</item>
 		<item name="android:windowContentOverlay">@null</item>
 	</style>
 	<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.Material3" />
 	<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.Material3" />
-	<style name="AppTheme.DebugActivity" parent="AppTheme">
-		<item name="windowActionBar">true</item>
-		<item name="windowNoTitle">false</item>
-	</style>
 </resources>
