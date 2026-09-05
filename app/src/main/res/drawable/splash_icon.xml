@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The splash mark: a ring that sweeps one full turn like a clock hand, then a
+  cross that settles into the middle of it. The schedule and the clinic, which is
+  what the app is.
+
+  Geometry follows the Android 12+ splash contract. With no icon background
+  colour the system gives the icon a 288dp canvas and shows only the inner 192dp
+  circle, so nothing here leaves a 96 radius around the centre at 144,144: the
+  ring reaches 82.5 and the cross 44. The old medbook_icon.png filled 98% of its
+  canvas, so the mask ate the calendar body, its rings and its checkmark and left
+  a teal disc with a cross in it.
+
+  Turning the mask from the thing that broke the icon into the thing that frames
+  it is the point of the ring.
+
+  The static state below is the FINISHED mark, not the first frame. Below API 31
+  the splash cannot animate and shows this drawable as-is; authored at the
+  animation's start, the launch icon would be blank.
+-->
+<animated-vector
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:aapt="http://schemas.android.com/aapt">
+
+	<aapt:attr name="android:drawable">
+		<vector
+			android:width="288dp"
+			android:height="288dp"
+			android:viewportWidth="288"
+			android:viewportHeight="288">
+
+			<!-- Rotated so the sweep starts at twelve o'clock. -->
+			<group
+				android:name="ring_group"
+				android:pivotX="144"
+				android:pivotY="144"
+				android:rotation="-90">
+				<path
+					android:name="ring"
+					android:pathData="M 144,68 A 76,76 0 1 1 144,220 A 76,76 0 1 1 144,68 Z"
+					android:strokeColor="@color/splash_mark"
+					android:strokeWidth="13"
+					android:strokeLineCap="round"
+					android:trimPathStart="0"
+					android:trimPathEnd="1" />
+			</group>
+
+			<group
+				android:name="cross_group"
+				android:pivotX="144"
+				android:pivotY="144"
+				android:scaleX="1"
+				android:scaleY="1">
+				<path
+					android:name="cross_vertical"
+					android:pathData="M 144,114 L 144,174"
+					android:strokeColor="@color/splash_mark"
+					android:strokeWidth="28"
+					android:strokeLineCap="round" />
+				<path
+					android:name="cross_horizontal"
+					android:pathData="M 114,144 L 174,144"
+					android:strokeColor="@color/splash_mark"
+					android:strokeWidth="28"
+					android:strokeLineCap="round" />
+			</group>
+		</vector>
+	</aapt:attr>
+
+	<!-- The ring draws itself in over the first 600ms. -->
+	<target android:name="ring">
+		<aapt:attr name="android:animation">
+			<objectAnimator
+				android:propertyName="trimPathEnd"
+				android:valueFrom="0"
+				android:valueTo="1"
+				android:valueType="floatType"
+				android:duration="600"
+				android:interpolator="@android:interpolator/fast_out_slow_in" />
+		</aapt:attr>
+	</target>
+
+	<!-- The cross lands once the ring is most of the way round, with a slight
+	     overshoot so it settles rather than snaps. -->
+	<target android:name="cross_group">
+		<aapt:attr name="android:animation">
+			<set>
+				<objectAnimator
+					android:propertyName="scaleX"
+					android:valueFrom="0"
+					android:valueTo="1"
+					android:valueType="floatType"
+					android:startOffset="320"
+					android:duration="420"
+					android:interpolator="@android:anim/overshoot_interpolator" />
+				<objectAnimator
+					android:propertyName="scaleY"
+					android:valueFrom="0"
+					android:valueTo="1"
+					android:valueType="floatType"
+					android:startOffset="320"
+					android:duration="420"
+					android:interpolator="@android:anim/overshoot_interpolator" />
+			</set>
+		</aapt:attr>
+	</target>
+</animated-vector>

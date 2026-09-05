@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="?attr/selectableItemBackground"
+	android:gravity="center_vertical"
+	android:orientation="horizontal"
+	android:paddingStart="12dp"
+	android:paddingEnd="12dp"
+	android:paddingTop="10dp"
+	android:paddingBottom="10dp">
+	<ImageView
+		android:id="@+id/doctor_portrait"
+		android:layout_width="52dp"
+		android:layout_height="52dp"
+		android:contentDescription="@null"
+		android:scaleType="centerCrop" />
+	<LinearLayout
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="12dp"
+		android:layout_weight="1"
+		android:orientation="vertical">
+		<TextView
+			android:id="@+id/doctor_name"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:ellipsize="end"
+			android:maxLines="1"
+			android:textAppearance="@style/TextAppearance.MedBook.Label"
+			android:textColor="?colorOnSurface"
+			tools:text="@tools:sample/full_names" />
+		<!-- specialty_original: the source's own unsplit wording, which is the only
+		     form fit to read. The split terms exist for filtering, not display. -->
+		<TextView
+			android:id="@+id/doctor_specialty"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="1dp"
+			android:ellipsize="end"
+			android:maxLines="2"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOnSurfaceVariant"
+			tools:text="Cardiology (Heart Diseases) Specialist" />
+		<TextView
+			android:id="@+id/doctor_meta"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="2dp"
+			android:ellipsize="end"
+			android:maxLines="1"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOutline"
+			tools:text="MBBS, FCPS (Medicine) - Dhaka" />
+	</LinearLayout>
+</LinearLayout>

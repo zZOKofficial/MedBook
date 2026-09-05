@@ -1,0 +1,12 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/family_name"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginTop="14dp"
+	android:layout_marginBottom="2dp"
+	android:paddingStart="12dp"
+	android:paddingEnd="12dp"
+	android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
+	android:textColor="?colorPrimary"
+	tools:text="Heart, lungs &amp; blood"
+	xmlns:tools="http://schemas.android.com/tools" />

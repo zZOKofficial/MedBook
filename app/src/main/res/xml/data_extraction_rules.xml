@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- As backup_rules.xml, for API 31 and above. Both cloud backup and device-to-device
+     transfer skip the directory; it is regenerated from the packaged asset. -->
+<data-extraction-rules>
+	<cloud-backup>
+		<exclude domain="database" path="medbook.db" />
+		<exclude domain="sharedpref" path="dataset.xml" />
+	</cloud-backup>
+	<device-transfer>
+		<exclude domain="database" path="medbook.db" />
+		<exclude domain="sharedpref" path="dataset.xml" />
+	</device-transfer>
+</data-extraction-rules>

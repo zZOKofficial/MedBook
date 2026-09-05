@@ -4,4 +4,9 @@
 	<color name="colorAccent">#03DAC5</color>
 	<color name="colorControlHighlight">#E3F2FD</color>
 	<color name="colorControlNormal">#BDBDBD</color>
+	<!-- The splash is resolved before the theme, so these cannot be ?attr and
+	     need explicit day and night values. They track the generated scheme:
+	     the background is md_surface, the disc is the seed itself. -->
+	<color name="splash_background">#F9F9FF</color>
+	<color name="splash_mark">#1976D2</color>
 </resources>

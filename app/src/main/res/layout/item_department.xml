@@ -1,0 +1,54 @@
+<!--
+  Deliberately a LinearLayout with its own divider rather than a MaterialButton.
+
+  The old list used Widget.MedBook.Department.Row and got its dividers from the
+  containing LinearLayout's showDividers="middle", which a RecyclerView has no
+  equivalent for. Carrying the divider on the row itself, and hiding it on the last
+  row of a family, keeps the rule the old layout described: separators stay inside a
+  group and never run under its heading. That style is gone now, and this is what
+  replaced it.
+
+  The look it defined is kept, and so is the reason for it. The department list is a
+  surface, not 45 objects: no fill, text left aligned, 56dp so the row is a target
+  rather than a stretched button. Centred text in a full-width button was what made
+  the original list feel ragged - the label floated somewhere different on every row,
+  so there was no edge for the eye to follow.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="56dp"
+		android:background="?attr/selectableItemBackground"
+		android:gravity="center_vertical"
+		android:orientation="horizontal"
+		android:paddingStart="12dp"
+		android:paddingEnd="12dp">
+		<TextView
+			android:id="@+id/department_name"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:textAppearance="@style/TextAppearance.MedBook.Label"
+			android:textColor="?colorOnSurface"
+			tools:text="Cardiology Care Centre" />
+		<TextView
+			android:id="@+id/department_count"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="12dp"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOnSurfaceVariant"
+			tools:text="600" />
+	</LinearLayout>
+	<View
+		android:id="@+id/department_divider"
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_marginStart="12dp"
+		android:layout_marginEnd="12dp"
+		android:background="?colorOutlineVariant" />
+</LinearLayout>

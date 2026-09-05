@@ -5,7 +5,7 @@
 **Your Health, Your Schedule.**
 
 [![Status](https://img.shields.io/badge/status-alpha-orange)](#project-status)
-[![Version](https://img.shields.io/badge/version-0.1.0--alpha.1-blue)](app/build.gradle)
+[![Version](https://img.shields.io/badge/version-0.1.0--alpha.3-blue)](app/build.gradle)
 [![Platform](https://img.shields.io/badge/platform-Android%205.0%2B-3DDC84?logo=android&logoColor=white)](#requirements)
 [![License](https://img.shields.io/badge/license-AGPL--3.0-lightgrey)](LICENSE)
 
@@ -17,32 +17,46 @@ appointments from a phone.
 
 ## Project Status
 
-**Pre-alpha. The user interface exists; the behaviour behind it does not yet.**
+**Alpha. The directory works offline; booking and accounts do not exist.**
 
 This section is deliberately blunt so that contributors and users know exactly
 what they are looking at.
 
 | Area | State |
 | --- | --- |
-| Splash screen | Working — displays for 500 ms, then opens the home screen |
-| Home screen layout | Working — renders 46 medical department buttons |
-| Department buttons | **Not wired** — no click handlers are attached |
-| Search | **Not wired** — the `SearchView` has no query listener |
-| Doctor profiles | Not built |
+| Splash screen | Working — a vector mark, held 800ms, with a fade hand-off |
+| Home screen | Working — 45 departments with live counts, light and dark |
+| Grouping | Working — the 45 sit under twelve headings, by body system |
+| **Doctor directory** | **Working — 7,438 doctors and 9,350 chambers, offline** |
+| Doctor profiles | Working — degrees, chambers, verbatim hours, tap to dial |
+| Search | Working — full-text over names, specialties, workplaces and cities |
+| Data layer | Working — a prebuilt SQLite database packed into the APK |
 | Appointment booking | Not built |
 | Accounts and sign-in | Not built |
-| Backend / data layer | Not built — the app ships no network or database code |
+| Reviews and ratings | Read-only — ratings are shown as published, never collected |
 
 Everything in [Roadmap](#roadmap) is planned work, not shipped work.
 
+### About the data
+
+The directory is a snapshot of publicly listed doctor profiles, built offline and
+bundled with the app. There is no server and no network call: the app requests no
+permissions at all, not even internet access.
+
+The dataset itself is **not in this repository**, and neither is the pipeline that
+builds it. It covers thousands of named practitioners along with their chamber
+addresses, appointment numbers and BMDC registration numbers, which is not something
+to publish as a downloadable file. A checkout without it still builds and runs — the
+directory is simply empty.
+
 ## Screens
 
-**Splash** (`MainActivity`) — app icon, wordmark, and tagline, shown briefly
-before handing off to the home screen.
-
 **Home** (`HomeActivity`) — the MedBook wordmark, a search field, and a
-scrolling list of 46 medical departments, from Accident & Emergency through
-Urology. Typography is applied at runtime from the bundled SF Pro Display faces.
+scrolling list of 45 medical departments grouped under twelve headings by
+the part of the body involved, from Urgent & critical care through General &
+diagnostic services. Typography comes from the type scale in
+`values/styles.xml` — Gabarito for the wordmark, Hind Siliguri for everything
+else.
 
 ## Tech Stack
 
@@ -53,14 +67,19 @@ Urology. Typography is applied at runtime from the bundled SF Pro Display faces.
 | Compile / Target SDK | 36 (Android 16) |
 | Build | Gradle 9.7.1 · Android Gradle Plugin 9.4.0 |
 | Toolchain | JDK 25, resolved automatically by the Gradle daemon |
-| UI | Material Components 1.12.0 · AndroidX AppCompat 1.7.1 |
+| UI | Material Components 1.12.0 · AndroidX AppCompat 1.7.1 · RecyclerView 1.4.0 |
+| Data | Prebuilt SQLite, opened read-only. FTS4 for search |
 | Theme | Material 3 DayNight, edge-to-edge, no action bar |
+| Colour | One scheme generated from the `#1976D2` seed, day and night |
 | Typography | Gabarito + Hind Siliguri (both SIL OFL 1.1), as a type scale |
 | Window insets | Handled on the home screen; required from API 35 |
 | View access | View Binding |
 
-The project has no backend, no analytics, and no third-party SDKs beyond
-AndroidX and Material Components.
+The project has no backend, no analytics, and no third-party SDKs beyond AndroidX
+and Material Components. The directory needs none: the database is prebuilt and never
+written to, so there are no migrations for Room to manage, and portraits are decoded
+straight from the APK's assets rather than fetched, so there is nothing for an image
+loading library to do.
 
 ## Project Structure
 
@@ -72,14 +91,14 @@ MedBook/
 │   └── src/main/
 │       ├── AndroidManifest.xml
 │       ├── java/com/zzok/medbook/
-│       │   ├── MainActivity.java     # Splash; forwards to HomeActivity
-│       │   └── HomeActivity.java     # Department list and search field
+│       │   └── HomeActivity.java     # Department list, search, splash handoff
 │       └── res/
 │           ├── font/                 # Gabarito + Hind Siliguri, subsetted
-│           ├── layout/               # main.xml, home.xml
-│           ├── drawable-xhdpi/       # App and splash imagery
+│           ├── layout/               # home.xml
+│           ├── drawable/             # Splash mark, search and divider shapes
 │           ├── mipmap-xhdpi/         # Launcher icon
-│           └── values/               # colors.xml, strings.xml, styles.xml
+│           ├── values/               # colors.xml, colors_m3.xml, styles.xml
+│           └── values-night/         # Dark overrides for both colour files
 ├── gradle/wrapper/                   # Pinned Gradle distribution
 ├── build.gradle                      # Root build script
 ├── settings.gradle                   # Module and repository declarations
@@ -133,16 +152,16 @@ intentionally not tracked.
 
 Ordered roughly by dependency — each item builds on the ones above it.
 
-1. **Wire the existing UI** — click handlers for the 46 department buttons, and
-   a query listener for the search field
-2. **Doctor directory** — list practitioners per department, with a data layer
-   behind it
-3. **Doctor profiles** — qualifications, biography, and availability
-4. **Appointment booking** — slot selection and confirmation
-5. **Accounts** — registration, sign-in, and per-patient appointment history
-6. **Reminders** — notifications ahead of a booked appointment
-7. **Clinic locations** — maps and directions
-8. **Localisation** — Bangla support, for which the font assets are already bundled
+1. ~~**Wire the existing UI**~~ — done in 0.1.0-alpha.2
+2. ~~**Data-driven departments**~~ — done in 0.2.0-alpha.1
+3. ~~**Doctor directory**~~ — done in 0.2.0-alpha.1
+4. ~~**Doctor profiles**~~ — done in 0.2.0-alpha.1
+5. **Better discovery** — map symptoms to departments, filter by city, and sort
+   by who is available soonest rather than by standing
+6. **Appointment booking** — slot selection and confirmation
+7. **Accounts** — registration, sign-in, and per-patient appointment history
+8. **Localisation** — Bangla, which the Hind Siliguri interface face already
+   supports
 
 Longer term: prescription management, medical-record storage, doctor ratings,
 consultation payments, and telemedicine.
@@ -150,9 +169,9 @@ consultation payments, and telemedicine.
 ## Contributing
 
 Contributions are welcome, and the roadmap above is the best place to start —
-item 1 is self-contained and needs no backend.
+item 5 is self-contained and needs no backend.
 
-Development happens on release branches — **`release/0.1`** is the current one,
+Development happens on release branches — **`release/0.2`** is the current one,
 so branch from there rather than from `main`. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for the branching model, the versioning
 scheme, and the code style.

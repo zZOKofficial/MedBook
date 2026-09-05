@@ -1,10 +1,15 @@
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical">
+	<!--
+	  focusableInTouchMode on the container, so it takes initial focus instead of the
+	  SearchView. Without it the field is focused on launch and the soft keyboard opens
+	  over the department list before the user has asked for it - visible on API 21,
+	  where the keyboard covered everything below Cardiology Care Centre.
+	-->
 	<LinearLayout
 		android:id="@+id/linear_bg_home"
 		android:layout_width="match_parent"
@@ -12,6 +17,8 @@
 		android:paddingLeft="16dp"
 		android:paddingRight="16dp"
 		android:background="?colorSurface"
+		android:focusable="true"
+		android:focusableInTouchMode="true"
 		android:orientation="vertical">
 		<TextView
 			android:id="@+id/medbook_logo"
@@ -19,6 +26,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="8dp"
 			android:padding="8dp"
+			android:fontFamily="@font/gabarito_extrabold"
 			android:text="@string/app_name"
 			android:textAppearance="@style/TextAppearance.MedBook.Wordmark"
 			android:textColor="?colorPrimary" />
@@ -27,580 +35,86 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:background="@drawable/bg_search"
-			android:queryHint="@string/search_hint"
+			app:queryHint="@string/search_hint"
 			app:iconifiedByDefault="false" />
-		<TextView
-			android:id="@+id/search_result_subtitle"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="12dp"
-			android:padding="8dp"
-			android:text="No doctors found, try searching another department."
-			android:textAppearance="@style/TextAppearance.MedBook.Caption"
-			android:textColor="?colorOnSurface"
-			android:alpha="0.5" />
-		<ScrollView
-			android:id="@+id/vscroll_specialty"
+		<!-- Only shown when a search of at least 2 characters matches nothing.
+		     It used to be a permanently visible "No doctors found" line sitting
+		     above the whole department list. -->
+		<LinearLayout
+			android:id="@+id/empty_state"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
-			<LinearLayout
-				android:id="@+id/linear_specialty"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="32dp"
+			android:gravity="center_horizontal"
+			android:orientation="vertical"
+			android:visibility="gone">
+			<TextView
+				android:id="@+id/search_result_subtitle"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:orientation="vertical">
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/accident_and_emegerency"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Accident &amp; Emergency"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/anesthesia_and_pain_medicine"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Anesthesia and Pain Medicine"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/cancer_care_centre"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Cancer Care Centre"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/cardiology_care_centre"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Cardiology Care Centre"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/cardiothoracic_and_vascular_surgery"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Cardiothoracic &amp; Vascular Surgery"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/cardiothoracic_anaesthesia"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Cardiothoracic Anaesthesia"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/child_development_centre"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Child Development Centre"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/counselling_centre"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Counselling Centre"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/critical_care_units"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Critical Care Units"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/dental_and_maxillofacial_surgery"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Dental &amp; Maxillofacial Surgery"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/dermatology_and_venereology"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Dermatology &amp; Venereology"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/diabetology_and_endocrinology"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Diabetology &amp; Endocrinology"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/diagnostic_and_interventional_radiology"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Diagnostic &amp; Interventional Radiology"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/dietetics_and_nutrition"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Dietetics &amp; Nutrition"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/ENT_and_head_neck_surgery"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="ENT &amp; Head Neck Surgery"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/fertility_centre"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Fertility Centre"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/gastroenterology_and_hepatology"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Gastroenterology &amp; Hepatology"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/general_and_laparoscopic_surgery"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="General &amp; Laparoscopic Surgery"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/haematology_and_stem_cell_transplant"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Haematology &amp; Stem Cell Transplant"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/hepatobiliary_pancreatic_and_liver_transplant"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Hepatobiliary, Pancreatic and Liver Transplant"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/internal_medicine"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Internal Medicine"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/kidney_transplant_program"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Kidney Transplant Program"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/lithotripsy"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Lithotripsy"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/medical_oncology"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Medical Oncology"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/neonatology"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Neonatology"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/nephrology"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Nephrology"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/neurology"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Neurology"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/neurosurgery"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Neurosurgery"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/nuclear_medicine"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Nuclear Medicine"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/obstetrics_and_gynaecology"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Obstetrics and Gynaecology"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/ophthalmology"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Ophthalmology"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/orthopaedics"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Orthopaedics"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/paediatrics"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Paediatrics"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/paediatric_cardiology"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Paediatric Cardiology"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/paediatric_surgery_and_urology"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Paediatric Surgery &amp; Urology"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/paediatrics_and_neonatology"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Paediatrics &amp; Neonatology"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/physical_medicine_and_rehabilitation"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Physical Medicine &amp; Rehabilitation"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/plastic_reconstructive_and_cosmetic_surgery"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Plastic, Reconstructive &amp; Cosmetic Surgery"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/psychiatry"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Psychiatry"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/radiation_oncology"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Radiation Oncology"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/respiratory_medicine"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Respiratory Medicine"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/rheumatology"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Rheumatology"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/thoracic_surgery"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Thoracic Surgery"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/thyroid_and_head_neck_oncosurgery"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Thyroid and Head-Neck Oncosurgery"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/transfusion_medicine"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Transfusion Medicine"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/urology"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-					android:padding="8dp"
-					app:backgroundTint="?colorSecondaryContainer"
-					android:gravity="center_horizontal|center_vertical"
-					android:text="Urology"
-					android:textSize="16sp"
-					android:textColor="?colorOnSecondaryContainer"
-					app:cornerRadius="8dp" />
-			</LinearLayout>
-		</ScrollView>
+				android:gravity="center_horizontal"
+				android:textAppearance="@style/TextAppearance.MedBook.Title"
+				android:textColor="?colorOnSurface" />
+			<TextView
+				android:id="@+id/search_result_help"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:text="@string/search_no_results_help"
+				android:gravity="center_horizontal"
+				android:textAppearance="@style/TextAppearance.MedBook.Caption"
+				android:textColor="?colorOnSurfaceVariant" />
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/browse_all"
+				style="@style/Widget.Material3.Button.TextButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="12dp"
+				android:text="@string/browse_all_departments" />
+		</LinearLayout>
+		<!--
+		  Shown while the directory is unpacked on first launch. That is a one-time
+		  ~2s decrypt and decompress of a 12MB database on the emulator, and it only
+		  repeats when the app or the dataset is updated. Without something here the
+		  screen is an empty list for two seconds, which reads as a broken app.
+		-->
+		<LinearLayout
+			android:id="@+id/loading_state"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="center"
+			android:orientation="vertical">
+			<ProgressBar
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:indeterminate="true" />
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
+				android:text="@string/directory_preparing"
+				android:textAppearance="@style/TextAppearance.MedBook.Caption"
+				android:textColor="?colorOnSurfaceVariant" />
+		</LinearLayout>
+		<!--
+		  The departments, grouped by the part of the body involved, because that
+		  is what a patient knows before they know which specialty they need.
+
+		  The grouping rule and the three families that break it on purpose are
+		  documented alongside the data now, in pipeline/departments.json in the
+		  dataset archive - the same file that maps each department onto the source's
+		  specialty vocabulary. Keeping the rule next to the mapping it governs is the
+		  point of having moved this out of the layout.
+
+		  Dividers moved onto the rows themselves (see item_department.xml), because a
+		  RecyclerView has no equivalent of showDividers="middle".
+		-->
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/department_list"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:clipToPadding="false"
+			android:scrollbars="none"
+			android:visibility="gone" />
 	</LinearLayout>
 </LinearLayout>
