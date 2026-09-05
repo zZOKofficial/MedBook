@@ -8,7 +8,7 @@ branches or backports.
 
 | Version | Supported |
 | --- | --- |
-| `release/0.1` (0.1.0-alpha.1) | :white_check_mark: |
+| `release/0.1` (0.1.0-alpha.2) | :white_check_mark: |
 | Any earlier snapshot | :x: |
 
 Because the application currently ships no network, storage, or authentication
