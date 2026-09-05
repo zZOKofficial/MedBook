@@ -70,7 +70,7 @@ public final class DoctorRepository {
 
 	// -- browsing -----------------------------------------------------------------
 
-	/** All 46 departments, in the layout's own family order. */
+	/** Every department, in the layout's own family order. */
 	public List<Department> departments() {
 		Cursor _cursor = database.rawQuery(
 			"SELECT d.id, d.key, d.name, f.name, d.doctor_count"
@@ -157,10 +157,10 @@ public final class DoctorRepository {
 	// -- search -------------------------------------------------------------------
 
 	/**
-	 * Departments whose name contains the query. Cheap: there are only 46.
+	 * Departments whose name contains the query. Cheap: there are only 45.
 	 *
 	 * "&" and "and" are treated as the same thing, so typing "cardiothoracic and
-	 * vascular" still finds "Cardiothoracic &amp; Vascular Surgery". Eleven of the 46
+	 * vascular" still finds "Cardiothoracic &amp; Vascular Surgery". Eleven of the 45
 	 * names contain an ampersand, and nobody types one. This is why department search
 	 * is a scan here rather than another FTS query: norm() reduces "&" to a separator,
 	 * which is right for indexing prose and wrong for matching these names.

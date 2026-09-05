@@ -39,7 +39,7 @@
 			app:iconifiedByDefault="false" />
 		<!-- Only shown when a search of at least 2 characters matches nothing.
 		     It used to be a permanently visible "No doctors found" line sitting
-		     above 46 visible departments. -->
+		     above the whole department list. -->
 		<LinearLayout
 			android:id="@+id/empty_state"
 			android:layout_width="match_parent"
@@ -97,7 +97,7 @@
 				android:textColor="?colorOnSurfaceVariant" />
 		</LinearLayout>
 		<!--
-		  The 46 departments, grouped by the part of the body involved, because that
+		  The departments, grouped by the part of the body involved, because that
 		  is what a patient knows before they know which specialty they need.
 
 		  The grouping rule and the three families that break it on purpose are

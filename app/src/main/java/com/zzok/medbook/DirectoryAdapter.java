@@ -81,7 +81,7 @@ public final class DirectoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 	/**
 	 * Search results: matching departments first, then matching doctors.
 	 *
-	 * Departments lead because they are the smaller, more certain answer - 46 curated
+	 * Departments lead because they are the smaller, more certain answer - 45 curated
 	 * names against 7,438 doctors - and because someone typing "cardio" is usually
 	 * looking for the department rather than one particular cardiologist.
 	 */

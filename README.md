@@ -25,8 +25,8 @@ what they are looking at.
 | Area | State |
 | --- | --- |
 | Splash screen | Working — a vector mark, held 800ms, with a fade hand-off |
-| Home screen | Working — 46 departments with live counts, light and dark |
-| Grouping | Working — the 46 sit under twelve headings, by body system |
+| Home screen | Working — 45 departments with live counts, light and dark |
+| Grouping | Working — the 45 sit under twelve headings, by body system |
 | **Doctor directory** | **Working — 7,438 doctors and 9,350 chambers, offline** |
 | Doctor profiles | Working — degrees, chambers, verbatim hours, tap to dial |
 | Search | Working — full-text over names, specialties, workplaces and cities |
@@ -52,7 +52,7 @@ directory is simply empty.
 ## Screens
 
 **Home** (`HomeActivity`) — the MedBook wordmark, a search field, and a
-scrolling list of 46 medical departments grouped under twelve headings by
+scrolling list of 45 medical departments grouped under twelve headings by
 the part of the body involved, from Urgent & critical care through General &
 diagnostic services. Typography comes from the type scale in
 `values/styles.xml` — Gabarito for the wordmark, Hind Siliguri for everything

@@ -4,11 +4,15 @@
   The old list used Widget.MedBook.Department.Row and got its dividers from the
   containing LinearLayout's showDividers="middle", which a RecyclerView has no
   equivalent for. Carrying the divider on the row itself, and hiding it on the last
-  row of a family, keeps the rule the layout comment described: separators stay
-  inside a group and never run under its heading.
+  row of a family, keeps the rule the old layout described: separators stay inside a
+  group and never run under its heading. That style is gone now, and this is what
+  replaced it.
 
-  The look is unchanged - 56dp, left aligned, no fill, so every row starts on the
-  same vertical line.
+  The look it defined is kept, and so is the reason for it. The department list is a
+  surface, not 45 objects: no fill, text left aligned, 56dp so the row is a target
+  rather than a stretched button. Centred text in a full-width button was what made
+  the original list feel ragged - the label floated somewhere different on every row,
+  so there was no edge for the eye to follow.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
