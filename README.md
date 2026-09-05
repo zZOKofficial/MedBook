@@ -17,17 +17,18 @@ appointments from a phone.
 
 ## Project Status
 
-**Pre-alpha. The user interface exists; the behaviour behind it does not yet.**
+**Pre-alpha. The interface works; there is no medical data behind it yet.**
 
 This section is deliberately blunt so that contributors and users know exactly
 what they are looking at.
 
 | Area | State |
 | --- | --- |
-| Splash screen | Working — displays for 500 ms, then opens the home screen |
-| Home screen layout | Working — renders 46 medical department buttons |
-| Department buttons | **Not wired** — no click handlers are attached |
-| Search | **Not wired** — the `SearchView` has no query listener |
+| Splash screen | Working — the system splash screen, with no artificial delay |
+| Home screen | Working — 46 medical departments, light and dark |
+| Department buttons | Working — tappable, but say doctors are coming soon |
+| Search | Working — filters departments, debounced, `&` matches `and` |
+| **Doctor directory** | **Not built — the app contains no doctors** |
 | Doctor profiles | Not built |
 | Appointment booking | Not built |
 | Accounts and sign-in | Not built |
@@ -36,9 +37,6 @@ what they are looking at.
 Everything in [Roadmap](#roadmap) is planned work, not shipped work.
 
 ## Screens
-
-**Splash** (`MainActivity`) — app icon, wordmark, and tagline, shown briefly
-before handing off to the home screen.
 
 **Home** (`HomeActivity`) — the MedBook wordmark, a search field, and a
 scrolling list of 46 medical departments, from Accident & Emergency through
@@ -72,11 +70,10 @@ MedBook/
 │   └── src/main/
 │       ├── AndroidManifest.xml
 │       ├── java/com/zzok/medbook/
-│       │   ├── MainActivity.java     # Splash; forwards to HomeActivity
-│       │   └── HomeActivity.java     # Department list and search field
+│       │   └── HomeActivity.java     # Department list, search, splash handoff
 │       └── res/
 │           ├── font/                 # Gabarito + Hind Siliguri, subsetted
-│           ├── layout/               # main.xml, home.xml
+│           ├── layout/               # home.xml
 │           ├── drawable-xhdpi/       # App and splash imagery
 │           ├── mipmap-xhdpi/         # Launcher icon
 │           └── values/               # colors.xml, strings.xml, styles.xml
@@ -133,16 +130,18 @@ intentionally not tracked.
 
 Ordered roughly by dependency — each item builds on the ones above it.
 
-1. **Wire the existing UI** — click handlers for the 46 department buttons, and
-   a query listener for the search field
-2. **Doctor directory** — list practitioners per department, with a data layer
-   behind it
-3. **Doctor profiles** — qualifications, biography, and availability
-4. **Appointment booking** — slot selection and confirmation
-5. **Accounts** — registration, sign-in, and per-patient appointment history
-6. **Reminders** — notifications ahead of a booked appointment
-7. **Clinic locations** — maps and directions
-8. **Localisation** — Bangla support, for which the font assets are already bundled
+1. ~~**Wire the existing UI**~~ — done in 0.1.0-alpha.2
+2. **Data-driven departments** — move the 46 out of the layout and into data,
+   behind a RecyclerView
+3. **Doctor directory** — list practitioners per department, stored in Room and
+   seeded from a bundled dataset
+4. **Doctor profiles** — qualifications, biography, and chamber times
+5. **Better discovery** — group the departments, map symptoms to them, and sort
+   by who is available soonest rather than alphabetically
+6. **Appointment booking** — slot selection and confirmation
+7. **Accounts** — registration, sign-in, and per-patient appointment history
+8. **Localisation** — Bangla, which the Hind Siliguri interface face already
+   supports
 
 Longer term: prescription management, medical-record storage, doctor ratings,
 consultation payments, and telemedicine.
