@@ -17,7 +17,7 @@ appointments from a phone.
 
 ## Project Status
 
-**Pre-alpha. The interface works; there is no medical data behind it yet.**
+**Alpha. The directory works offline; booking and accounts do not exist.**
 
 This section is deliberately blunt so that contributors and users know exactly
 what they are looking at.
@@ -25,17 +25,29 @@ what they are looking at.
 | Area | State |
 | --- | --- |
 | Splash screen | Working — a vector mark, held 800ms, with a fade hand-off |
-| Home screen | Working — 46 medical departments, light and dark |
-| Department rows | Working — tappable, but say doctors are coming soon |
+| Home screen | Working — 46 departments with live counts, light and dark |
 | Grouping | Working — the 46 sit under twelve headings, by body system |
-| Search | Working — filters departments, debounced, `&` matches `and` |
-| **Doctor directory** | **Not built — the app contains no doctors** |
-| Doctor profiles | Not built |
+| **Doctor directory** | **Working — 7,438 doctors and 9,350 chambers, offline** |
+| Doctor profiles | Working — degrees, chambers, verbatim hours, tap to dial |
+| Search | Working — full-text over names, specialties, workplaces and cities |
+| Data layer | Working — a prebuilt SQLite database packed into the APK |
 | Appointment booking | Not built |
 | Accounts and sign-in | Not built |
-| Backend / data layer | Not built — the app ships no network or database code |
+| Reviews and ratings | Read-only — ratings are shown as published, never collected |
 
 Everything in [Roadmap](#roadmap) is planned work, not shipped work.
+
+### About the data
+
+The directory is a snapshot of publicly listed doctor profiles, built offline and
+bundled with the app. There is no server and no network call: the app requests no
+permissions at all, not even internet access.
+
+The dataset itself is **not in this repository**, and neither is the pipeline that
+builds it. It covers thousands of named practitioners along with their chamber
+addresses, appointment numbers and BMDC registration numbers, which is not something
+to publish as a downloadable file. A checkout without it still builds and runs — the
+directory is simply empty.
 
 ## Screens
 
@@ -55,15 +67,19 @@ else.
 | Compile / Target SDK | 36 (Android 16) |
 | Build | Gradle 9.7.1 · Android Gradle Plugin 9.4.0 |
 | Toolchain | JDK 25, resolved automatically by the Gradle daemon |
-| UI | Material Components 1.12.0 · AndroidX AppCompat 1.7.1 |
+| UI | Material Components 1.12.0 · AndroidX AppCompat 1.7.1 · RecyclerView 1.4.0 |
+| Data | Prebuilt SQLite, opened read-only. FTS4 for search |
 | Theme | Material 3 DayNight, edge-to-edge, no action bar |
 | Colour | One scheme generated from the `#1976D2` seed, day and night |
 | Typography | Gabarito + Hind Siliguri (both SIL OFL 1.1), as a type scale |
 | Window insets | Handled on the home screen; required from API 35 |
 | View access | View Binding |
 
-The project has no backend, no analytics, and no third-party SDKs beyond
-AndroidX and Material Components.
+The project has no backend, no analytics, and no third-party SDKs beyond AndroidX
+and Material Components. The directory needs none: the database is prebuilt and never
+written to, so there are no migrations for Room to manage, and portraits are decoded
+straight from the APK's assets rather than fetched, so there is nothing for an image
+loading library to do.
 
 ## Project Structure
 
@@ -137,13 +153,11 @@ intentionally not tracked.
 Ordered roughly by dependency — each item builds on the ones above it.
 
 1. ~~**Wire the existing UI**~~ — done in 0.1.0-alpha.2
-2. **Data-driven departments** — move the 46 out of the layout and into data,
-   behind a RecyclerView
-3. **Doctor directory** — list practitioners per department, stored in Room and
-   seeded from a bundled dataset
-4. **Doctor profiles** — qualifications, biography, and chamber times
-5. **Better discovery** — group the departments, map symptoms to them, and sort
-   by who is available soonest rather than alphabetically
+2. ~~**Data-driven departments**~~ — done in 0.2.0-alpha.1
+3. ~~**Doctor directory**~~ — done in 0.2.0-alpha.1
+4. ~~**Doctor profiles**~~ — done in 0.2.0-alpha.1
+5. **Better discovery** — map symptoms to departments, filter by city, and sort
+   by who is available soonest rather than by standing
 6. **Appointment booking** — slot selection and confirmation
 7. **Accounts** — registration, sign-in, and per-patient appointment history
 8. **Localisation** — Bangla, which the Hind Siliguri interface face already
@@ -155,9 +169,9 @@ consultation payments, and telemedicine.
 ## Contributing
 
 Contributions are welcome, and the roadmap above is the best place to start —
-item 1 is self-contained and needs no backend.
+item 5 is self-contained and needs no backend.
 
-Development happens on release branches — **`release/0.1`** is the current one,
+Development happens on release branches — **`release/0.2`** is the current one,
 so branch from there rather than from `main`. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for the branching model, the versioning
 scheme, and the code style.
