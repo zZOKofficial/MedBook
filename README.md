@@ -40,7 +40,8 @@ Everything in [Roadmap](#roadmap) is planned work, not shipped work.
 
 **Home** (`HomeActivity`) — the MedBook wordmark, a search field, and a
 scrolling list of 46 medical departments, from Accident & Emergency through
-Urology. Typography is applied at runtime from the bundled SF Pro Display faces.
+Urology. Typography comes from the type scale in `values/styles.xml` — Gabarito
+for the wordmark, Hind Siliguri for everything else.
 
 ## Tech Stack
 
