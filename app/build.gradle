@@ -12,6 +12,23 @@ if (canSignRelease) {
 	keystorePropertiesFile.withInputStream { keystoreProperties.load(it) }
 }
 
+// The doctor directory. Its source data covers 7,438 named doctors, so neither the
+// dataset nor the artifacts built from it are in this repo; dataset.properties points
+// at a private archive elsewhere on the machine. Same bargain as signing above -- a
+// contributor without it gets a working build whose directory is simply empty, rather
+// than a failure.
+def datasetPropertiesFile = rootProject.file("dataset.properties")
+def datasetProperties = new Properties()
+if (datasetPropertiesFile.exists()) {
+	datasetPropertiesFile.withInputStream { datasetProperties.load(it) }
+}
+def datasetDir = datasetProperties['dataset.dir']
+def datasetKey = datasetProperties['dataset.key'] ?: ""
+def hasDataset = datasetDir != null && file(datasetDir).exists()
+if (datasetDir != null && !hasDataset) {
+	logger.warn("dataset.dir '${datasetDir}' does not exist - building without the doctor directory")
+}
+
 android {
 	compileSdk 36
 	
@@ -20,10 +37,25 @@ android {
 		namespace "com.zzok.medbook"
 		minSdkVersion 21
 		targetSdkVersion 36
-		versionCode 55
-		versionName "0.1.0-alpha.3"
+		versionCode 56
+		versionName "0.2.0-alpha.1"
+		buildConfigField "String", "DATASET_KEY", "\"${datasetKey}\""
 	}
-	
+
+	sourceSets {
+		main {
+			if (hasDataset) {
+				assets.srcDirs += datasetDir
+			}
+		}
+	}
+
+	androidResources {
+		// Both are already compressed; re-deflating them only costs build time, and
+		// leaving them stored lets AssetManager map the portraits straight out of the APK.
+		noCompress += ["webp", "dat"]
+	}
+
 	signingConfigs {
 		if (canSignRelease) {
 			release {
@@ -47,6 +79,7 @@ android {
 	}
 	buildFeatures {
 		viewBinding true
+		buildConfig true
 	}
 }
 

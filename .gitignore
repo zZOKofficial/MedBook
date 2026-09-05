@@ -31,6 +31,15 @@ keystore.properties
 *.jks
 *.keystore
 
+# Doctor directory - private. The dataset covers 7,438 named doctors with
+# chamber addresses, phone numbers and BMDC registration numbers, so neither it
+# nor anything generated from it belongs in a public repo. The archive itself
+# lives outside this tree; see .claude/CLAUDE.md.
+dataset.properties
+doctordataset/
+app/src/main/assets/
+*.dat
+
 # Native
 .cxx/
 .externalNativeBuild/
