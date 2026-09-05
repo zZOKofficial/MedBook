@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!--
+	  Material 3 light scheme, generated from the MedBook seed #1976D2.
+	  Material Color Utilities, Fidelity variant: it keeps the seed intact,
+	  so md_primary_container is #1976D2 exactly. TonalSpot, the M3 default,
+	  desaturates it to #43608A, which is not the blue this app was given.
+	  Generated, not hand-picked. Regenerate rather than editing by hand.
+	-->
+
+	<color name="md_primary">#005DAC</color>
+	<color name="md_on_primary">#FFFFFF</color>
+	<color name="md_primary_container">#1976D2</color>
+	<color name="md_on_primary_container">#FFFDFF</color>
+	<color name="md_inverse_primary">#A5C8FF</color>
+	<color name="md_secondary">#475F84</color>
+	<color name="md_on_secondary">#FFFFFF</color>
+	<color name="md_secondary_container">#BAD3FD</color>
+	<color name="md_on_secondary_container">#425B7F</color>
+	<color name="md_tertiary">#944700</color>
+	<color name="md_on_tertiary">#FFFFFF</color>
+	<color name="md_tertiary_container">#BA5B00</color>
+	<color name="md_on_tertiary_container">#FFFEFF</color>
+	<color name="md_error">#BA1A1A</color>
+	<color name="md_on_error">#FFFFFF</color>
+	<color name="md_error_container">#FFDAD6</color>
+	<color name="md_on_error_container">#93000A</color>
+	<color name="md_background">#F9F9FF</color>
+	<color name="md_on_background">#181C21</color>
+	<color name="md_surface">#F9F9FF</color>
+	<color name="md_on_surface">#181C21</color>
+	<color name="md_surface_variant">#DDE2F0</color>
+	<color name="md_on_surface_variant">#414752</color>
+	<color name="md_inverse_surface">#2D3037</color>
+	<color name="md_inverse_on_surface">#EFF0F9</color>
+	<color name="md_outline">#717783</color>
+	<color name="md_outline_variant">#C1C6D4</color>
+	<color name="md_surface_dim">#D8DAE2</color>
+	<color name="md_surface_bright">#F9F9FF</color>
+	<color name="md_surface_container_lowest">#FFFFFF</color>
+	<color name="md_surface_container_low">#F2F3FC</color>
+	<color name="md_surface_container">#ECEDF6</color>
+	<color name="md_surface_container_high">#E6E8F0</color>
+	<color name="md_surface_container_highest">#E0E2EA</color>
+	<color name="md_scrim">#000000</color>
+
+</resources>

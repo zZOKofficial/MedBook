@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hairline between rows in the scan list. Height comes from the shape, so
+     LinearLayout can use it directly as android:divider. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+	android:shape="rectangle">
+	<solid android:color="@color/md_outline_variant" />
+	<size android:height="1dp" />
+</shape>
