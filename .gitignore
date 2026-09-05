@@ -1,20 +1,41 @@
 # Gradle
 .gradle/
 build/
-app/build/
+.kotlin/
+
+# Keep the wrapper jar even if a broad *.jar rule is added later
+!gradle/wrapper/gradle-wrapper.jar
+
+# Build outputs
+release/
+out/
+bin/
+gen/
+*.apk
+*.aab
+*.ap_
+*.aar
+*.dex
+*.class
 
 # Android Studio / IntelliJ
 .idea/
 *.iml
 captures/
+.navigation/
+*.hprof
 
-# Local configuration
+# Local configuration and signing secrets
 local.properties
-
-# Keystores
+keystore.properties
 *.jks
 *.keystore
 
-# Native / logs
+# Native
 .cxx/
+.externalNativeBuild/
+
+# Logs and OS cruft
 *.log
+.DS_Store
+Thumbs.db
