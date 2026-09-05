@@ -8,13 +8,26 @@ branches or backports.
 
 | Version | Supported |
 | --- | --- |
-| `release/0.1` (0.1.0-alpha.2) | :white_check_mark: |
+| `release/0.2` (0.2.0-alpha.1) | :white_check_mark: |
 | Any earlier snapshot | :x: |
 
-Because the application currently ships no network, storage, or authentication
-code, its practical attack surface is small. That will change as the
-[roadmap](README.md#roadmap) is implemented, and this policy will be revised
-alongside it.
+The application ships no network and no authentication code, and requests no
+Android permissions at all, so its practical attack surface stays small. It does
+now carry local data, which is worth stating precisely:
+
+- The doctor directory is bundled in the APK, gzipped and AES-256-GCM sealed, and
+  unpacked on first launch into the app's private storage. It is read-only and is
+  excluded from cloud backup and device transfer.
+- **The key is compiled into the app.** Sealing stops the directory being read by
+  unzipping the APK, which is what it is for. It is not a defence against someone
+  who reverse-engineers the binary, and it should not be described as one. The
+  unpacked database is ordinary SQLite on disk, protected by the OS on a
+  non-rooted device and nothing more.
+- Everything in it is public professional information, published by its source.
+  There are no credentials, tokens, or user data of any kind.
+
+That will change as the [roadmap](README.md#roadmap) is implemented, and this
+policy will be revised alongside it.
 
 ## Reporting a Vulnerability
 
