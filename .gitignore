@@ -39,3 +39,6 @@ keystore.properties
 *.log
 .DS_Store
 Thumbs.db
+
+# Local assistant working notes - private, not shared
+.claude/
