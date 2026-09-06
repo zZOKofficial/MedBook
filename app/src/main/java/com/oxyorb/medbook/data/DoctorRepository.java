@@ -1,14 +1,14 @@
-package com.zzok.medbook.data;
+package com.oxyorb.medbook.data;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
-import com.zzok.medbook.data.model.Chamber;
-import com.zzok.medbook.data.model.Department;
-import com.zzok.medbook.data.model.Doctor;
-import com.zzok.medbook.data.model.DoctorSummary;
+import com.oxyorb.medbook.data.model.Chamber;
+import com.oxyorb.medbook.data.model.Department;
+import com.oxyorb.medbook.data.model.Doctor;
+import com.oxyorb.medbook.data.model.DoctorSummary;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +49,18 @@ public final class DoctorRepository {
 	 *
 	 * Blocking. Call it off the main thread; the first call has to unpack 12 MB.
 	 */
+	/**
+	 * Whether the directory is already open in this process.
+	 *
+	 * Lets a recreate -- which is what changing the theme or the language causes --
+	 * skip the first-launch spinner, since open() will return the existing instance
+	 * without touching the disk. Cheap enough to call on the main thread, which
+	 * open() is not.
+	 */
+	public static synchronized boolean isOpen() {
+		return instance != null;
+	}
+
 	public static synchronized DoctorRepository open(Context _context) {
 		if (instance != null) {
 			return instance;

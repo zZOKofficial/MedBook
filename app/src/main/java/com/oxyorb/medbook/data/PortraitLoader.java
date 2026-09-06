@@ -1,4 +1,4 @@
-package com.zzok.medbook.data;
+package com.oxyorb.medbook.data;
 
 import android.content.Context;
 import android.content.res.AssetManager;

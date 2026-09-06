@@ -1,4 +1,4 @@
-package com.zzok.medbook;
+package com.oxyorb.medbook;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,9 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.zzok.medbook.data.PortraitLoader;
-import com.zzok.medbook.data.model.Department;
-import com.zzok.medbook.data.model.DoctorSummary;
+import com.oxyorb.medbook.data.PortraitLoader;
+import com.oxyorb.medbook.data.model.Department;
+import com.oxyorb.medbook.data.model.DoctorSummary;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;

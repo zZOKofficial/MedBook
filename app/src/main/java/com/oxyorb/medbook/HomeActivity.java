@@ -1,4 +1,4 @@
-package com.zzok.medbook;
+package com.oxyorb.medbook;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
@@ -15,11 +17,11 @@ import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import com.zzok.medbook.data.DoctorRepository;
-import com.zzok.medbook.data.PortraitLoader;
-import com.zzok.medbook.data.model.Department;
-import com.zzok.medbook.data.model.DoctorSummary;
-import com.zzok.medbook.databinding.*;
+import com.oxyorb.medbook.data.DoctorRepository;
+import com.oxyorb.medbook.data.PortraitLoader;
+import com.oxyorb.medbook.data.model.Department;
+import com.oxyorb.medbook.data.model.DoctorSummary;
+import com.oxyorb.medbook.databinding.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -57,17 +59,47 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 	 */
 	private int searchToken;
 
+	/**
+	 * Process-scoped, because the splash belongs to starting MedBook and not to
+	 * starting this activity.
+	 *
+	 * Changing the theme or the language recreates every live activity -- appcompat
+	 * walks its whole delegate set, and a stopped HomeActivity is still in it -- so
+	 * onCreate runs again with the process warm and the app already on screen. The
+	 * 800ms hold below would replay over it: a fake splash on API 21-30, and a plain
+	 * 800ms freeze on API 31+, where there is no starting window left to hold.
+	 *
+	 * A static dies with the process, which is exactly the definition of a cold start.
+	 * Deliberately not keyed on savedInstanceState being null: a restore after process
+	 * death IS a cold start and should show the splash, and a fresh process gets false
+	 * here regardless of what the bundle says.
+	 */
+	private static boolean splashPlayed;
+
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
+		// Unconditional, even on a recreate: this call is also the hand-off from
+		// Theme.MedBook.Splash to AppTheme, and AppTheme is where all 35 M3 colour
+		// roles are named. Skip it and the activity keeps the splash theme, which
+		// names none of them, and everything renders in the Material baseline purple.
 		SplashScreen _splash = SplashScreen.installSplashScreen(this);
-		holdSplashForAnimation(_splash);
-		animateSplashExit(_splash);
+		if (!splashPlayed) {
+			splashPlayed = true;
+			holdSplashForAnimation(_splash);
+			animateSplashExit(_splash);
+		}
 		super.onCreate(_savedInstanceState);
 		binding = HomeBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 		applyWindowInsets();
 		flattenSearchField();
 		wireSearch();
+		binding.settingsButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+			}
+		});
 		binding.browseAll.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
@@ -79,6 +111,14 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 			query = _savedInstanceState.getString(STATE_QUERY, "");
 		}
 
+		// A recreate -- a theme or language change -- has the directory open already,
+		// so loadDirectory() below returns in a few milliseconds. Showing the
+		// first-launch spinner for that long reads as a flicker, not as progress.
+		if (DoctorRepository.isOpen()) {
+			binding.loadingState.setVisibility(View.GONE);
+			binding.departmentList.setVisibility(View.VISIBLE);
+		}
+
 		adapter = new DirectoryAdapter(PortraitLoader.get(this), this);
 		binding.departmentList.setLayoutManager(new LinearLayoutManager(this));
 		binding.departmentList.setAdapter(adapter);
@@ -88,8 +128,7 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 
 	/**
 	 * Opens the directory off the main thread and shows it when it is ready.
-	 *
-	 * The first launch after an install or a dataset change has to decrypt and
+	 * The first launch after an installation or a dataset change has to decrypt and
 	 * decompress a 12MB database, which measured about 1.9s on the emulator. Every
 	 * launch after that is a file open. Doing it on the main thread would be an ANR
 	 * on a slow device, so the list stays behind a spinner until this returns.
@@ -121,9 +160,8 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 
 	/**
 	 * The system dismisses the splash as soon as the first frame is ready, which
-	 * on anything but a cold start is well before an 800ms animation has played,
+	 * on anything but a cold start is well before a 800ms animation has played,
 	 * so the mark would be torn away mid-sweep.
-	 *
 	 * This is a real delay and worth being honest about. It is not the same as
 	 * the 500ms Timer in the old MainActivity this replaced: that one waited for
 	 * nothing at all, this one waits exactly as long as there is something to
@@ -141,14 +179,12 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 
 	/**
 	 * Hands the splash over instead of cutting to the home screen.
-	 *
 	 * Worth knowing why this exists: the system starts the icon's own sweep when
 	 * it creates the splash window, not when that window reaches the screen. On
 	 * the emulator those are about 830ms apart and the sweep runs for 740ms, so
 	 * the animation had already finished by the time anything was visible - it
 	 * measured as a completely static mark until the global animator scale was
-	 * turned up to 10x, which stretched it enough to catch.
-	 *
+	 * turned up to 10x, which stretched it enough to be caught.
 	 * The exit is the part whose timing we own, so it is the part that can be
 	 * relied on to be seen. Making the sweep itself reliably visible would mean
 	 * holding the splash roughly 1.3s, which is a real cost at every launch.
@@ -156,7 +192,7 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 	private void animateSplashExit(SplashScreen _splash) {
 		_splash.setOnExitAnimationListener(new SplashScreen.OnExitAnimationListener() {
 			@Override
-			public void onSplashScreenExit(final SplashScreenViewProvider _provider) {
+			public void onSplashScreenExit(@NonNull final SplashScreenViewProvider _provider) {
 				_provider.getView()
 					.animate()
 					.alpha(0f)
@@ -178,7 +214,6 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 	 * From API 35 onward the system draws content edge to edge and the opt-out is
 	 * gone, so the layout has to inset itself or the wordmark sits under the
 	 * status bar.
-	 *
 	 * The bottom inset deliberately does not go on the root. Padding the root
 	 * ends the list above the navigation bar and leaves a dead band of surface
 	 * with the gesture pill floating in it, which reads as the list running out
@@ -193,8 +228,9 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 		final int baseBottom = binding.linearBgHome.getPaddingBottom();
 		final int baseListBottom = binding.departmentList.getPaddingBottom();
 		ViewCompat.setOnApplyWindowInsetsListener(binding.linearBgHome, new OnApplyWindowInsetsListener() {
-			@Override
-			public WindowInsetsCompat onApplyWindowInsets(View _view, WindowInsetsCompat _insets) {
+			@NonNull
+            @Override
+			public WindowInsetsCompat onApplyWindowInsets(@NonNull View _view, @NonNull WindowInsetsCompat _insets) {
 				Insets _bars = _insets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
 				_view.setPadding(baseLeft + _bars.left, baseTop + _bars.top, baseRight + _bars.right, baseBottom);
 				binding.departmentList.setPadding(
@@ -341,7 +377,7 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle _outState) {
+	protected void onSaveInstanceState(@NonNull Bundle _outState) {
 		super.onSaveInstanceState(_outState);
 		_outState.putString(STATE_QUERY, query);
 	}

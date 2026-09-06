@@ -6,6 +6,7 @@
 	     storage, so there is nothing to request - not even network access. -->
 
 	<application
+		android:name=".MedBookApp"
 		android:allowBackup="true"
 		android:fullBackupContent="@xml/backup_rules"
 		android:dataExtractionRules="@xml/data_extraction_rules"
@@ -33,9 +34,14 @@
 			android:parentActivityName=".DepartmentDoctorsActivity"
 			android:screenOrientation="portrait"
 			android:exported="false" />
+		<activity
+			android:name=".SettingsActivity"
+			android:parentActivityName=".HomeActivity"
+			android:screenOrientation="portrait"
+			android:exported="false" />
 		<provider
 			android:name="androidx.startup.InitializationProvider"
-			android:authorities="com.zzok.medbook.androidx-startup"
+			android:authorities="${applicationId}.androidx-startup"
 			android:exported="false">
 			<meta-data
 				android:name="androidx.lifecycle.ProcessLifecycleInitializer"

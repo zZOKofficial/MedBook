@@ -5,9 +5,10 @@
 **Your Health, Your Schedule.**
 
 [![Status](https://img.shields.io/badge/status-alpha-orange)](#project-status)
-[![Version](https://img.shields.io/badge/version-0.1.0--alpha.3-blue)](app/build.gradle)
+[![Version](https://img.shields.io/badge/version-0.2.0--alpha.1-blue)](app/build.gradle)
 [![Platform](https://img.shields.io/badge/platform-Android%205.0%2B-3DDC84?logo=android&logoColor=white)](#requirements)
 [![License](https://img.shields.io/badge/license-AGPL--3.0-lightgrey)](LICENSE)
+[![Size](https://img.shields.io/badge/apk-28.4%20MB-blue)](#about-the-data)
 
 MedBook is an Android application intended to connect patients with healthcare
 providers — browsing medical departments, finding doctors, and booking
@@ -49,14 +50,39 @@ addresses, appointment numbers and BMDC registration numbers, which is not somet
 to publish as a downloadable file. A checkout without it still builds and runs — the
 directory is simply empty.
 
+Carrying it is most of the app's size. The release APK is **28.4 MB**, against about
+6 MB before the directory existed: 21.4 MB of that is 6,134 doctor portraits at 160 px
+WebP, and 3.7 MB is the database itself — 7,438 doctors, 9,350 chambers, 1,690
+hospitals and a full-text index, gzipped and sealed, unpacked to private storage on
+first launch.
+
+The seal keeps the directory from being readable by unzipping the APK, which is the
+point of it. It is not protection against a reverse engineer: the key is compiled into
+the app. Preventing bulk extraction outright would need the data to live on a server,
+which MedBook deliberately does not have — the directory works with no connection at
+all.
+
 ## Screens
 
 **Home** (`HomeActivity`) — the MedBook wordmark, a search field, and a
 scrolling list of 45 medical departments grouped under twelve headings by
 the part of the body involved, from Urgent & critical care through General &
-diagnostic services. Typography comes from the type scale in
-`values/styles.xml` — Gabarito for the wordmark, Hind Siliguri for everything
-else.
+diagnostic services. Each row carries its doctor count. Searching queries
+doctors and departments together, and returns departments first.
+
+**Department** (`DepartmentDoctorsActivity`) — every doctor in one department,
+verified profiles first, then the most reviewed. Paged fifty at a time; the
+largest department holds 1,420.
+
+**Doctor** (`DoctorDetailActivity`) — portrait, degrees, designation, workplace,
+experience and BMDC registration, then a card per chamber with its verbatim
+address and opening hours and a tap-to-dial appointment number. Nothing is
+inferred: a fact the source does not state is simply absent, an unrated doctor
+shows no rating rather than a zero, and the 1,304 profiles with no portrait get
+their initials rather than a stock photo.
+
+Typography comes from the type scale in `values/styles.xml` — Gabarito for the
+wordmark, Hind Siliguri for everything else.
 
 ## Tech Stack
 
@@ -72,7 +98,7 @@ else.
 | Theme | Material 3 DayNight, edge-to-edge, no action bar |
 | Colour | One scheme generated from the `#1976D2` seed, day and night |
 | Typography | Gabarito + Hind Siliguri (both SIL OFL 1.1), as a type scale |
-| Window insets | Handled on the home screen; required from API 35 |
+| Window insets | Handled on every screen; required from API 35 |
 | View access | View Binding |
 
 The project has no backend, no analytics, and no third-party SDKs beyond AndroidX
@@ -86,23 +112,37 @@ loading library to do.
 ```
 MedBook/
 ├── app/
-│   ├── build.gradle                  # Module config: SDK levels, deps, view binding
+│   ├── build.gradle                  # SDK levels, deps, signing, dataset wiring
 │   ├── proguard-rules.pro
 │   └── src/main/
 │       ├── AndroidManifest.xml
 │       ├── java/com/zzok/medbook/
-│       │   └── HomeActivity.java     # Department list, search, splash handoff
+│       │   ├── HomeActivity.java              # Departments, search, splash handoff
+│       │   ├── DepartmentDoctorsActivity.java # One department, paged
+│       │   ├── DoctorDetailActivity.java      # One profile and its chambers
+│       │   ├── DirectoryAdapter.java          # Headings, departments and doctors
+│       │   └── data/
+│       │       ├── DatasetUnpacker.java       # Unseals the bundled directory
+│       │       ├── DoctorRepository.java      # Read-only queries and search
+│       │       ├── PortraitLoader.java        # Decodes portraits from assets
+│       │       ├── InitialsDrawable.java      # Fallback when there is no portrait
+│       │       └── model/                     # Department, Doctor, Chamber, summary
 │       └── res/
 │           ├── font/                 # Gabarito + Hind Siliguri, subsetted
-│           ├── layout/               # home.xml
-│           ├── drawable/             # Splash mark, search and divider shapes
+│           ├── layout/               # Home, department, profile, and row layouts
+│           ├── drawable/             # Splash mark, search, divider, back arrow
 │           ├── mipmap-xhdpi/         # Launcher icon
 │           ├── values/               # colors.xml, colors_m3.xml, styles.xml
-│           └── values-night/         # Dark overrides for both colour files
+│           ├── values-night/         # Dark overrides for both colour files
+│           └── xml/                  # Backup rules: the directory is never backed up
 ├── gradle/wrapper/                   # Pinned Gradle distribution
 ├── build.gradle                      # Root build script
 ├── settings.gradle                   # Module and repository declarations
 └── gradle.properties
+
+# Not in the repository, and required only for the doctor directory:
+#   dataset.properties                # Points at the private archive, plus its key
+#   keystore.properties               # Release signing
 ```
 
 ## Requirements
@@ -143,6 +183,12 @@ cd MedBook
 
 The APK is written to `app/build/outputs/apk/debug/`. To build and install onto
 a connected device in one step, use `installDebug` in place of `assembleDebug`.
+
+This builds without the doctor directory, which is what a clone gets: there is no
+`dataset.properties`, so no directory data is packaged and the app opens on an
+empty state. Everything else — the departments, the search field, the theme —
+behaves normally. Release signing degrades the same way, producing an unsigned
+release rather than failing.
 
 Opening the project folder in Android Studio and pressing **Run** works
 equally well; `local.properties` is generated on first sync and is
@@ -196,8 +242,9 @@ needs no second face and no visual mismatch. It comes from Indian Type Foundry,
 and the subsets here retain the full Indic layout-feature set, without which
 Bengali conjuncts would not form.
 
-Only subsets are redistributed — 195 KB for all four files, against ~890 KB for
-the full faces. Coverage is verified against every character the app renders.
+Only subsets are redistributed — 388 KB on disk for all four files, 195 KB once
+packed into the APK, against ~890 KB for the full faces. Coverage is verified
+against every character the app renders.
 
 Typography is defined once as a scale in `values/styles.xml`, and each role
 names a concrete font file, so no weight is ever synthesised.

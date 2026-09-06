@@ -5,9 +5,22 @@
   Drive to restore something the app can regenerate for free - and it would put the
   directory somewhere neither the app nor the user controls.
 
+  local.xml is device-local state, not preferences: it records that this install has
+  shown the privacy notice, and what the last update check found. A cloud restore can
+  land on a different phone and a different person, so carrying "already accepted"
+  across would skip a first-run disclosure for someone who has never seen it.
+
+  settings.xml - the theme and language choice - is deliberately NOT excluded. That
+  one is the user's own choice and should follow them to a new device.
+
+  Excludes only. Adding a single <include> flips this file's meaning from "back up
+  everything except these" to "back up only these", which would silently stop backing
+  up settings.xml.
+
   Used on API 23-30; API 31 and above read data_extraction_rules.xml instead.
 -->
 <full-backup-content>
 	<exclude domain="database" path="medbook.db" />
 	<exclude domain="sharedpref" path="dataset.xml" />
+	<exclude domain="sharedpref" path="local.xml" />
 </full-backup-content>

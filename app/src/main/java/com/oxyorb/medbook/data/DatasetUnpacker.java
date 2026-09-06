@@ -1,11 +1,11 @@
-package com.zzok.medbook.data;
+package com.oxyorb.medbook.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.util.Base64;
 import android.util.Log;
-import com.zzok.medbook.BuildConfig;
+import com.oxyorb.medbook.BuildConfig;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;

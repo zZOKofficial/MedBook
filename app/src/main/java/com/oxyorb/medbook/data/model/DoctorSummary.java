@@ -1,4 +1,4 @@
-package com.zzok.medbook.data.model;
+package com.oxyorb.medbook.data.model;
 
 /** What a doctor row in a list needs, and nothing more. */
 public final class DoctorSummary {
