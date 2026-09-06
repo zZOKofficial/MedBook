@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Bengali interface strings.
+
+  The doctor directory itself stays English, and that is a data fact rather than a
+  shortcut: the scrape carries no Bengali for doctor names, chamber names, degrees
+  or addresses (0.0% of each), and about_bn is the only Bengali the source
+  publishes. Translating a chamber address would also make it harder to find, not
+  easier, and MBBS/FCPS are written in Latin script in Bangladeshi practice.
+
+  So this file localises the app, not the data. Department and family names are the
+  one exception - they are a closed vocabulary the app owns, and they live here too.
+-->
+<resources>
+	<string name="search_hint">ডাক্তার বা বিভাগ খুঁজুন</string>
+
+	<string name="search_no_results">\"%1$s\" এর সাথে কিছু মেলেনি</string>
+	<string name="search_no_results_help">বানান দেখে নিন, অথবা আরও সাধারণ শব্দ দিয়ে খুঁজুন — যেমন হৃদরোগ, শিশু বা চর্ম।</string>
+	<string name="browse_all_departments">সব বিভাগ দেখুন</string>
+
+	<string name="results_departments">বিভাগ</string>
+	<string name="results_doctors">ডাক্তার</string>
+
+	<string name="directory_preparing">তালিকা প্রস্তুত করা হচ্ছে…</string>
+	<string name="directory_unavailable">এই সংস্করণে ডাক্তারের তালিকা নেই।</string>
+
+	<!-- Bengali counts the same way for one and many; the classifier does the work. -->
+	<plurals name="department_doctor_count">
+		<item quantity="one">%1$d জন ডাক্তার</item>
+		<item quantity="other">%1$d জন ডাক্তার</item>
+	</plurals>
+	<string name="department_empty">এই বিভাগে এখনও কোনো ডাক্তার যুক্ত হয়নি।</string>
+
+	<string name="doctor_chambers">চেম্বার</string>
+	<string name="doctor_about">পরিচিতি</string>
+	<string name="doctor_bmdc">বিএমডিসি রেজিস্ট্রেশন %1$s</string>
+	<string name="doctor_verified">যাচাইকৃত</string>
+	<!-- Reordered from the English: Bengali puts the review count first. -->
+	<string name="doctor_rating">%2$d টি রিভিউ থেকে %1$.2f</string>
+	<string name="chamber_call">কল করুন</string>
+	<string name="chamber_closed">বন্ধ: %1$s</string>
+	<string name="portrait_of">%1$s এর ছবি</string>
+	<string name="back">পিছনে</string>
+	<string name="no_dialer">এই ডিভাইসে কল করার কোনো অ্যাপ নেই।</string>
+
+	<!-- Settings. -->
+	<string name="settings">সেটিংস</string>
+	<string name="settings_appearance">চেহারা</string>
+	<string name="settings_theme">থিম</string>
+	<string name="theme_system">ডিভাইস অনুযায়ী</string>
+	<string name="theme_system_legacy_note">অ্যান্ড্রয়েডের এই সংস্করণে সিস্টেম ডার্ক মোড নেই, তাই মেডবুক ব্যাটারি সেভার অনুসরণ করবে।</string>
+	<string name="theme_light">লাইট</string>
+	<string name="theme_dark">ডার্ক</string>
+	<string name="settings_language">ভাষা</string>
+	<string name="language_system">ডিভাইস অনুযায়ী</string>
+</resources>

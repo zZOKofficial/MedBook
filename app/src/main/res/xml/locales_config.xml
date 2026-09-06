@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Read only on API 33 and above, where it puts MedBook into
+  Settings > System > Languages > App languages and tells the system picker which
+  languages to offer. Below 33 nothing reads this file and the same choice is made
+  in MedBook's own settings screen instead, applied by appcompat.
+
+  android:defaultLocale arrived in API 35 and is ignored on 33-34, which is harmless.
+-->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android"
+	android:defaultLocale="en">
+	<locale android:name="en" />
+	<locale android:name="bn" />
+</locale-config>

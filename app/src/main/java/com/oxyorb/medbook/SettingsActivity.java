@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.oxyorb.medbook.databinding.SettingsBinding;
+import com.oxyorb.medbook.settings.LocaleController;
 import com.oxyorb.medbook.settings.SettingsStore;
 
 /**
@@ -29,8 +30,9 @@ public class SettingsActivity extends AppCompatActivity {
 
 	private SettingsBinding binding;
 	private SettingsStore settings;
-	/** Guards the listener while the stored value is being reflected into the UI. */
-	private boolean binding_theme;
+	/** Guard the listeners while a stored value is being reflected into the UI. */
+	private boolean bindingTheme;
+	private boolean bindingLanguage;
 
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -48,6 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
 		});
 
 		bindTheme();
+		bindLanguage();
 	}
 
 	private void bindTheme() {
@@ -57,7 +60,7 @@ public class SettingsActivity extends AppCompatActivity {
 		binding.themeSystemNote.setVisibility(
 			Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ? View.GONE : View.VISIBLE);
 
-		binding_theme = true;
+		bindingTheme = true;
 		switch (settings.theme()) {
 			case SettingsStore.THEME_LIGHT:
 				binding.themeGroup.check(R.id.theme_light);
@@ -69,12 +72,12 @@ public class SettingsActivity extends AppCompatActivity {
 				binding.themeGroup.check(R.id.theme_system);
 				break;
 		}
-		binding_theme = false;
+		bindingTheme = false;
 
 		binding.themeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(RadioGroup _group, int _checkedId) {
-				if (binding_theme) {
+				if (bindingTheme) {
 					return;
 				}
 				int _theme = SettingsStore.THEME_SYSTEM;
@@ -88,6 +91,35 @@ public class SettingsActivity extends AppCompatActivity {
 				// including this one, and the choice must already be durable when
 				// the new instance reads it back.
 				AppCompatDelegate.setDefaultNightMode(settings.nightMode());
+			}
+		});
+	}
+
+	private void bindLanguage() {
+		String _tag = settings.localeTag();
+		bindingLanguage = true;
+		if ("bn".equals(_tag)) {
+			binding.languageGroup.check(R.id.language_bengali);
+		} else if ("en".equals(_tag)) {
+			binding.languageGroup.check(R.id.language_english);
+		} else {
+			binding.languageGroup.check(R.id.language_system);
+		}
+		bindingLanguage = false;
+
+		binding.languageGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup _group, int _checkedId) {
+				if (bindingLanguage) {
+					return;
+				}
+				String _choice = "";
+				if (_checkedId == R.id.language_english) {
+					_choice = "en";
+				} else if (_checkedId == R.id.language_bengali) {
+					_choice = "bn";
+				}
+				LocaleController.set(settings, _choice);
 			}
 		});
 	}

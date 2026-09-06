@@ -54,6 +54,10 @@ android {
 		// Both are already compressed; re-deflating them only costs build time, and
 		// leaving them stored lets AssetManager map the portraits straight out of the APK.
 		noCompress += ["webp", "dat"]
+		// MedBook ships English and Bengali. appcompat and material carry about
+		// seventy other language folders between them; none of them are ours, and
+		// keeping them would put translations in the picker that do not exist.
+		localeFilters += ["en", "bn"]
 	}
 
 	signingConfigs {

@@ -50,4 +50,9 @@
 	<string name="theme_system_legacy_note">This version of Android has no system dark mode, so MedBook follows the battery saver instead.</string>
 	<string name="theme_light">Light</string>
 	<string name="theme_dark">Dark</string>
+	<string name="settings_language">Language</string>
+	<string name="language_system">Follow the device</string>
+	<!-- Language names are written in their own language, in every locale. -->
+	<string name="language_english" translatable="false">English</string>
+	<string name="language_bengali" translatable="false">বাংলা</string>
 </resources>
