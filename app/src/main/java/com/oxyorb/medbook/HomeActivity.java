@@ -58,11 +58,35 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 	 */
 	private int searchToken;
 
+	/**
+	 * Process-scoped, because the splash belongs to starting MedBook and not to
+	 * starting this activity.
+	 *
+	 * Changing the theme or the language recreates every live activity -- appcompat
+	 * walks its whole delegate set, and a stopped HomeActivity is still in it -- so
+	 * onCreate runs again with the process warm and the app already on screen. The
+	 * 800ms hold below would replay over it: a fake splash on API 21-30, and a plain
+	 * 800ms freeze on API 31+, where there is no starting window left to hold.
+	 *
+	 * A static dies with the process, which is exactly the definition of a cold start.
+	 * Deliberately not keyed on savedInstanceState being null: a restore after process
+	 * death IS a cold start and should show the splash, and a fresh process gets false
+	 * here regardless of what the bundle says.
+	 */
+	private static boolean splashPlayed;
+
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
+		// Unconditional, even on a recreate: this call is also the hand-off from
+		// Theme.MedBook.Splash to AppTheme, and AppTheme is where all 35 M3 colour
+		// roles are named. Skip it and the activity keeps the splash theme, which
+		// names none of them, and everything renders in the Material baseline purple.
 		SplashScreen _splash = SplashScreen.installSplashScreen(this);
-		holdSplashForAnimation(_splash);
-		animateSplashExit(_splash);
+		if (!splashPlayed) {
+			splashPlayed = true;
+			holdSplashForAnimation(_splash);
+			animateSplashExit(_splash);
+		}
 		super.onCreate(_savedInstanceState);
 		binding = HomeBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
@@ -78,6 +102,14 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 		});
 		if (_savedInstanceState != null) {
 			query = _savedInstanceState.getString(STATE_QUERY, "");
+		}
+
+		// A recreate -- a theme or language change -- has the directory open already,
+		// so loadDirectory() below returns in a few milliseconds. Showing the
+		// first-launch spinner for that long reads as a flicker, not as progress.
+		if (DoctorRepository.isOpen()) {
+			binding.loadingState.setVisibility(View.GONE);
+			binding.departmentList.setVisibility(View.VISIBLE);
 		}
 
 		adapter = new DirectoryAdapter(PortraitLoader.get(this), this);

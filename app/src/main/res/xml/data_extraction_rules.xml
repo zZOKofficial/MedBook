@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- As backup_rules.xml, for API 31 and above. Both cloud backup and device-to-device
-     transfer skip the directory; it is regenerated from the packaged asset. -->
+     transfer skip the directory; it is regenerated from the packaged asset.
+
+     The two differ over local.xml. Cloud restore has no idea whose phone it is landing
+     on, so the record of having shown the privacy notice stays behind. Device transfer
+     is the same person moving to a new phone with the old one in their hand, so a
+     notice they accepted is a notice they actually saw, and it carries across.
+
+     Excludes only - see the note in backup_rules.xml. -->
 <data-extraction-rules>
 	<cloud-backup>
 		<exclude domain="database" path="medbook.db" />
 		<exclude domain="sharedpref" path="dataset.xml" />
+		<exclude domain="sharedpref" path="local.xml" />
 	</cloud-backup>
 	<device-transfer>
 		<exclude domain="database" path="medbook.db" />
