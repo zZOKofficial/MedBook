@@ -149,16 +149,16 @@ public final class DoctorRepository {
 
 	public List<Chamber> chambers(long _doctorId) {
 		Cursor _cursor = database.rawQuery(
-			"SELECT name, address, city, area, visiting_hours, days, closed_days, phones"
+			"SELECT seq, name, address, city, area, visiting_hours, days, closed_days, phones"
 				+ " FROM chambers WHERE doctor_id = ? ORDER BY seq",
 			new String[] {String.valueOf(_doctorId)});
 		try {
 			List<Chamber> _chambers = new ArrayList<>(_cursor.getCount());
 			while (_cursor.moveToNext()) {
 				_chambers.add(new Chamber(
-					_cursor.getString(0), _cursor.getString(1), _cursor.getString(2), _cursor.getString(3),
-					_cursor.getString(4), split(_cursor.getString(5)), split(_cursor.getString(6)),
-					split(_cursor.getString(7))));
+					_cursor.getInt(0), _cursor.getString(1), _cursor.getString(2), _cursor.getString(3),
+					_cursor.getString(4), _cursor.getString(5), split(_cursor.getString(6)),
+					split(_cursor.getString(7)), split(_cursor.getString(8))));
 			}
 			return _chambers;
 		} finally {

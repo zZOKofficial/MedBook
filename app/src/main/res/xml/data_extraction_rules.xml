@@ -7,15 +7,20 @@
      is the same person moving to a new phone with the old one in their hand, so a
      notice they accepted is a notice they actually saw, and it carries across.
 
-     Excludes only - see the note in backup_rules.xml. -->
+     Demo bookings stay behind in both. Unlike the privacy notice they are not even
+     true of the same person on a new phone: they are simulated appointments against a
+     particular unpacked build of the directory, and nothing outside this install can
+     resolve them. -->
 <data-extraction-rules>
 	<cloud-backup>
 		<exclude domain="database" path="medbook.db" />
 		<exclude domain="sharedpref" path="dataset.xml" />
 		<exclude domain="sharedpref" path="local.xml" />
+		<exclude domain="sharedpref" path="demo.xml" />
 	</cloud-backup>
 	<device-transfer>
 		<exclude domain="database" path="medbook.db" />
 		<exclude domain="sharedpref" path="dataset.xml" />
+		<exclude domain="sharedpref" path="demo.xml" />
 	</device-transfer>
 </data-extraction-rules>

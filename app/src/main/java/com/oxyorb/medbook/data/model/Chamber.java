@@ -5,6 +5,15 @@ import java.util.List;
 /** One place a doctor sees patients. A doctor may have up to seven. */
 public final class Chamber {
 
+	/**
+	 * The chamber's position in this doctor's list, straight from the table.
+	 *
+	 * Ordinary field, load-bearing purpose: it is the only thing that tells two chambers
+	 * apart when a doctor holds two sittings at the same place. Five doctors in the
+	 * directory publish a chamber twice under one name and address, differing only in
+	 * their hours, and without this they would be indistinguishable.
+	 */
+	public final int seq;
 	public final String name;
 	/** Verbatim from the source. Never rewritten, reformatted or re-ordered. */
 	public final String address;
@@ -27,8 +36,9 @@ public final class Chamber {
 	 */
 	public final List<String> phones;
 
-	public Chamber(String _name, String _address, String _city, String _area, String _visitingHours,
-			List<String> _days, List<String> _closedDays, List<String> _phones) {
+	public Chamber(int _seq, String _name, String _address, String _city, String _area,
+			String _visitingHours, List<String> _days, List<String> _closedDays, List<String> _phones) {
+		seq = _seq;
 		name = _name;
 		address = _address;
 		city = _city;

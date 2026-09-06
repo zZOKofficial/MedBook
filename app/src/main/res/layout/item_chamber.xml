@@ -40,4 +40,28 @@
 		android:layout_height="wrap_content"
 		android:layout_marginTop="10dp"
 		tools:text="Call +8801700000000" />
+	<!-- Demo mode only, and gone in every sense otherwise: the row is not shown, and
+	     nothing in this card hints that a booking screen exists. Also gone when the
+	     chamber's published hours could not be read, because there is then no honest
+	     day to lay slots over. -->
+	<LinearLayout
+		android:id="@+id/chamber_demo_row"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="6dp"
+		android:orientation="horizontal"
+		android:visibility="gone">
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/chamber_book"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/chamber_book" />
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/chamber_console"
+			style="@style/Widget.Material3.Button.TextButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="4dp"
+			android:text="@string/chamber_console" />
+	</LinearLayout>
 </LinearLayout>

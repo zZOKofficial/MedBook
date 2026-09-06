@@ -54,6 +54,78 @@
 	<string name="settings_language">ভাষা</string>
 	<string name="language_system">ডিভাইস অনুযায়ী</string>
 
+	<!-- Demo mode. -->
+	<string name="settings_demo">ডেমো</string>
+	<string name="settings_demo_toggle">নমুনা বুকিং</string>
+	<string name="settings_demo_note">কাল্পনিক অ্যাপয়েন্টমেন্ট দিয়ে বুকিং কেমন হবে তা দেখায়। কিছুই বুক হয় না এবং কোনো চেম্বারে জানানো হয় না। হাসপাতালকে মেডবুক দেখানোর জন্য।</string>
+	<string name="settings_demo_reset">ডেমো বুকিং মুছুন</string>
+	<string name="settings_demo_reset_message">ডেমোতে নেওয়া সব অ্যাপয়েন্টমেন্ট মুছে যাবে। ডেমোর অন্য কিছু বদলাবে না।</string>
+	<string name="settings_demo_reset_done">ডেমো বুকিং মুছে ফেলা হয়েছে।</string>
+	<string name="settings_demo_reset_empty">মুছে ফেলার মতো কোনো ডেমো বুকিং নেই।</string>
+
+	<string name="demo_badge">ডেমো</string>
+	<string name="demo_banner">নমুনা। কিছুই বুক হয় না এবং কোনো চেম্বারে জানানো হয় না।</string>
+
+	<string name="chamber_book">বুক করুন (ডেমো)</string>
+	<string name="chamber_console">চেম্বার ভিউ</string>
+	<string name="booking_title">সময় বেছে নিন</string>
+	<string name="booking_today">আজ</string>
+	<string name="booking_closed">এই চেম্বারে এই দিনে বসা হয় না।</string>
+	<plurals name="booking_free_count">
+		<item quantity="one">%1$d টি সময় খালি</item>
+		<item quantity="other">%1$d টি সময় খালি</item>
+	</plurals>
+	<string name="booking_confirm_title">এই সময়টি নেবেন?</string>
+	<!-- Reordered from the English: Bengali puts the date before the time. -->
+	<string name="booking_confirm_message">%2$s তারিখে %1$s।\n\nএটি একটি ডেমো। কোনো অ্যাপয়েন্টমেন্ট নেওয়া হয় না, চেম্বারে কাউকে জানানোও হয় না। সত্যিকারের বুকিংয়ের জন্য চেম্বারে কল করুন।</string>
+	<string name="booking_confirm_action">ডেমোতে নিন</string>
+	<string name="booking_cancel_title">এই সময়টি ছেড়ে দেবেন?</string>
+	<string name="booking_cancel_action">ছেড়ে দিন</string>
+	<string name="booking_cancelled">ডেমো বুকিং সরানো হয়েছে।</string>
+	<string name="booking_done">ডেমোতে নেওয়া হয়েছে। সিরিয়াল %1$d।</string>
+	<string name="cancel">বাতিল</string>
+	<string name="slot_free">খালি</string>
+	<string name="slot_taken">নেওয়া হয়েছে</string>
+	<string name="slot_yours">আপনার</string>
+
+	<string name="console_title">চেম্বার ভিউ</string>
+	<!-- Reordered: Bengali puts the total before the number taken. -->
+	<string name="console_utilisation">%2$d টির মধ্যে %1$d টি বুক \u00b7 %3$d%%</string>
+	<string name="console_empty">এই দিনে কিছু বুক করা হয়নি।</string>
+	<string name="console_you">আপনি</string>
+	<string name="console_no_show">আসেননি</string>
+	<string name="console_free">—</string>
+
+	<!-- Invented patients. Localised because they are the app&apos;s own invention
+	     rather than scraped data. The directory stays English because the source
+	     publishes no Bengali, but these have no source to be faithful to. -->
+	<string-array name="demo_patient_names">
+		<item>নাসরিন আ.</item>
+		<item>রফিকুল ই.</item>
+		<item>শিরিন আ.</item>
+		<item>কামরুল হ.</item>
+		<item>ফারহানা র.</item>
+		<item>জাহাঙ্গীর আ.</item>
+		<item>সুলতানা প.</item>
+		<item>মিজানুর র.</item>
+		<item>আয়েশা স.</item>
+		<item>তানভীর আ.</item>
+		<item>রকেয়া ব.</item>
+		<item>শফিকুল ই.</item>
+		<item>নুসরাত জ.</item>
+		<item>হাবিবুর র.</item>
+		<item>মরিয়ম ক.</item>
+		<item>আনিসুর র.</item>
+		<item>সাবিনা ই.</item>
+		<item>দিলওয়ার হ.</item>
+		<item>রেহানা প.</item>
+		<item>মতিউর র.</item>
+		<item>সালমা ক.</item>
+		<item>ইকবাল হ.</item>
+		<item>তসলিমা ন.</item>
+		<item>গোলাম ম.</item>
+	</string-array>
+
 	<!-- Department and family names. Medical terminology rather than
 	     translation: where Bangladeshi practice says a term in English, it
 	     stays in English. -->

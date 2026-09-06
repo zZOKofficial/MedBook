@@ -149,5 +149,45 @@
 				android:textAppearance="@style/TextAppearance.MedBook.Body"
 				android:textColor="?colorOnSurface" />
 		</RadioGroup>
+
+		<!-- Demo mode. Off unless it is switched on here, and when it is off nothing
+		     anywhere else in the app shows any sign that it exists. -->
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingStart="12dp"
+			android:paddingEnd="12dp"
+			android:text="@string/settings_demo"
+			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
+			android:textColor="?colorSecondary" />
+		<com.google.android.material.materialswitch.MaterialSwitch
+			android:id="@+id/demo_switch"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:minHeight="48dp"
+			android:paddingStart="12dp"
+			android:paddingEnd="12dp"
+			android:text="@string/settings_demo_toggle"
+			android:textAppearance="@style/TextAppearance.MedBook.Body"
+			android:textColor="?colorOnSurface" />
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="2dp"
+			android:paddingStart="12dp"
+			android:paddingEnd="12dp"
+			android:text="@string/settings_demo_note"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOnSurfaceVariant" />
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/demo_reset"
+			style="@style/Widget.Material3.Button.TonalButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="12dp"
+			android:layout_marginTop="12dp"
+			android:layout_marginBottom="24dp"
+			android:text="@string/settings_demo_reset" />
 	</LinearLayout>
 </ScrollView>

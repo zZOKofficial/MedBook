@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:gravity="center_vertical"
+	android:minHeight="48dp"
+	android:orientation="horizontal"
+	android:paddingStart="12dp"
+	android:paddingEnd="12dp"
+	android:paddingTop="6dp"
+	android:paddingBottom="6dp">
+	<TextView
+		android:id="@+id/row_serial"
+		android:layout_width="34dp"
+		android:layout_height="wrap_content"
+		android:textAppearance="@style/TextAppearance.MedBook.Caption"
+		android:textColor="?colorOutline"
+		tools:text="7" />
+	<TextView
+		android:id="@+id/row_time"
+		android:layout_width="76dp"
+		android:layout_height="wrap_content"
+		android:textAppearance="@style/TextAppearance.MedBook.Label"
+		tools:text="5:20 pm" />
+	<TextView
+		android:id="@+id/row_patient"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:ellipsize="end"
+		android:maxLines="1"
+		android:textAppearance="@style/TextAppearance.MedBook.Body"
+		tools:text="Nasrin A." />
+	<TextView
+		android:id="@+id/row_flag"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="8dp"
+		android:text="@string/console_no_show"
+		android:textAppearance="@style/TextAppearance.MedBook.Caption"
+		android:textColor="?colorError"
+		android:visibility="gone"
+		tools:text="did not attend" />
+</LinearLayout>

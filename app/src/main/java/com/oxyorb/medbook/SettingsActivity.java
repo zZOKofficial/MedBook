@@ -1,9 +1,12 @@
 package com.oxyorb.medbook;
 
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +16,9 @@ import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.oxyorb.medbook.databinding.SettingsBinding;
+import com.oxyorb.medbook.demo.DemoStore;
 import com.oxyorb.medbook.settings.LocaleController;
 import com.oxyorb.medbook.settings.SettingsStore;
 
@@ -33,6 +38,7 @@ public class SettingsActivity extends AppCompatActivity {
 	/** Guard the listeners while a stored value is being reflected into the UI. */
 	private boolean bindingTheme;
 	private boolean bindingLanguage;
+	private boolean bindingDemo;
 
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -51,6 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 		bindTheme();
 		bindLanguage();
+		bindDemo();
 	}
 
 	private void bindTheme() {
@@ -122,6 +129,65 @@ public class SettingsActivity extends AppCompatActivity {
 				LocaleController.set(settings, _choice);
 			}
 		});
+	}
+
+	/**
+	 * The demo switch, and the one action that undoes what it produces.
+	 *
+	 * Turning it on is deliberately a plain visible switch rather than something
+	 * hidden, which is what makes the labelling on the demo screens themselves load
+	 * bearing: anyone can find this, so nothing behind it may look like a real
+	 * booking. Turning it off leaves the bookings alone -- switching back on should
+	 * find the demo where it was left, mid-pitch, rather than wiped.
+	 */
+	private void bindDemo() {
+		bindingDemo = true;
+		binding.demoSwitch.setChecked(settings.demoEnabled());
+		bindingDemo = false;
+		binding.demoReset.setEnabled(settings.demoEnabled());
+
+		binding.demoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton _button, boolean _checked) {
+				if (bindingDemo) {
+					return;
+				}
+				settings.setDemoEnabled(_checked);
+				binding.demoReset.setEnabled(_checked);
+			}
+		});
+
+		binding.demoReset.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				confirmReset();
+			}
+		});
+	}
+
+	/**
+	 * Clears the bookings and nothing else. There is nothing else to clear: the rest
+	 * of the demo is computed from the chamber and the date and was never stored.
+	 */
+	private void confirmReset() {
+		final DemoStore _demo = DemoStore.get(this);
+		if (_demo.isEmpty()) {
+			Toast.makeText(this, R.string.settings_demo_reset_empty, Toast.LENGTH_SHORT).show();
+			return;
+		}
+		new MaterialAlertDialogBuilder(this)
+			.setTitle(R.string.settings_demo_reset)
+			.setMessage(R.string.settings_demo_reset_message)
+			.setNegativeButton(R.string.cancel, null)
+			.setPositiveButton(R.string.settings_demo_reset, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface _dialog, int _which) {
+					_demo.reset();
+					Toast.makeText(SettingsActivity.this, R.string.settings_demo_reset_done,
+						Toast.LENGTH_SHORT).show();
+				}
+			})
+			.show();
 	}
 
 	/**

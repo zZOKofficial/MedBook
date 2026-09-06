@@ -7,7 +7,7 @@
 **Your Health, Your Schedule.**
 
 [![Status](https://img.shields.io/badge/status-alpha-orange)](#project-status)
-[![Version](https://img.shields.io/badge/version-0.3.0--alpha.1-blue)](app/build.gradle)
+[![Version](https://img.shields.io/badge/version-0.4.0--alpha.1-blue)](app/build.gradle)
 [![Platform](https://img.shields.io/badge/platform-Android%205.0%2B-3DDC84?logo=android&logoColor=white)](#requirements)
 [![License](https://img.shields.io/badge/license-AGPL--3.0-lightgrey)](LICENSE)
 [![Size](https://img.shields.io/badge/apk-28.2%20MB-blue)](#about-the-data)
@@ -38,6 +38,7 @@ what they are looking at.
 | Bangla | Working — the interface and all 45 departments; the directory stays English |
 | Launcher icon | Working — adaptive, with a monochrome layer for themed icons |
 | Data layer | Working — a prebuilt SQLite database packed into the APK |
+| Demo booking | Working — simulated, off by default. See [Demo mode](#demo-mode) |
 | Appointment booking | Not built |
 | Accounts and sign-in | Not built |
 | Reviews and ratings | Read-only — ratings are shown as published, never collected |
@@ -92,8 +93,48 @@ Theme is Follow the device, Light or Dark, so someone on a light phone can still
 read MedBook in dark. Language is Follow the device, English or বাংলা. Both are
 remembered, and both survive a restart.
 
+**Booking** and **Chamber view** (`BookingActivity`, `ChamberConsoleActivity`) —
+only when demo mode is on. Described under [Demo mode](#demo-mode).
+
 Typography comes from the type scale in `values/styles.xml` — Gabarito for the
 wordmark, Hind Siliguri for everything else.
+
+## Demo mode
+
+**Off by default, and everything it shows is invented.** It exists to answer one
+question in a room — *what would this look like for our chamber?* — for a product
+whose booking half does not exist and cannot until there is a backend.
+
+Switched on in **Settings → Demo**, two screens appear on each chamber of a doctor's
+profile. **Book** lays twenty-minute slots over that chamber's real published hours
+and lets you take one. **Chamber view** shows the same day from behind the desk: the
+serials in the order they would be called, who holds each one, the utilisation, and
+one no-show.
+
+What makes it hold up in front of a chamber manager:
+
+- **It is randomised but reproducible.** Occupancy is drawn from a seed made of the
+  chamber, the date and the doctor's standing, so the same day looks the same on every
+  launch and on every device — two phones in the same meeting agree. Nothing about the
+  simulated side is stored; it is recomputed. `java.util.Random` is specified to the
+  bit, and `StrictMath.pow` is used in the draw for the same reason.
+- **It is shaped, not noise.** A verified doctor with hundreds of reviews sits busier,
+  today is nearly full and next week nearly empty, and a session fills from its edges.
+  Three slots always stay open, because a demo has to survive being tapped.
+- **Your own bookings persist** across restarts, sit in the chamber view among the
+  invented ones, and are the only thing written down. **Reset demo bookings** clears
+  them and nothing else — there is nothing else to clear.
+- **It only offers a day it can read.** Slots come from the chamber's verbatim
+  `visiting_hours`, parsed for 8,563 of the 8,920 chambers that state any (96.0%). The
+  787 that publish nothing readable — 428 of them saying to call and ask — get no Book
+  button rather than an invented afternoon.
+
+Every screen carries an unmissable banner in the error colour: *nothing is booked and
+no chamber is contacted*. These are real doctors with real published numbers, and
+somebody believing a simulated booking is the only way this feature does harm. With
+the switch off there is no button, no row, and no trace of it anywhere in the app.
+
+It adds no permission, no dependency and no network call.
 
 ## Bangla
 
@@ -275,7 +316,7 @@ consultation payments, and telemedicine.
 Contributions are welcome, and the roadmap above is the best place to start —
 item 5 is self-contained and needs no backend.
 
-Development happens on release branches — **`release/0.3`** is the current one,
+Development happens on release branches — **`release/0.4`** is the current one,
 so branch from there rather than from `main`. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for the branching model, the versioning
 scheme, and the code style.
