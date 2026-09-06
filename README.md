@@ -7,7 +7,7 @@
 **Your Health, Your Schedule.**
 
 [![Status](https://img.shields.io/badge/status-alpha-orange)](#project-status)
-[![Version](https://img.shields.io/badge/version-0.3.0--alpha.1-blue)](app/build.gradle)
+[![Version](https://img.shields.io/badge/version-0.4.0--alpha.1-blue)](app/build.gradle)
 [![Platform](https://img.shields.io/badge/platform-Android%205.0%2B-3DDC84?logo=android&logoColor=white)](#requirements)
 [![License](https://img.shields.io/badge/license-AGPL--3.0-lightgrey)](LICENSE)
 [![Size](https://img.shields.io/badge/apk-28.2%20MB-blue)](#about-the-data)
@@ -275,7 +275,7 @@ consultation payments, and telemedicine.
 Contributions are welcome, and the roadmap above is the best place to start —
 item 5 is self-contained and needs no backend.
 
-Development happens on release branches — **`release/0.3`** is the current one,
+Development happens on release branches — **`release/0.4`** is the current one,
 so branch from there rather than from `main`. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for the branching model, the versioning
 scheme, and the code style.
