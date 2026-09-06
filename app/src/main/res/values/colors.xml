@@ -1,12 +1,13 @@
 <resources>
-	<color name="colorPrimary">#1976D2</color>
-	<color name="colorPrimaryDark">#0D47A1</color>
-	<color name="colorAccent">#03DAC5</color>
-	<color name="colorControlHighlight">#E3F2FD</color>
-	<color name="colorControlNormal">#BDBDBD</color>
-	<!-- The splash is resolved before the theme, so these cannot be ?attr and
-	     need explicit day and night values. They track the generated scheme:
-	     the background is md_surface, the disc is the seed itself. -->
-	<color name="splash_background">#F9F9FF</color>
-	<color name="splash_mark">#1976D2</color>
+	<!--
+	  The Sketchware-era colorPrimary, colorPrimaryDark, colorAccent and the two
+	  control colours lived here unreferenced for the life of the project. They named
+	  the old blue, which is not what the app is any more, so a stale #1976D2 sitting
+	  under the name colorPrimary is worse than nothing. The scheme is in
+	  colors_m3.xml and reaches views through the theme.
+
+	  The splash is resolved before the theme, so this one cannot be ?attr and needs
+	  explicit day and night values. It tracks md_surface in the generated scheme.
+	-->
+	<color name="splash_background">#F8F9FB</color>
 </resources>

@@ -1,3 +1,6 @@
+<!-- Secondary rather than primary: the wordmark is the primary voice on the home
+     screen and the family headings sit beneath it. Both are teal now, a tone
+     apart, which is the whole point of taking two colours from the mark. -->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/family_name"
 	android:layout_width="match_parent"
@@ -7,6 +10,6 @@
 	android:paddingStart="12dp"
 	android:paddingEnd="12dp"
 	android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-	android:textColor="?colorPrimary"
+	android:textColor="?colorSecondary"
 	tools:text="Heart, lungs &amp; blood"
 	xmlns:tools="http://schemas.android.com/tools" />

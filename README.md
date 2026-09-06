@@ -142,7 +142,7 @@ Phone numbers and BMDC registrations deliberately do not.
 | UI | Material Components 1.12.0 · AndroidX AppCompat 1.7.1 · RecyclerView 1.4.0 |
 | Data | Prebuilt SQLite, opened read-only. FTS4 for search |
 | Theme | Material 3 DayNight, edge-to-edge, no action bar |
-| Colour | One scheme generated from the `#1976D2` seed, day and night |
+| Colour | Generated from the mark: primary `#1C5B6C`, secondary `#42A4AB` |
 | Typography | Gabarito + Hind Siliguri (both SIL OFL 1.1), as a type scale |
 | Window insets | Handled on every screen; required from API 35 |
 | View access | View Binding |
