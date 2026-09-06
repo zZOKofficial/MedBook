@@ -20,16 +20,38 @@
 		android:focusable="true"
 		android:focusableInTouchMode="true"
 		android:orientation="vertical">
-		<TextView
-			android:id="@+id/medbook_logo"
-			android:layout_width="wrap_content"
+		<!--
+		  The wordmark and the way into settings share a row. The wordmark used to be a
+		  direct child here; it needs a horizontal parent to have anything beside it, and
+		  that parent stays a direct child of linear_bg_home because linear_bg_home is
+		  where the top window inset is applied.
+		-->
+		<LinearLayout
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="8dp"
-			android:padding="8dp"
-			android:fontFamily="@font/gabarito_extrabold"
-			android:text="@string/app_name"
-			android:textAppearance="@style/TextAppearance.MedBook.Wordmark"
-			android:textColor="?colorPrimary" />
+			android:orientation="horizontal">
+			<TextView
+				android:id="@+id/medbook_logo"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:layout_gravity="center_vertical"
+				android:padding="8dp"
+				android:fontFamily="@font/gabarito_extrabold"
+				android:text="@string/app_name"
+				android:textAppearance="@style/TextAppearance.MedBook.Wordmark"
+				android:textColor="?colorPrimary" />
+			<ImageButton
+				android:id="@+id/settings_button"
+				android:layout_width="44dp"
+				android:layout_height="44dp"
+				android:layout_gravity="center_vertical"
+				android:background="?attr/selectableItemBackgroundBorderless"
+				android:contentDescription="@string/settings"
+				android:scaleType="center"
+				android:src="@drawable/ic_settings" />
+		</LinearLayout>
 		<androidx.appcompat.widget.SearchView
 			android:id="@+id/search_docs"
 			android:layout_width="match_parent"

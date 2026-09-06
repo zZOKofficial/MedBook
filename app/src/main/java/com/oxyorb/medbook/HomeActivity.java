@@ -1,5 +1,6 @@
 package com.oxyorb.medbook;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -93,6 +94,12 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 		applyWindowInsets();
 		flattenSearchField();
 		wireSearch();
+		binding.settingsButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+			}
+		});
 		binding.browseAll.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
