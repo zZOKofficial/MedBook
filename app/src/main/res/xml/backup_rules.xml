@@ -10,6 +10,9 @@
   land on a different phone and a different person, so carrying "already accepted"
   across would skip a first-run disclosure for someone who has never seen it.
 
+  demo.xml holds bookings made in the simulated demo mode. They are a rehearsal on one
+  install against one build of the directory, and they mean nothing anywhere else.
+
   settings.xml - the theme and language choice - is deliberately NOT excluded. That
   one is the user's own choice and should follow them to a new device.
 
@@ -23,4 +26,5 @@
 	<exclude domain="database" path="medbook.db" />
 	<exclude domain="sharedpref" path="dataset.xml" />
 	<exclude domain="sharedpref" path="local.xml" />
+	<exclude domain="sharedpref" path="demo.xml" />
 </full-backup-content>

@@ -58,6 +58,18 @@ public final class DatasetUnpacker {
 	private static final String PREFS = "dataset";
 	private static final String KEY_STAMP = "unpacked_stamp";
 
+	/**
+	 * Which dataset build is currently unpacked, or null if none is.
+	 *
+	 * Exposed so that anything holding state keyed on a doctor or chamber row id can tell
+	 * when that state stopped meaning anything. Those ids are handed out in the order the
+	 * pipeline read its input, so a rebuild moves them; this string changes at exactly the
+	 * same moment, and is already what decides whether to unpack again.
+	 */
+	public static String stamp(Context _context) {
+		return _context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY_STAMP, null);
+	}
+
 	private static final int COPY_BUFFER = 1 << 16;
 
 	private DatasetUnpacker() {

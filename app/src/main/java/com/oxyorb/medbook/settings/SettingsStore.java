@@ -13,7 +13,8 @@ import androidx.appcompat.app.AppCompatDelegate;
  * settings.xml holds what the user chose -- their theme and their language --
  * and restoring that onto a new phone is exactly what they would expect.
  * local.xml holds facts about this install: that the privacy notice has been
- * shown here, and what the last update check found.
+ * shown here, what the last update check found, and whether this particular
+ * phone has been put into the simulated demo mode.
  *
  * Those must not travel. A cloud restore can land on a different phone and a
  * different person, and carrying "already saw the privacy notice" across would
@@ -45,6 +46,7 @@ public final class SettingsStore {
 	private static final String KEY_PRIVACY_VERSION = "privacy_notice_version";
 	private static final String KEY_UPDATE_DISMISSED = "update_dismissed_tag";
 	private static final String KEY_UPDATE_CHECKED_AT = "update_last_checked_at";
+	private static final String KEY_DEMO = "demo_enabled";
 
 	private static SettingsStore instance;
 
@@ -136,5 +138,25 @@ public final class SettingsStore {
 
 	public void setLastUpdateCheckAt(long _at) {
 		local.edit().putLong(KEY_UPDATE_CHECKED_AT, _at).apply();
+	}
+
+	// -- demo mode ----------------------------------------------------------------
+
+	/**
+	 * Whether the simulated booking mode is on. Off unless someone turned it on here.
+	 *
+	 * This is a choice the user makes, which by the rule above would put it in
+	 * settings.xml -- and it lives in local.xml anyway, for the same reason the privacy
+	 * notice does. A restore can land on a different phone and a different person, and
+	 * arriving on a stranger's phone with demo mode already on would show them a booking
+	 * screen for a real doctor with a real published number. Being able to book an
+	 * appointment that was never made is worth strictly less than not being able to.
+	 */
+	public boolean demoEnabled() {
+		return local.getBoolean(KEY_DEMO, false);
+	}
+
+	public void setDemoEnabled(boolean _enabled) {
+		local.edit().putBoolean(KEY_DEMO, _enabled).apply();
 	}
 }
