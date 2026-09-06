@@ -1,11 +1,12 @@
 package com.zzok.medbook;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
@@ -88,8 +89,7 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 
 	/**
 	 * Opens the directory off the main thread and shows it when it is ready.
-	 *
-	 * The first launch after an install or a dataset change has to decrypt and
+	 * The first launch after an installation or a dataset change has to decrypt and
 	 * decompress a 12MB database, which measured about 1.9s on the emulator. Every
 	 * launch after that is a file open. Doing it on the main thread would be an ANR
 	 * on a slow device, so the list stays behind a spinner until this returns.
@@ -121,9 +121,8 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 
 	/**
 	 * The system dismisses the splash as soon as the first frame is ready, which
-	 * on anything but a cold start is well before an 800ms animation has played,
+	 * on anything but a cold start is well before a 800ms animation has played,
 	 * so the mark would be torn away mid-sweep.
-	 *
 	 * This is a real delay and worth being honest about. It is not the same as
 	 * the 500ms Timer in the old MainActivity this replaced: that one waited for
 	 * nothing at all, this one waits exactly as long as there is something to
@@ -141,14 +140,12 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 
 	/**
 	 * Hands the splash over instead of cutting to the home screen.
-	 *
 	 * Worth knowing why this exists: the system starts the icon's own sweep when
 	 * it creates the splash window, not when that window reaches the screen. On
 	 * the emulator those are about 830ms apart and the sweep runs for 740ms, so
 	 * the animation had already finished by the time anything was visible - it
 	 * measured as a completely static mark until the global animator scale was
-	 * turned up to 10x, which stretched it enough to catch.
-	 *
+	 * turned up to 10x, which stretched it enough to be caught.
 	 * The exit is the part whose timing we own, so it is the part that can be
 	 * relied on to be seen. Making the sweep itself reliably visible would mean
 	 * holding the splash roughly 1.3s, which is a real cost at every launch.
@@ -156,7 +153,7 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 	private void animateSplashExit(SplashScreen _splash) {
 		_splash.setOnExitAnimationListener(new SplashScreen.OnExitAnimationListener() {
 			@Override
-			public void onSplashScreenExit(final SplashScreenViewProvider _provider) {
+			public void onSplashScreenExit(@NonNull final SplashScreenViewProvider _provider) {
 				_provider.getView()
 					.animate()
 					.alpha(0f)
@@ -178,7 +175,6 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 	 * From API 35 onward the system draws content edge to edge and the opt-out is
 	 * gone, so the layout has to inset itself or the wordmark sits under the
 	 * status bar.
-	 *
 	 * The bottom inset deliberately does not go on the root. Padding the root
 	 * ends the list above the navigation bar and leaves a dead band of surface
 	 * with the gesture pill floating in it, which reads as the list running out
@@ -193,8 +189,9 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 		final int baseBottom = binding.linearBgHome.getPaddingBottom();
 		final int baseListBottom = binding.departmentList.getPaddingBottom();
 		ViewCompat.setOnApplyWindowInsetsListener(binding.linearBgHome, new OnApplyWindowInsetsListener() {
-			@Override
-			public WindowInsetsCompat onApplyWindowInsets(View _view, WindowInsetsCompat _insets) {
+			@NonNull
+            @Override
+			public WindowInsetsCompat onApplyWindowInsets(@NonNull View _view, @NonNull WindowInsetsCompat _insets) {
 				Insets _bars = _insets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
 				_view.setPadding(baseLeft + _bars.left, baseTop + _bars.top, baseRight + _bars.right, baseBottom);
 				binding.departmentList.setPadding(
@@ -341,7 +338,7 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle _outState) {
+	protected void onSaveInstanceState(@NonNull Bundle _outState) {
 		super.onSaveInstanceState(_outState);
 		_outState.putString(STATE_QUERY, query);
 	}
