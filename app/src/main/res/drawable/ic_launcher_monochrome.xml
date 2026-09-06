@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Themed-icon layer for Android 13 and above, where the launcher tints a single
+  silhouette with the wallpaper colours. Colour cannot carry the mark here, so
+  the calendar and the cross are one path with fillType evenOdd: the cross falls
+  inside the body and is knocked out of it rather than drawn on top. The check is
+  dropped, since at this size a tinted stroke inside a tinted shape reads as noise.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="108dp"
+	android:height="108dp"
+	android:viewportWidth="108"
+	android:viewportHeight="108">
+	<group
+		android:pivotX="511.5"
+		android:pivotY="492.15"
+		android:scaleX="0.09265"
+		android:scaleY="0.09265"
+		android:translateX="-457.5"
+		android:translateY="-438.15">
+		<path
+			android:fillColor="#000000"
+			android:fillType="evenOdd"
+			android:pathData="M 198.5 352 L 198.5 309 C 198.5 269.2 228.8 238.5 268.5 237.2 L 294.8 236.7 L 295.2 220.7 C 295.5 205.7 295.7 204.1 298.1 198.9 C 301.3 192.1 306.4 186.9 313.3 183.3 C 317.9 180.8 319.6 180.5 328 180.5 C 336.4 180.5 338.1 180.8 342.5 183.2 C 347.5 185.8 353.2 191.2 356.2 196.1 C 359.7 201.7 361 209.1 361 223.2 L 361 237 L 662.8 237 L 663.2 220.7 C 663.5 205.7 663.7 204.1 666.1 198.9 C 669.3 192.1 674.4 186.9 681.3 183.3 C 685.9 180.8 687.6 180.5 696 180.5 C 704.7 180.5 706 180.8 710.9 183.5 C 718.7 187.8 724.6 194.8 727 202.7 C 728.6 207.9 729 212 729 223 L 729 236.8 L 749 237.3 C 790.5 238.3 824.5 270.3 824.5 311 L 824.5 352 Z M 198.5 352 L 824.5 352 L 824.5 738 C 824.5 774.4 796.4 803.8 761.5 803.8 L 265.5 803.8 C 227.8 803.8 198.5 774.0 198.5 737 Z M 463 390.5 L 561 390.5 A 15 15 0 0 1 576 405.5 L 576 683 A 15 15 0 0 1 561 698 L 463 698 A 15 15 0 0 1 448 683 L 448 405.5 A 15 15 0 0 1 463 390.5 Z M 360 484 L 664 484 A 15 15 0 0 1 679 499 L 679 586 A 15 15 0 0 1 664 601 L 360 601 A 15 15 0 0 1 345 586 L 345 499 A 15 15 0 0 1 360 484 Z" />
+	</group>
+</vector>
