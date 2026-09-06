@@ -25,6 +25,11 @@ now carry local data, which is worth stating precisely:
   non-rooted device and nothing more.
 - Everything in it is public professional information, published by its source.
   There are no credentials, tokens, or user data of any kind.
+- The simulated demo mode writes the appointments taken in it to a private
+  preferences file. They are invented, name nobody, and are excluded from cloud
+  backup and from device transfer both. They are discarded outright whenever the
+  bundled directory is replaced, since they address a doctor by a row id that a
+  rebuild reassigns.
 
 That will change as the [roadmap](README.md#roadmap) is implemented, and this
 policy will be revised alongside it.
