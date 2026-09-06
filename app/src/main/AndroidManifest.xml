@@ -35,7 +35,7 @@
 			android:exported="false" />
 		<provider
 			android:name="androidx.startup.InitializationProvider"
-			android:authorities="com.zzok.medbook.androidx-startup"
+			android:authorities="${applicationId}.androidx-startup"
 			android:exported="false">
 			<meta-data
 				android:name="androidx.lifecycle.ProcessLifecycleInitializer"

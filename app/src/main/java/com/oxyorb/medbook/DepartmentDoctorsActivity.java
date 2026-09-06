@@ -1,4 +1,4 @@
-package com.zzok.medbook;
+package com.oxyorb.medbook;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,11 +12,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.zzok.medbook.data.DoctorRepository;
-import com.zzok.medbook.data.PortraitLoader;
-import com.zzok.medbook.data.model.Department;
-import com.zzok.medbook.data.model.DoctorSummary;
-import com.zzok.medbook.databinding.*;
+import com.oxyorb.medbook.data.DoctorRepository;
+import com.oxyorb.medbook.data.PortraitLoader;
+import com.oxyorb.medbook.data.model.Department;
+import com.oxyorb.medbook.data.model.DoctorSummary;
+import com.oxyorb.medbook.databinding.*;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

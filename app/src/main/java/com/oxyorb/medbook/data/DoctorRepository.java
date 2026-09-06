@@ -1,14 +1,14 @@
-package com.zzok.medbook.data;
+package com.oxyorb.medbook.data;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
-import com.zzok.medbook.data.model.Chamber;
-import com.zzok.medbook.data.model.Department;
-import com.zzok.medbook.data.model.Doctor;
-import com.zzok.medbook.data.model.DoctorSummary;
+import com.oxyorb.medbook.data.model.Chamber;
+import com.oxyorb.medbook.data.model.Department;
+import com.oxyorb.medbook.data.model.Doctor;
+import com.oxyorb.medbook.data.model.DoctorSummary;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;

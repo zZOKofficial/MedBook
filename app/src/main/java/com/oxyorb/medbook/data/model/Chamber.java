@@ -1,4 +1,4 @@
-package com.zzok.medbook.data.model;
+package com.oxyorb.medbook.data.model;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.zzok.medbook.data;
+package com.oxyorb.medbook.data;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

@@ -33,12 +33,12 @@ android {
 	compileSdk 36
 	
 	defaultConfig {
-		applicationId "com.zzok.medbook"
-		namespace "com.zzok.medbook"
+		applicationId "com.oxyorb.medbook"
+		namespace "com.oxyorb.medbook"
 		minSdkVersion 21
 		targetSdkVersion 36
-		versionCode 56
-		versionName "0.2.0-alpha.1"
+		versionCode 57
+		versionName "0.3.0-alpha.1"
 		buildConfigField "String", "DATASET_KEY", "\"${datasetKey}\""
 	}
 

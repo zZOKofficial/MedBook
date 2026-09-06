@@ -1,4 +1,4 @@
-package com.zzok.medbook;
+package com.oxyorb.medbook;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -15,11 +15,11 @@ import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.button.MaterialButton;
-import com.zzok.medbook.data.DoctorRepository;
-import com.zzok.medbook.data.PortraitLoader;
-import com.zzok.medbook.data.model.Chamber;
-import com.zzok.medbook.data.model.Doctor;
-import com.zzok.medbook.databinding.*;
+import com.oxyorb.medbook.data.DoctorRepository;
+import com.oxyorb.medbook.data.PortraitLoader;
+import com.oxyorb.medbook.data.model.Chamber;
+import com.oxyorb.medbook.data.model.Doctor;
+import com.oxyorb.medbook.databinding.*;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

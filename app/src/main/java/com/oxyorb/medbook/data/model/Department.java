@@ -1,4 +1,4 @@
-package com.zzok.medbook.data.model;
+package com.oxyorb.medbook.data.model;
 
 /** One of MedBook's departments, with the clinical family it is grouped under. */
 public final class Department {
