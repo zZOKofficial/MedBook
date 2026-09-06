@@ -39,6 +39,12 @@ public final class EpochDay {
 		return (int) (_utc.getTimeInMillis() / MILLIS_PER_DAY);
 	}
 
+	/** Minutes since midnight where the device is standing. */
+	public static int minuteOfDayNow() {
+		Calendar _local = Calendar.getInstance();
+		return _local.get(Calendar.HOUR_OF_DAY) * 60 + _local.get(Calendar.MINUTE);
+	}
+
 	/** One of Calendar.SUNDAY through Calendar.SATURDAY. */
 	public static int dayOfWeek(int _epochDay) {
 		return calendar(_epochDay).get(Calendar.DAY_OF_WEEK);

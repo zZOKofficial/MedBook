@@ -36,6 +36,19 @@
 			android:parentActivityName=".DepartmentDoctorsActivity"
 			android:screenOrientation="portrait"
 			android:exported="false" />
+		<!-- Both reachable only while demo mode is on, which is off unless it is
+		     switched on in Settings. Neither is exported, and both leave themselves
+		     if the mode goes off while they sit on the back stack. -->
+		<activity
+			android:name=".BookingActivity"
+			android:parentActivityName=".DoctorDetailActivity"
+			android:screenOrientation="portrait"
+			android:exported="false" />
+		<activity
+			android:name=".ChamberConsoleActivity"
+			android:parentActivityName=".DoctorDetailActivity"
+			android:screenOrientation="portrait"
+			android:exported="false" />
 		<activity
 			android:name=".SettingsActivity"
 			android:parentActivityName=".HomeActivity"

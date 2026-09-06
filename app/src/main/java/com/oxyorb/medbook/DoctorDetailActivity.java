@@ -18,6 +18,8 @@ import com.google.android.material.button.MaterialButton;
 import com.oxyorb.medbook.data.DoctorRepository;
 import com.oxyorb.medbook.data.PortraitLoader;
 import com.oxyorb.medbook.data.model.Chamber;
+import com.oxyorb.medbook.demo.VisitingHours;
+import com.oxyorb.medbook.settings.SettingsStore;
 import com.oxyorb.medbook.data.model.Doctor;
 import com.oxyorb.medbook.databinding.*;
 import java.util.Locale;
@@ -37,6 +39,8 @@ public class DoctorDetailActivity extends AppCompatActivity {
 
 	private DoctorDetailBinding binding;
 	private final ExecutorService worker = Executors.newSingleThreadExecutor();
+	/** Kept because the demo's chamber rows need it long after the profile has loaded. */
+	private long doctorId;
 
 	public static Intent intentFor(Context _context, long _doctorId) {
 		Intent _intent = new Intent(_context, DoctorDetailActivity.class);
@@ -58,6 +62,7 @@ public class DoctorDetailActivity extends AppCompatActivity {
 		});
 
 		final long _id = getIntent().getLongExtra(EXTRA_ID, -1L);
+		doctorId = _id;
 		worker.execute(new Runnable() {
 			@Override
 			public void run() {
@@ -138,8 +143,42 @@ public class DoctorDetailActivity extends AppCompatActivity {
 					}
 				});
 			}
+			bindDemo(_card, _chamber);
 			binding.chamberContainer.addView(_card);
 		}
+	}
+
+	/**
+	 * The demo's way in, or nothing at all.
+	 *
+	 * Two conditions, and both have to hold. Demo mode is off unless someone turned it
+	 * on in Settings, and a chamber whose published hours could not be read has no
+	 * honest day to offer -- 787 of the 9,350 chambers are in that state, most of them
+	 * because the source says to call and ask.
+	 */
+	private void bindDemo(View _card, Chamber _chamber) {
+		View _row = _card.findViewById(R.id.chamber_demo_row);
+		if (!SettingsStore.get(this).demoEnabled()
+				|| VisitingHours.parse(_chamber.visitingHours) == null) {
+			_row.setVisibility(View.GONE);
+			return;
+		}
+
+		final int _seq = _chamber.seq;
+		_row.setVisibility(View.VISIBLE);
+		_card.findViewById(R.id.chamber_book).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				startActivity(BookingActivity.intentFor(DoctorDetailActivity.this, doctorId, _seq));
+			}
+		});
+		_card.findViewById(R.id.chamber_console).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				startActivity(ChamberConsoleActivity.intentFor(
+					DoctorDetailActivity.this, doctorId, _seq));
+			}
+		});
 	}
 
 	/**

@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_margin="4dp"
+	android:background="?attr/selectableItemBackground"
+	android:gravity="center"
+	android:minHeight="56dp"
+	android:orientation="vertical"
+	android:paddingTop="8dp"
+	android:paddingBottom="8dp">
+	<TextView
+		android:id="@+id/slot_time"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="@style/TextAppearance.MedBook.Label"
+		tools:text="5:20 pm" />
+	<TextView
+		android:id="@+id/slot_state"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="@style/TextAppearance.MedBook.Caption"
+		tools:text="Taken" />
+</LinearLayout>

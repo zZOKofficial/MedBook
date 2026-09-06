@@ -56,6 +56,92 @@
 	<string name="language_english" translatable="false">English</string>
 	<string name="language_bengali" translatable="false">বাংলা</string>
 
+	<!-- Demo mode. A simulated booking system, off unless it is switched on in
+	     Settings. Nothing it shows is real: no appointment is made, and nobody at
+	     any chamber is told anything. Every string here says so somewhere. -->
+	<string name="settings_demo">Demo</string>
+	<string name="settings_demo_toggle">Simulated booking</string>
+	<string name="settings_demo_note">Shows what booking would look like, using invented appointments. Nothing is booked and no chamber is contacted. For showing MedBook to hospitals.</string>
+	<string name="settings_demo_reset">Reset demo bookings</string>
+	<string name="settings_demo_reset_message">Every appointment taken in the demo will be forgotten. Nothing else about the demo changes.</string>
+	<string name="settings_demo_reset_done">Demo bookings cleared.</string>
+	<string name="settings_demo_reset_empty">There are no demo bookings to clear.</string>
+
+	<!-- Shown on every demo screen, and deliberately hard to miss. -->
+	<string name="demo_badge">DEMO</string>
+	<string name="demo_banner">Simulated. Nothing is booked and no chamber is contacted.</string>
+
+	<!-- Booking, all of it simulated. -->
+	<string name="chamber_book">Book (demo)</string>
+	<string name="chamber_console">Chamber view</string>
+	<string name="booking_title">Choose a time</string>
+	<string name="booking_today">Today</string>
+	<string name="booking_closed">This chamber does not sit on this day.</string>
+	<!-- %1$d is how many of the day&apos;s slots are still open. -->
+	<plurals name="booking_free_count">
+		<item quantity="one">%1$d time open</item>
+		<item quantity="other">%1$d times open</item>
+	</plurals>
+	<string name="booking_confirm_title">Take this time?</string>
+	<!-- %1$s is a time such as 5:20 pm, %2$s a date such as Sat 12 Sep. -->
+	<string name="booking_confirm_message">%1$s on %2$s.\n\nThis is a demonstration. No appointment is made, and nobody at the chamber is told. To book for real, call the chamber.</string>
+	<string name="booking_confirm_action">Take it in the demo</string>
+	<string name="booking_cancel_title">Give up this time?</string>
+	<string name="booking_cancel_action">Give it up</string>
+	<string name="booking_cancelled">Demo booking removed.</string>
+	<!-- %1$d is the serial the chamber would call out. -->
+	<string name="booking_done">Taken in the demo. Serial %1$d.</string>
+	<string name="cancel">Cancel</string>
+	<string name="slot_free">Open</string>
+	<string name="slot_taken">Taken</string>
+	<string name="slot_yours">Yours</string>
+
+	<!-- Chamber view: the same day, from the chamber&apos;s side of the desk. -->
+	<string name="console_title">Chamber view</string>
+	<!-- %1$d booked out of %2$d slots, %3$d the same as a percentage. -->
+	<string name="console_utilisation">%1$d of %2$d booked \u00b7 %3$d%%</string>
+	<string name="console_empty">Nothing is booked on this day.</string>
+	<string name="console_you">You</string>
+	<string name="console_no_show">did not attend</string>
+	<!-- The serial on its own, in a column too narrow for a word. It is a
+	     format argument rather than a bare number so that it renders in
+	     Bengali numerals like every other count in the app. -->
+	<string name="console_serial_number" translatable="false">%1$d</string>
+	<!-- An empty slot in the chamber's book. -->
+	<string name="console_free">—</string>
+
+	<!-- Invented patients for the chamber view. Nobody real is named here: the
+	     directory publishes no patients and never will. They are localised because
+	     unlike the doctor names they are the app&apos;s own invention rather than
+	     scraped data, and a Bengali chamber list full of Latin names would look
+	     like exactly what it is. -->
+	<string-array name="demo_patient_names">
+		<item>Nasrin A.</item>
+		<item>Rafiqul I.</item>
+		<item>Shirin A.</item>
+		<item>Kamrul H.</item>
+		<item>Farhana R.</item>
+		<item>Jahangir A.</item>
+		<item>Sultana P.</item>
+		<item>Mizanur R.</item>
+		<item>Ayesha S.</item>
+		<item>Tanvir A.</item>
+		<item>Rokeya B.</item>
+		<item>Shafiqul I.</item>
+		<item>Nusrat J.</item>
+		<item>Habibur R.</item>
+		<item>Marium K.</item>
+		<item>Anisur R.</item>
+		<item>Sabina I.</item>
+		<item>Delwar H.</item>
+		<item>Rehana P.</item>
+		<item>Motiur R.</item>
+		<item>Salma K.</item>
+		<item>Iqbal H.</item>
+		<item>Taslima N.</item>
+		<item>Golam M.</item>
+	</string-array>
+
 	<!-- Department and family names, mirroring the dataset exactly.
 	     They exist as resources so values-bn can carry a Bengali name per key.
 	     DepartmentNames looks them up by departments.key, which the model has
