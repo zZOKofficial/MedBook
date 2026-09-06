@@ -7,17 +7,20 @@ long-lived release branch where that version's work happens, and which merges
 back into `main` when the version ships.
 
 ```
-main         ──●──────────────────●───────────────────●──▶
+main         ──●──────────────────●───────────────────●──────────────▶
               │                  ╱                   ╱
               ├── release/0.1 ──●                   ╱
               │         │                          ╱
               │      v0.1.0-alpha.1               ╱
-              └────────── release/0.2 ───────────●──▶
-                                  │
-                            v0.2.0-alpha.1
+              ├────────── release/0.2 ───────────●
+              │                   │
+              │             v0.2.0-alpha.1
+              └────────────────── release/0.3 ──────────────▶
+                                            │
+                                      v0.3.0-alpha.1
 ```
 
-**The current development branch is `release/0.2`.** Day-to-day work goes there,
+**The current development branch is `release/0.3`.** Day-to-day work goes there,
 not on `main`.
 
 Release branches are named for the **minor** version — `release/0.1`, not

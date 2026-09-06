@@ -67,12 +67,12 @@ public final class DirectoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 		String _family = null;
 		for (int _i = 0; _i < _departments.size(); _i++) {
 			Department _department = _departments.get(_i);
-			if (!_department.familyName.equals(_family)) {
-				_family = _department.familyName;
+			if (!_department.displayFamilyName.equals(_family)) {
+				_family = _department.displayFamilyName;
 				rows.add(new Row(TYPE_HEADER, _family, null, null, false));
 			}
 			boolean _lastInFamily = _i + 1 == _departments.size()
-				|| !_departments.get(_i + 1).familyName.equals(_family);
+				|| !_departments.get(_i + 1).displayFamilyName.equals(_family);
 			rows.add(new Row(TYPE_DEPARTMENT, null, _department, null, !_lastInFamily));
 		}
 		notifyDataSetChanged();
@@ -188,7 +188,7 @@ public final class DirectoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 		}
 
 		void bind(final Row _row) {
-			name.setText(_row.department.name);
+			name.setText(_row.department.displayName);
 			count.setText(String.format(Locale.getDefault(), "%d", _row.department.doctorCount));
 			divider.setVisibility(_row.divided ? View.VISIBLE : View.INVISIBLE);
 			itemView.setOnClickListener(new View.OnClickListener() {

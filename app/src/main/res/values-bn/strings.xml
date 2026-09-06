@@ -53,4 +53,66 @@
 	<string name="theme_dark">ডার্ক</string>
 	<string name="settings_language">ভাষা</string>
 	<string name="language_system">ডিভাইস অনুযায়ী</string>
+
+	<!-- Department and family names. Medical terminology rather than
+	     translation: where Bangladeshi practice says a term in English, it
+	     stays in English. -->
+	<string name="family_urgent_critical_care">জরুরি ও ক্রিটিক্যাল কেয়ার</string>
+	<string name="family_heart_lungs_blood">হৃদযন্ত্র, ফুসফুস ও রক্ত</string>
+	<string name="family_brain_nerves_mind">মস্তিষ্ক, স্নায়ু ও মন</string>
+	<string name="family_digestive_system_liver">পরিপাকতন্ত্র ও যকৃত</string>
+	<string name="family_kidneys_urinary">কিডনি ও মূত্রতন্ত্র</string>
+	<string name="family_hormones_metabolism">হরমোন ও বিপাক</string>
+	<string name="family_bones_joints_movement">হাড়, অস্থিসন্ধি ও চলাচল</string>
+	<string name="family_eyes_ears_teeth_throat">চোখ, কান, দাঁত ও গলা</string>
+	<string name="family_skin">ত্বক</string>
+	<string name="family_women_children">নারী ও শিশু</string>
+	<string name="family_cancer">ক্যান্সার</string>
+	<string name="family_general_diagnostic_services">সাধারণ ও রোগনির্ণয় সেবা</string>
+
+	<string name="dept_accident_and_emergency">দুর্ঘটনা ও জরুরি বিভাগ</string>
+	<string name="dept_critical_care_units">ক্রিটিক্যাল কেয়ার ইউনিট</string>
+	<string name="dept_anesthesia_and_pain_medicine">অ্যানেস্থেসিয়া ও ব্যথা চিকিৎসা</string>
+	<string name="dept_cardiology_care_centre">হৃদরোগ কেন্দ্র</string>
+	<string name="dept_cardiothoracic_and_vascular_surgery">কার্ডিওথোরাসিক ও ভাস্কুলার সার্জারি</string>
+	<string name="dept_cardiothoracic_anaesthesia">কার্ডিওথোরাসিক অ্যানেস্থেসিয়া</string>
+	<string name="dept_thoracic_surgery">বক্ষ সার্জারি</string>
+	<string name="dept_respiratory_medicine">বক্ষব্যাধি</string>
+	<string name="dept_haematology_and_stem_cell_transplant">রক্তরোগ ও স্টেম সেল ট্রান্সপ্ল্যান্ট</string>
+	<string name="dept_transfusion_medicine">রক্ত সঞ্চালন চিকিৎসা</string>
+	<string name="dept_neurology">স্নায়ুরোগ</string>
+	<string name="dept_neurosurgery">নিউরোসার্জারি</string>
+	<string name="dept_psychiatry">মানসিক রোগ</string>
+	<string name="dept_counselling_centre">কাউন্সেলিং কেন্দ্র</string>
+	<string name="dept_gastroenterology_and_hepatology">গ্যাস্ট্রোএন্টেরোলজি ও লিভার রোগ</string>
+	<string name="dept_hepatobiliary_pancreatic_and_liver_transplant">হেপাটোবিলিয়ারি, প্যানক্রিয়াস ও লিভার ট্রান্সপ্ল্যান্ট</string>
+	<string name="dept_general_and_laparoscopic_surgery">জেনারেল ও ল্যাপারোস্কোপিক সার্জারি</string>
+	<string name="dept_nephrology">কিডনি রোগ</string>
+	<string name="dept_kidney_transplant_program">কিডনি ট্রান্সপ্ল্যান্ট কর্মসূচি</string>
+	<string name="dept_urology">মূত্ররোগ</string>
+	<string name="dept_lithotripsy">লিথোট্রিপসি</string>
+	<string name="dept_diabetology_and_endocrinology">ডায়াবেটিস ও হরমোন রোগ</string>
+	<string name="dept_thyroid_and_head_neck_oncosurgery">থাইরয়েড ও মাথা-গলার ক্যান্সার সার্জারি</string>
+	<string name="dept_dietetics_and_nutrition">খাদ্য ও পুষ্টি</string>
+	<string name="dept_orthopaedics">অর্থোপেডিকস</string>
+	<string name="dept_rheumatology">বাত রোগ</string>
+	<string name="dept_physical_medicine_and_rehabilitation">ফিজিক্যাল মেডিসিন ও পুনর্বাসন</string>
+	<string name="dept_ophthalmology">চক্ষু</string>
+	<string name="dept_ent_and_head_neck_surgery">নাক-কান-গলা ও হেড-নেক সার্জারি</string>
+	<string name="dept_dental_and_maxillofacial_surgery">দন্ত ও ম্যাক্সিলোফেসিয়াল সার্জারি</string>
+	<string name="dept_dermatology_and_venereology">চর্ম ও যৌনরোগ</string>
+	<string name="dept_plastic_reconstructive_and_cosmetic_surgery">প্লাস্টিক, রিকনস্ট্রাক্টিভ ও কসমেটিক সার্জারি</string>
+	<string name="dept_obstetrics_and_gynaecology">প্রসূতি ও স্ত্রীরোগ</string>
+	<string name="dept_fertility_centre">বন্ধ্যত্ব চিকিৎসা কেন্দ্র</string>
+	<string name="dept_paediatrics">শিশুরোগ</string>
+	<string name="dept_paediatrics_and_neonatology">শিশু ও নবজাতক রোগ</string>
+	<string name="dept_child_development_centre">শিশু বিকাশ কেন্দ্র</string>
+	<string name="dept_paediatric_surgery_and_urology">শিশু সার্জারি ও মূত্ররোগ</string>
+	<string name="dept_paediatric_cardiology">শিশু হৃদরোগ</string>
+	<string name="dept_cancer_care_centre">ক্যান্সার চিকিৎসা কেন্দ্র</string>
+	<string name="dept_medical_oncology">মেডিকেল অনকোলজি</string>
+	<string name="dept_radiation_oncology">রেডিয়েশন অনকোলজি</string>
+	<string name="dept_internal_medicine">মেডিসিন</string>
+	<string name="dept_diagnostic_and_interventional_radiology">রোগনির্ণয় ও ইন্টারভেনশনাল রেডিওলজি</string>
+	<string name="dept_nuclear_medicine">নিউক্লিয়ার মেডিসিন</string>
 </resources>
