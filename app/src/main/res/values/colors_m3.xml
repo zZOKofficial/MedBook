@@ -2,47 +2,56 @@
 <resources>
 
 	<!--
-	  Material 3 light scheme, generated from the MedBook seed #1976D2.
-	  Material Color Utilities, Fidelity variant: it keeps the seed intact,
-	  so md_primary_container is #1976D2 exactly. TonalSpot, the M3 default,
-	  desaturates it to #43608A, which is not the blue this app was given.
+	  Material 3 light scheme, generated from the two colours of the MedBook mark:
+	  primary from the calendar header #1C5B6C, secondary from its body #42A4AB.
+	  The app and its logo were different colours until 0.3; now they are not.
+
+	  Material Color Utilities, Fidelity variant: it keeps the seed intact, so
+	  md_primary_container is #1C5B6C exactly. TonalSpot, the M3 default, would
+	  desaturate it into a grey-blue that is not the teal the mark is drawn in.
+
+	  The raw logo colours are NOT used as text roles, because neither survives both
+	  themes: #42A4AB reads at 2.8:1 on the light surface and #1C5B6C at 2.4:1 on the
+	  dark one, against the 4.5:1 that body text needs. A tonal palette exists exactly
+	  to solve that: light takes a darker tone of the same hue and dark takes a
+	  lighter one, so the hue survives and the contrast does too.
+
 	  Generated, not hand-picked. Regenerate rather than editing by hand.
 	-->
 
-	<color name="md_primary">#005DAC</color>
+	<color name="md_primary">#004352</color>
 	<color name="md_on_primary">#FFFFFF</color>
-	<color name="md_primary_container">#1976D2</color>
-	<color name="md_on_primary_container">#FFFDFF</color>
-	<color name="md_inverse_primary">#A5C8FF</color>
-	<color name="md_secondary">#475F84</color>
+	<color name="md_primary_container">#1C5B6C</color>
+	<color name="md_on_primary_container">#98D1E5</color>
+	<color name="md_inverse_primary">#96CFE3</color>
+	<color name="md_secondary">#00696F</color>
 	<color name="md_on_secondary">#FFFFFF</color>
-	<color name="md_secondary_container">#BAD3FD</color>
-	<color name="md_on_secondary_container">#425B7F</color>
-	<color name="md_tertiary">#944700</color>
+	<color name="md_secondary_container">#91EFF6</color>
+	<color name="md_on_secondary_container">#006E74</color>
+	<color name="md_tertiary">#583405</color>
 	<color name="md_on_tertiary">#FFFFFF</color>
-	<color name="md_tertiary_container">#BA5B00</color>
-	<color name="md_on_tertiary_container">#FFFEFF</color>
+	<color name="md_tertiary_container">#734B1B</color>
+	<color name="md_on_tertiary_container">#F5BD83</color>
 	<color name="md_error">#BA1A1A</color>
 	<color name="md_on_error">#FFFFFF</color>
 	<color name="md_error_container">#FFDAD6</color>
 	<color name="md_on_error_container">#93000A</color>
-	<color name="md_background">#F9F9FF</color>
-	<color name="md_on_background">#181C21</color>
-	<color name="md_surface">#F9F9FF</color>
-	<color name="md_on_surface">#181C21</color>
-	<color name="md_surface_variant">#DDE2F0</color>
-	<color name="md_on_surface_variant">#414752</color>
-	<color name="md_inverse_surface">#2D3037</color>
-	<color name="md_inverse_on_surface">#EFF0F9</color>
-	<color name="md_outline">#717783</color>
-	<color name="md_outline_variant">#C1C6D4</color>
-	<color name="md_surface_dim">#D8DAE2</color>
-	<color name="md_surface_bright">#F9F9FF</color>
+	<color name="md_background">#F8F9FB</color>
+	<color name="md_on_background">#191C1D</color>
+	<color name="md_surface">#F8F9FB</color>
+	<color name="md_on_surface">#191C1D</color>
+	<color name="md_surface_variant">#DCE4E7</color>
+	<color name="md_on_surface_variant">#40484B</color>
+	<color name="md_inverse_surface">#2E3132</color>
+	<color name="md_inverse_on_surface">#F0F1F2</color>
+	<color name="md_outline">#70787C</color>
+	<color name="md_outline_variant">#C0C8CB</color>
+	<color name="md_surface_dim">#D9DADB</color>
+	<color name="md_surface_bright">#F8F9FB</color>
 	<color name="md_surface_container_lowest">#FFFFFF</color>
-	<color name="md_surface_container_low">#F2F3FC</color>
-	<color name="md_surface_container">#ECEDF6</color>
-	<color name="md_surface_container_high">#E6E8F0</color>
-	<color name="md_surface_container_highest">#E0E2EA</color>
+	<color name="md_surface_container_low">#F2F4F5</color>
+	<color name="md_surface_container">#EDEEEF</color>
+	<color name="md_surface_container_high">#E7E8E9</color>
+	<color name="md_surface_container_highest">#E1E3E4</color>
 	<color name="md_scrim">#000000</color>
-
 </resources>

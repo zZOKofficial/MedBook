@@ -1,14 +1,16 @@
-<img width="1024" height="1024" alt="MedBook" src="https://github.com/user-attachments/assets/318b6b23-d395-4039-83c4-465f21e06e6e" />
+<p align="center">
+  <img src="medbook.svg" alt="MedBook" width="128">
+</p>
 
 # MedBook
 
 **Your Health, Your Schedule.**
 
 [![Status](https://img.shields.io/badge/status-alpha-orange)](#project-status)
-[![Version](https://img.shields.io/badge/version-0.2.0--alpha.1-blue)](app/build.gradle)
+[![Version](https://img.shields.io/badge/version-0.3.0--alpha.1-blue)](app/build.gradle)
 [![Platform](https://img.shields.io/badge/platform-Android%205.0%2B-3DDC84?logo=android&logoColor=white)](#requirements)
 [![License](https://img.shields.io/badge/license-AGPL--3.0-lightgrey)](LICENSE)
-[![Size](https://img.shields.io/badge/apk-28.4%20MB-blue)](#about-the-data)
+[![Size](https://img.shields.io/badge/apk-28.2%20MB-blue)](#about-the-data)
 
 MedBook is an Android application intended to connect patients with healthcare
 providers — browsing medical departments, finding doctors, and booking
@@ -25,12 +27,16 @@ what they are looking at.
 
 | Area | State |
 | --- | --- |
-| Splash screen | Working — a vector mark, held 800ms, with a fade hand-off |
+| Splash screen | Working — the MedBook mark, held 800ms, with a fade hand-off |
 | Home screen | Working — 45 departments with live counts, light and dark |
 | Grouping | Working — the 45 sit under twelve headings, by body system |
 | **Doctor directory** | **Working — 7,438 doctors and 9,350 chambers, offline** |
 | Doctor profiles | Working — degrees, chambers, verbatim hours, tap to dial |
 | Search | Working — full-text over names, specialties, workplaces and cities |
+| Settings | Working — reached from the home screen, theme and language |
+| Light and dark | Working — follows the device, or overridden per app |
+| Bangla | Working — the interface and all 45 departments; the directory stays English |
+| Launcher icon | Working — adaptive, with a monochrome layer for themed icons |
 | Data layer | Working — a prebuilt SQLite database packed into the APK |
 | Appointment booking | Not built |
 | Accounts and sign-in | Not built |
@@ -50,7 +56,7 @@ addresses, appointment numbers and BMDC registration numbers, which is not somet
 to publish as a downloadable file. A checkout without it still builds and runs — the
 directory is simply empty.
 
-Carrying it is most of the app's size. The release APK is **28.4 MB**, against about
+Carrying it is most of the app's size. The release APK is **28.2 MB**, against about
 6 MB before the directory existed: 21.4 MB of that is 6,134 doctor portraits at 160 px
 WebP, and 3.7 MB is the database itself — 7,438 doctors, 9,350 chambers, 1,690
 hospitals and a full-text index, gzipped and sealed, unpacked to private storage on
@@ -81,8 +87,48 @@ inferred: a fact the source does not state is simply absent, an unrated doctor
 shows no rating rather than a zero, and the 1,304 profiles with no portrait get
 their initials rather than a stock photo.
 
+**Settings** (`SettingsActivity`) — reached from the gear beside the wordmark.
+Theme is Follow the device, Light or Dark, so someone on a light phone can still
+read MedBook in dark. Language is Follow the device, English or বাংলা. Both are
+remembered, and both survive a restart.
+
 Typography comes from the type scale in `values/styles.xml` — Gabarito for the
 wordmark, Hind Siliguri for everything else.
+
+## Bangla
+
+The interface is fully Bengali: every string, all 45 department names and the
+twelve family headings. **The directory itself stays English**, and that is a
+property of the data rather than unfinished work.
+
+The source publishes almost no Bengali. Measured across the dataset:
+
+| Field | Rows | Contains Bengali |
+| --- | --- | --- |
+| Doctor names | 7,438 | 0 (0.0%) |
+| Chamber names | 9,350 | 0 (0.0%) |
+| Chamber addresses | 9,348 | 5 (0.1%) |
+| Biographies (`about_bn`) | 347 | 347 (100%) |
+
+A Bengali directory would mean inventing 4,404 distinct degree strings, 3,542
+visiting-hours strings and 2,349 addresses with nothing to translate from — and
+most of it should not be translated anyway. Doctor and hospital names, BMDC
+numbers and degrees such as MBBS and FCPS are written in Latin script in
+Bangladeshi practice, and a translated chamber address is harder to find, not
+easier. The one Bengali field the source does publish, `about_bn`, has been shown
+on the profile since 0.2.
+
+Department names are the exception because they are a closed vocabulary the app
+owns rather than data it received. They are resolved from `departments.key`
+through a compile-time map — deliberately not `Resources.getIdentifier`, which
+`shrinkResources` would strip from release builds only, leaving every debug build
+looking correct.
+
+Search matches both languages at once, so `cardiology` still finds হৃদরোগ কেন্দ্র
+while the interface is in Bengali.
+
+Counts and ratings render in Bengali digits, which is correct Bengali typography.
+Phone numbers and BMDC registrations deliberately do not.
 
 ## Tech Stack
 
@@ -96,10 +142,13 @@ wordmark, Hind Siliguri for everything else.
 | UI | Material Components 1.12.0 · AndroidX AppCompat 1.7.1 · RecyclerView 1.4.0 |
 | Data | Prebuilt SQLite, opened read-only. FTS4 for search |
 | Theme | Material 3 DayNight, edge-to-edge, no action bar |
-| Colour | One scheme generated from the `#1976D2` seed, day and night |
+| Colour | Generated from the mark: primary `#1C5B6C`, secondary `#42A4AB` |
 | Typography | Gabarito + Hind Siliguri (both SIL OFL 1.1), as a type scale |
 | Window insets | Handled on every screen; required from API 35 |
 | View access | View Binding |
+| Languages | English and বাংলা, switchable in-app; per-app locales on API 33+ |
+| Icon | Adaptive, with a monochrome layer for Android 13 themed icons |
+| Tests | JUnit 4 unit tests over department search; no device needed |
 
 The project has no backend, no analytics, and no third-party SDKs beyond AndroidX
 and Material Components. The directory needs none: the database is prebuilt and never
@@ -116,13 +165,19 @@ MedBook/
 │   ├── proguard-rules.pro
 │   └── src/main/
 │       ├── AndroidManifest.xml
-│       ├── java/com/zzok/medbook/
+│       ├── java/com/oxyorb/medbook/
+│       │   ├── MedBookApp.java                # Applies theme and language at startup
 │       │   ├── HomeActivity.java              # Departments, search, splash handoff
+│       │   ├── SettingsActivity.java          # Theme and language
 │       │   ├── DepartmentDoctorsActivity.java # One department, paged
 │       │   ├── DoctorDetailActivity.java      # One profile and its chambers
 │       │   ├── DirectoryAdapter.java          # Headings, departments and doctors
+│       │   ├── settings/
+│       │   │   ├── SettingsStore.java         # Preferences, split by what backup carries
+│       │   │   └── LocaleController.java      # Applies and reconciles the language
 │       │   └── data/
 │       │       ├── DatasetUnpacker.java       # Unseals the bundled directory
+│       │       ├── DepartmentNames.java       # Department names in the current locale
 │       │       ├── DoctorRepository.java      # Read-only queries and search
 │       │       ├── PortraitLoader.java        # Decodes portraits from assets
 │       │       ├── InitialsDrawable.java      # Fallback when there is no portrait
@@ -130,11 +185,13 @@ MedBook/
 │       └── res/
 │           ├── font/                 # Gabarito + Hind Siliguri, subsetted
 │           ├── layout/               # Home, department, profile, and row layouts
-│           ├── drawable/             # Splash mark, search, divider, back arrow
-│           ├── mipmap-xhdpi/         # Launcher icon
-│           ├── values/               # colors.xml, colors_m3.xml, styles.xml
+│           ├── drawable/             # Splash mark, launcher layers, search, back arrow
+│           ├── mipmap-anydpi-v26/    # Adaptive launcher icon
+│           ├── mipmap-*/             # Legacy launcher bitmaps, API 21-25
+│           ├── values/               # colors.xml, colors_m3.xml, styles.xml, strings
 │           ├── values-night/         # Dark overrides for both colour files
-│           └── xml/                  # Backup rules: the directory is never backed up
+│           ├── values-bn/            # Bengali interface and department names
+│           └── xml/                  # Backup rules and the locale config
 ├── gradle/wrapper/                   # Pinned Gradle distribution
 ├── build.gradle                      # Root build script
 ├── settings.gradle                   # Module and repository declarations
@@ -206,8 +263,9 @@ Ordered roughly by dependency — each item builds on the ones above it.
    by who is available soonest rather than by standing
 6. **Appointment booking** — slot selection and confirmation
 7. **Accounts** — registration, sign-in, and per-patient appointment history
-8. **Localisation** — Bangla, which the Hind Siliguri interface face already
-   supports
+8. ~~**Localisation**~~ — done in 0.3.0-alpha.1. The interface and all 45
+   department names are Bangla; the directory itself stays English, for the
+   reasons set out under [Bangla](#bangla)
 
 Longer term: prescription management, medical-record storage, doctor ratings,
 consultation payments, and telemedicine.
@@ -217,7 +275,7 @@ consultation payments, and telemedicine.
 Contributions are welcome, and the roadmap above is the best place to start —
 item 5 is self-contained and needs no backend.
 
-Development happens on release branches — **`release/0.2`** is the current one,
+Development happens on release branches — **`release/0.3`** is the current one,
 so branch from there rather than from `main`. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for the branching model, the versioning
 scheme, and the code style.
@@ -237,8 +295,8 @@ MedBook uses two typefaces, both under the
 | Wordmark | **Gabarito** ExtraBold | 800 | [OFL](licenses/Gabarito-OFL.txt) |
 | Interface | **Hind Siliguri** | Regular 400, SemiBold 600, Bold 700 | [OFL](licenses/HindSiliguri-OFL.txt) |
 
-Hind Siliguri draws Latin and Bengali as one family, so Bangla localisation
-needs no second face and no visual mismatch. It comes from Indian Type Foundry,
+Hind Siliguri draws Latin and Bengali as one family, so the Bangla interface
+needs no second face and has no visual mismatch. It comes from Indian Type Foundry,
 and the subsets here retain the full Indic layout-feature set, without which
 Bengali conjuncts would not form.
 
@@ -259,7 +317,9 @@ a network make their source available to its users.
 
 ## Author
 
-Developed by **Md. Maruf Hossain** ([zZOK](https://github.com/zZOKofficial)).
+Developed by **Md. Maruf Hossain** ([zZOK](https://github.com/zZOKofficial)),
+and published under **OxyOrb**, the consultancy he founded on 1 January 2024.
+The application identifier is `com.oxyorb.medbook`.
 
 ---
 

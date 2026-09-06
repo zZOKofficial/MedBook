@@ -50,4 +50,73 @@
 	<string name="theme_system_legacy_note">This version of Android has no system dark mode, so MedBook follows the battery saver instead.</string>
 	<string name="theme_light">Light</string>
 	<string name="theme_dark">Dark</string>
+	<string name="settings_language">Language</string>
+	<string name="language_system">Follow the device</string>
+	<!-- Language names are written in their own language, in every locale. -->
+	<string name="language_english" translatable="false">English</string>
+	<string name="language_bengali" translatable="false">বাংলা</string>
+
+	<!-- Department and family names, mirroring the dataset exactly.
+	     They exist as resources so values-bn can carry a Bengali name per key.
+	     DepartmentNames looks them up by departments.key, which the model has
+	     carried since before anything used it. These stay identical to the
+	     database: they are the English fallback. -->
+	<string name="family_urgent_critical_care">Urgent &amp; critical care</string>
+	<string name="family_heart_lungs_blood">Heart, lungs &amp; blood</string>
+	<string name="family_brain_nerves_mind">Brain, nerves &amp; mind</string>
+	<string name="family_digestive_system_liver">Digestive system &amp; liver</string>
+	<string name="family_kidneys_urinary">Kidneys &amp; urinary</string>
+	<string name="family_hormones_metabolism">Hormones &amp; metabolism</string>
+	<string name="family_bones_joints_movement">Bones, joints &amp; movement</string>
+	<string name="family_eyes_ears_teeth_throat">Eyes, ears, teeth &amp; throat</string>
+	<string name="family_skin">Skin</string>
+	<string name="family_women_children">Women &amp; children</string>
+	<string name="family_cancer">Cancer</string>
+	<string name="family_general_diagnostic_services">General &amp; diagnostic services</string>
+
+	<string name="dept_accident_and_emergency">Accident &amp; Emergency</string>
+	<string name="dept_critical_care_units">Critical Care Units</string>
+	<string name="dept_anesthesia_and_pain_medicine">Anesthesia and Pain Medicine</string>
+	<string name="dept_cardiology_care_centre">Cardiology Care Centre</string>
+	<string name="dept_cardiothoracic_and_vascular_surgery">Cardiothoracic &amp; Vascular Surgery</string>
+	<string name="dept_cardiothoracic_anaesthesia">Cardiothoracic Anaesthesia</string>
+	<string name="dept_thoracic_surgery">Thoracic Surgery</string>
+	<string name="dept_respiratory_medicine">Respiratory Medicine</string>
+	<string name="dept_haematology_and_stem_cell_transplant">Haematology &amp; Stem Cell Transplant</string>
+	<string name="dept_transfusion_medicine">Transfusion Medicine</string>
+	<string name="dept_neurology">Neurology</string>
+	<string name="dept_neurosurgery">Neurosurgery</string>
+	<string name="dept_psychiatry">Psychiatry</string>
+	<string name="dept_counselling_centre">Counselling Centre</string>
+	<string name="dept_gastroenterology_and_hepatology">Gastroenterology &amp; Hepatology</string>
+	<string name="dept_hepatobiliary_pancreatic_and_liver_transplant">Hepatobiliary, Pancreatic and Liver Transplant</string>
+	<string name="dept_general_and_laparoscopic_surgery">General &amp; Laparoscopic Surgery</string>
+	<string name="dept_nephrology">Nephrology</string>
+	<string name="dept_kidney_transplant_program">Kidney Transplant Program</string>
+	<string name="dept_urology">Urology</string>
+	<string name="dept_lithotripsy">Lithotripsy</string>
+	<string name="dept_diabetology_and_endocrinology">Diabetology &amp; Endocrinology</string>
+	<string name="dept_thyroid_and_head_neck_oncosurgery">Thyroid and Head-Neck Oncosurgery</string>
+	<string name="dept_dietetics_and_nutrition">Dietetics &amp; Nutrition</string>
+	<string name="dept_orthopaedics">Orthopaedics</string>
+	<string name="dept_rheumatology">Rheumatology</string>
+	<string name="dept_physical_medicine_and_rehabilitation">Physical Medicine &amp; Rehabilitation</string>
+	<string name="dept_ophthalmology">Ophthalmology</string>
+	<string name="dept_ent_and_head_neck_surgery">ENT &amp; Head Neck Surgery</string>
+	<string name="dept_dental_and_maxillofacial_surgery">Dental &amp; Maxillofacial Surgery</string>
+	<string name="dept_dermatology_and_venereology">Dermatology &amp; Venereology</string>
+	<string name="dept_plastic_reconstructive_and_cosmetic_surgery">Plastic, Reconstructive &amp; Cosmetic Surgery</string>
+	<string name="dept_obstetrics_and_gynaecology">Obstetrics and Gynaecology</string>
+	<string name="dept_fertility_centre">Fertility Centre</string>
+	<string name="dept_paediatrics">Paediatrics</string>
+	<string name="dept_paediatrics_and_neonatology">Paediatrics &amp; Neonatology</string>
+	<string name="dept_child_development_centre">Child Development Centre</string>
+	<string name="dept_paediatric_surgery_and_urology">Paediatric Surgery &amp; Urology</string>
+	<string name="dept_paediatric_cardiology">Paediatric Cardiology</string>
+	<string name="dept_cancer_care_centre">Cancer Care Centre</string>
+	<string name="dept_medical_oncology">Medical Oncology</string>
+	<string name="dept_radiation_oncology">Radiation Oncology</string>
+	<string name="dept_internal_medicine">Internal Medicine</string>
+	<string name="dept_diagnostic_and_interventional_radiology">Diagnostic &amp; Interventional Radiology</string>
+	<string name="dept_nuclear_medicine">Nuclear Medicine</string>
 </resources>

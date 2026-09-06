@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.oxyorb.medbook.settings.LocaleController;
 import com.oxyorb.medbook.settings.SettingsStore;
 
 /**
@@ -37,6 +38,8 @@ public final class MedBookApp extends Application {
 		// of this approach: a few hundred microseconds for a two-key file, in an app
 		// that already holds its own splash for 800ms on purpose. Making it async
 		// would reintroduce exactly the race this class exists to avoid.
-		AppCompatDelegate.setDefaultNightMode(SettingsStore.get(this).nightMode());
+		SettingsStore _settings = SettingsStore.get(this);
+		AppCompatDelegate.setDefaultNightMode(_settings.nightMode());
+		LocaleController.applyAtStartup(_settings);
 	}
 }

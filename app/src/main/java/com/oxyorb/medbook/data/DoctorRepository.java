@@ -85,7 +85,7 @@ public final class DoctorRepository {
 	/** Every department, in the layout's own family order. */
 	public List<Department> departments() {
 		Cursor _cursor = database.rawQuery(
-			"SELECT d.id, d.key, d.name, f.name, d.doctor_count"
+			"SELECT d.id, d.key, f.key, d.name, f.name, d.doctor_count"
 				+ " FROM departments d JOIN families f ON f.id = d.family_id"
 				+ " ORDER BY f.sort_order, d.sort_order", null);
 		try {
@@ -93,7 +93,7 @@ public final class DoctorRepository {
 			while (_cursor.moveToNext()) {
 				_departments.add(new Department(
 					_cursor.getLong(0), _cursor.getString(1), _cursor.getString(2),
-					_cursor.getString(3), _cursor.getInt(4)));
+					_cursor.getString(3), _cursor.getString(4), _cursor.getInt(5)));
 			}
 			return _departments;
 		} finally {
@@ -169,7 +169,16 @@ public final class DoctorRepository {
 	// -- search -------------------------------------------------------------------
 
 	/**
-	 * Departments whose name contains the query. Cheap: there are only 45.
+	 * Departments whose name contains the query, in either language. Cheap: only 45.
+	 *
+	 * Matching the dataset's English name as well as the displayed one is not
+	 * redundancy. In Bengali the headings are Bengali but every doctor behind them is
+	 * still described in English, so someone typing "cardiology" is doing something
+	 * reasonable and should not be told there is no such department.
+	 *
+	 * It takes the list rather than reading the database because the Bengali names are
+	 * resources and the data layer has no Resources -- which is also why this is now
+	 * static: there is no table left to scan.
 	 *
 	 * "&" and "and" are treated as the same thing, so typing "cardiothoracic and
 	 * vascular" still finds "Cardiothoracic &amp; Vascular Surgery". Eleven of the 45
@@ -177,14 +186,15 @@ public final class DoctorRepository {
 	 * is a scan here rather than another FTS query: norm() reduces "&" to a separator,
 	 * which is right for indexing prose and wrong for matching these names.
 	 */
-	public List<Department> searchDepartments(String _query) {
+	public static List<Department> searchDepartments(List<Department> _departments, String _query) {
 		String _normalised = norm(expandAmpersand(_query));
 		if (_normalised.isEmpty()) {
 			return Collections.emptyList();
 		}
 		List<Department> _matches = new ArrayList<>();
-		for (Department _department : departments()) {
-			if (norm(expandAmpersand(_department.name)).contains(_normalised)) {
+		for (Department _department : _departments) {
+			if (norm(expandAmpersand(_department.displayName)).contains(_normalised)
+				|| norm(expandAmpersand(_department.name)).contains(_normalised)) {
 				_matches.add(_department);
 			}
 		}

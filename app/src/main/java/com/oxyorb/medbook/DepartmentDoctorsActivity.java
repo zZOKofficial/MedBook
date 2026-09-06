@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.oxyorb.medbook.data.DepartmentNames;
 import com.oxyorb.medbook.data.DoctorRepository;
 import com.oxyorb.medbook.data.PortraitLoader;
 import com.oxyorb.medbook.data.model.Department;
@@ -25,6 +26,7 @@ import java.util.concurrent.Executors;
 public class DepartmentDoctorsActivity extends AppCompatActivity implements DirectoryAdapter.Listener {
 
 	private static final String EXTRA_ID = "department_id";
+	private static final String EXTRA_KEY = "department_key";
 	private static final String EXTRA_NAME = "department_name";
 	private static final String EXTRA_COUNT = "department_count";
 
@@ -49,9 +51,11 @@ public class DepartmentDoctorsActivity extends AppCompatActivity implements Dire
 	private boolean loading;
 	private boolean exhausted;
 
-	public static Intent intentFor(Context _context, long _departmentId, String _name, int _count) {
+	public static Intent intentFor(Context _context, long _departmentId, String _key,
+			String _name, int _count) {
 		Intent _intent = new Intent(_context, DepartmentDoctorsActivity.class);
 		_intent.putExtra(EXTRA_ID, _departmentId);
+		_intent.putExtra(EXTRA_KEY, _key);
 		_intent.putExtra(EXTRA_NAME, _name);
 		_intent.putExtra(EXTRA_COUNT, _count);
 		return _intent;
@@ -65,7 +69,12 @@ public class DepartmentDoctorsActivity extends AppCompatActivity implements Dire
 		applyWindowInsets();
 
 		departmentId = getIntent().getLongExtra(EXTRA_ID, -1L);
-		binding.departmentTitle.setText(getIntent().getStringExtra(EXTRA_NAME));
+		// Resolved from the key rather than read straight back out of the Intent. A
+		// language change recreates this activity with the SAME Intent, so a name
+		// frozen at navigation time would stay in the old language while everything
+		// around it flipped. The name is still carried, as the fallback.
+		binding.departmentTitle.setText(DepartmentNames.departmentName(getResources(),
+			getIntent().getStringExtra(EXTRA_KEY), getIntent().getStringExtra(EXTRA_NAME)));
 		// The department's own total, not how many rows have been paged in so far.
 		int _total = getIntent().getIntExtra(EXTRA_COUNT, 0);
 		binding.departmentSubtitle.setText(

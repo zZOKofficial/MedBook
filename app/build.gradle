@@ -54,6 +54,10 @@ android {
 		// Both are already compressed; re-deflating them only costs build time, and
 		// leaving them stored lets AssetManager map the portraits straight out of the APK.
 		noCompress += ["webp", "dat"]
+		// MedBook ships English and Bengali. appcompat and material carry about
+		// seventy other language folders between them; none of them are ours, and
+		// keeping them would put translations in the picker that do not exist.
+		localeFilters += ["en", "bn"]
 	}
 
 	signingConfigs {
@@ -84,6 +88,12 @@ android {
 }
 
 dependencies {
+	// Test only; nothing here reaches the APK. Department search and, later, the
+	// semver comparison are pure functions whose edge cases cannot be reached by
+	// tapping -- a Bengali query in particular needs an IME the emulator cannot be
+	// driven through from adb.
+	testImplementation 'junit:junit:4.13.2'
+
 	implementation 'androidx.appcompat:appcompat:1.7.1'
 	implementation 'com.google.android.material:material:1.12.0'
 	implementation 'androidx.core:core-splashscreen:1.0.1'

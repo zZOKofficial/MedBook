@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The near-white the mark was drawn on in medbook.svg, so the adaptive icon
+     stands on the same ground the logo has always had. Not a theme colour: this
+     is resolved by the launcher, outside the app, where no theme applies. -->
+<resources>
+	<color name="ic_launcher_background">#FEFEFD</color>
+</resources>

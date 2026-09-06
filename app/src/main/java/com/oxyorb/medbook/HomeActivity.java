@@ -1,15 +1,18 @@
 package com.oxyorb.medbook;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.splashscreen.SplashScreen;
 import androidx.core.splashscreen.SplashScreenViewProvider;
@@ -17,6 +20,7 @@ import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import com.oxyorb.medbook.data.DepartmentNames;
 import com.oxyorb.medbook.data.DoctorRepository;
 import com.oxyorb.medbook.data.PortraitLoader;
 import com.oxyorb.medbook.data.model.Department;
@@ -92,7 +96,7 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 		binding = HomeBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 		applyWindowInsets();
-		flattenSearchField();
+		styleSearchField();
 		wireSearch();
 		binding.settingsButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -140,7 +144,7 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 				final DoctorRepository _repository = DoctorRepository.open(HomeActivity.this);
 				final List<Department> _departments = _repository == null
 					? Collections.<Department>emptyList()
-					: _repository.departments();
+					: DepartmentNames.localize(getResources(), _repository.departments());
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
@@ -248,14 +252,36 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 	 * default underline is drawn straight across the capsule from bg_search. The
 	 * platform ids are the only handle on those inner views.
 	 */
-	private void flattenSearchField() {
+	/**
+	 * Drops the SearchView's own chrome and gives it the app's typeface.
+	 *
+	 * SearchView builds its own SearchAutoComplete internally, which reads neither the
+	 * queryHint styling nor the type scale every other view gets from its
+	 * textAppearance -- so the one field the user types into was the one piece of the
+	 * app still rendering in the system font.
+	 *
+	 * It has to be done here rather than in the theme. A theme-level
+	 * android:fontFamily does reach this view, but it also overrides the fontFamily
+	 * each textAppearance declares, which silently flattens the whole app back to
+	 * Regular; see the note in values/styles.xml. Reaching for this one view is the
+	 * narrower change.
+	 *
+	 * Only the typeface is set, not a full textAppearance: the size and colours the
+	 * SearchView resolves for itself are already right, and setTextAppearance would
+	 * take those over too.
+	 */
+	private void styleSearchField() {
 		View _plate = binding.searchDocs.findViewById(androidx.appcompat.R.id.search_plate);
 		if (_plate != null) {
 			_plate.setBackground(null);
 		}
 		View _text = binding.searchDocs.findViewById(androidx.appcompat.R.id.search_src_text);
-		if (_text != null) {
+		if (_text instanceof TextView) {
 			_text.setBackground(null);
+			Typeface _face = ResourcesCompat.getFont(this, R.font.hind_siliguri_regular);
+			if (_face != null) {
+				((TextView) _text).setTypeface(_face);
+			}
 		}
 	}
 
@@ -264,7 +290,8 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 	@Override
 	public void onDepartmentSelected(Department _department) {
 		startActivity(DepartmentDoctorsActivity.intentFor(
-			this, _department.id, _department.name, _department.doctorCount));
+			this, _department.id, _department.key, _department.displayName,
+			_department.doctorCount));
 	}
 
 	@Override
@@ -339,7 +366,7 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 		worker.execute(new Runnable() {
 			@Override
 			public void run() {
-				final List<Department> _departments = repository.searchDepartments(_query);
+				final List<Department> _matches = DoctorRepository.searchDepartments(departments, _query);
 				final List<DoctorSummary> _doctors = repository.searchDoctors(_query);
 				runOnUiThread(new Runnable() {
 					@Override
@@ -347,11 +374,11 @@ public class HomeActivity extends AppCompatActivity implements DirectoryAdapter.
 						if (_token != searchToken || isFinishing() || isDestroyed()) {
 							return;
 						}
-						if (_departments.isEmpty() && _doctors.isEmpty()) {
+						if (_matches.isEmpty() && _doctors.isEmpty()) {
 							showEmptyState(getString(R.string.search_no_results, _query), true);
 							return;
 						}
-						adapter.showResults(_departments, _doctors,
+						adapter.showResults(_matches, _doctors,
 							getString(R.string.results_departments),
 							getString(R.string.results_doctors));
 						binding.departmentList.scrollToPosition(0);
