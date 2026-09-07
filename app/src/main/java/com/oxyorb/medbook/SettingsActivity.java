@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
@@ -12,9 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
+import androidx.core.view.AccessibilityDelegateCompat;
 import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.oxyorb.medbook.databinding.SettingsBinding;
@@ -44,8 +47,6 @@ public class SettingsActivity extends AppCompatActivity {
 
 	private SettingsBinding binding;
 	private SettingsStore settings;
-	/** Guard the listener while the stored value is being reflected into the switch. */
-	private boolean bindingDemo;
 
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -68,20 +69,14 @@ public class SettingsActivity extends AppCompatActivity {
 		bindAbout();
 	}
 
-	/** Two ways out of settings, both to screens that only ever read. */
+	/** The one way out of settings, to a screen that only ever reads -- and from
+	 *  which Privacy and Licences are both a further tap away. */
 	private void bindAbout() {
 		binding.aboutRow.rowTitle.setText(R.string.settings_about_app);
 		binding.aboutRow.getRoot().setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
 				startActivity(new Intent(SettingsActivity.this, AboutActivity.class));
-			}
-		});
-		binding.privacyRow.rowTitle.setText(R.string.settings_privacy);
-		binding.privacyRow.getRoot().setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				startActivity(new Intent(SettingsActivity.this, PrivacyActivity.class));
 			}
 		});
 	}
@@ -188,11 +183,46 @@ public class SettingsActivity extends AppCompatActivity {
 	 * bearing: anyone can find this, so nothing behind it may look like a real
 	 * booking. Turning it off leaves the bookings alone -- switching back on should
 	 * find the demo where it was left, mid-pitch, rather than wiped.
+	 *
+	 * The row, not the switch, is the click target -- see setting_row_switch.xml --
+	 * so the switch reflects the stored value before its own listener is registered
+	 * below, exactly as bindTheme()/bindLanguage() never guard against an initial
+	 * setChecked firing a listener that is not there to fire yet.
+	 *
+	 * The switch is importantForAccessibility="no" in the layout, which leaves
+	 * TalkBack nothing to focus but the row -- and a plain clickable row reports no
+	 * checked state of its own. The delegate below is what makes it announce as a
+	 * switch rather than a silent label.
 	 */
 	private void bindDemo() {
-		bindingDemo = true;
-		binding.demoSwitch.setChecked(settings.demoEnabled());
-		bindingDemo = false;
+		binding.demoRow.rowTitle.setText(R.string.settings_demo_toggle);
+		binding.demoRow.rowSummary.setText(R.string.settings_demo_note);
+		binding.demoRow.rowSummary.setVisibility(View.VISIBLE);
+		binding.demoRow.rowSwitch.setChecked(settings.demoEnabled());
+
+		ViewCompat.setAccessibilityDelegate(binding.demoRow.getRoot(), new AccessibilityDelegateCompat() {
+			@Override
+			public void onInitializeAccessibilityNodeInfo(View _host, AccessibilityNodeInfoCompat _info) {
+				super.onInitializeAccessibilityNodeInfo(_host, _info);
+				_info.setClassName("android.widget.Switch");
+				_info.setCheckable(true);
+				_info.setChecked(binding.demoRow.rowSwitch.isChecked());
+			}
+		});
+		binding.demoRow.getRoot().setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				binding.demoRow.rowSwitch.toggle();
+			}
+		});
+		binding.demoRow.rowSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton _button, boolean _checked) {
+				settings.setDemoEnabled(_checked);
+				setResetEnabled(_checked);
+				binding.demoRow.getRoot().sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED);
+			}
+		});
 
 		binding.demoResetRow.rowTitle.setText(R.string.settings_demo_reset);
 		// An action, not a way into another screen, so it carries no chevron.
@@ -204,17 +234,6 @@ public class SettingsActivity extends AppCompatActivity {
 			}
 		});
 		setResetEnabled(settings.demoEnabled());
-
-		binding.demoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton _button, boolean _checked) {
-				if (bindingDemo) {
-					return;
-				}
-				settings.setDemoEnabled(_checked);
-				setResetEnabled(_checked);
-			}
-		});
 	}
 
 	/**

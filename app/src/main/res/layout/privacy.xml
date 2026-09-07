@@ -8,196 +8,77 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
-		android:paddingLeft="16dp"
-		android:paddingRight="16dp">
+		android:paddingLeft="@dimen/screen_gutter"
+		android:paddingRight="@dimen/screen_gutter">
 		<ImageButton
 			android:id="@+id/back_button"
-			android:layout_width="44dp"
-			android:layout_height="44dp"
-			android:layout_marginTop="4dp"
-			android:background="?attr/selectableItemBackgroundBorderless"
-			android:contentDescription="@string/back"
-			android:scaleType="center"
-			android:src="@drawable/ic_back" />
+			style="@style/Widget.MedBook.BackButton"
+			android:contentDescription="@string/back" />
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="4dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/privacy_title"
-			android:textAppearance="@style/TextAppearance.MedBook.Title"
-			android:textColor="?colorOnSurface" />
+			style="@style/Widget.MedBook.ScreenTitle"
+			android:text="@string/privacy_title" />
 
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="24dp"
-			android:layout_marginBottom="6dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/privacy_collect_heading"
-			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-			android:textColor="?colorSecondary" />
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/privacy_collect_heading" />
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:lineSpacingExtra="3dp"
-			android:text="@string/privacy_collect_body"
-			android:textAppearance="@style/TextAppearance.MedBook.Body"
-			android:textColor="?colorOnSurfaceVariant" />
+			style="@style/Widget.MedBook.Body"
+			android:text="@string/privacy_collect_body" />
 
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="24dp"
-			android:layout_marginBottom="6dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/privacy_network_heading"
-			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-			android:textColor="?colorSecondary" />
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/privacy_network_heading" />
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:lineSpacingExtra="3dp"
-			android:text="@string/privacy_network_body"
-			android:textAppearance="@style/TextAppearance.MedBook.Body"
-			android:textColor="?colorOnSurfaceVariant" />
+			style="@style/Widget.MedBook.Body"
+			android:text="@string/privacy_network_body" />
 
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="24dp"
-			android:layout_marginBottom="6dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/privacy_stored_heading"
-			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-			android:textColor="?colorSecondary" />
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/privacy_stored_heading" />
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:lineSpacingExtra="3dp"
-			android:text="@string/privacy_stored_body"
-			android:textAppearance="@style/TextAppearance.MedBook.Body"
-			android:textColor="?colorOnSurfaceVariant" />
+			style="@style/Widget.MedBook.Body"
+			android:text="@string/privacy_stored_body" />
 
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="24dp"
-			android:layout_marginBottom="6dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/privacy_directory_heading"
-			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-			android:textColor="?colorSecondary" />
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/privacy_directory_heading" />
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:lineSpacingExtra="3dp"
-			android:text="@string/privacy_directory_body"
-			android:textAppearance="@style/TextAppearance.MedBook.Body"
-			android:textColor="?colorOnSurfaceVariant" />
+			style="@style/Widget.MedBook.Body"
+			android:text="@string/privacy_directory_body" />
 
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="24dp"
-			android:layout_marginBottom="6dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/privacy_backup_heading"
-			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-			android:textColor="?colorSecondary" />
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/privacy_backup_heading" />
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:lineSpacingExtra="3dp"
-			android:text="@string/privacy_backup_body"
-			android:textAppearance="@style/TextAppearance.MedBook.Body"
-			android:textColor="?colorOnSurfaceVariant" />
+			style="@style/Widget.MedBook.Body"
+			android:text="@string/privacy_backup_body" />
 
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="24dp"
-			android:layout_marginBottom="6dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/privacy_calls_heading"
-			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-			android:textColor="?colorSecondary" />
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/privacy_calls_heading" />
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:lineSpacingExtra="3dp"
-			android:text="@string/privacy_calls_body"
-			android:textAppearance="@style/TextAppearance.MedBook.Body"
-			android:textColor="?colorOnSurfaceVariant" />
+			style="@style/Widget.MedBook.Body"
+			android:text="@string/privacy_calls_body" />
 
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="24dp"
-			android:layout_marginBottom="6dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/privacy_demo_heading"
-			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-			android:textColor="?colorSecondary" />
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/privacy_demo_heading" />
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:lineSpacingExtra="3dp"
-			android:text="@string/privacy_demo_body"
-			android:textAppearance="@style/TextAppearance.MedBook.Body"
-			android:textColor="?colorOnSurfaceVariant" />
+			style="@style/Widget.MedBook.Body"
+			android:text="@string/privacy_demo_body" />
 
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="24dp"
-			android:layout_marginBottom="6dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/privacy_corrections_heading"
-			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-			android:textColor="?colorSecondary" />
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/privacy_corrections_heading" />
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:lineSpacingExtra="3dp"
-			android:text="@string/privacy_corrections_body"
-			android:textAppearance="@style/TextAppearance.MedBook.Body"
-			android:textColor="?colorOnSurfaceVariant" />
+			style="@style/Widget.MedBook.Body"
+			android:text="@string/privacy_corrections_body" />
 
 		<!-- The only way out of this screen. Everything above it is a statement; this
 		     is the one thing a reader might need to act on. -->
 		<View
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:layout_marginStart="12dp"
-			android:layout_marginEnd="12dp"
-			android:layout_marginTop="12dp"
-			android:background="?colorOutlineVariant" />
+			style="@style/Widget.MedBook.Divider"
+			android:layout_marginTop="12dp" />
 		<include
 			android:id="@+id/corrections_row"
 			layout="@layout/setting_row"
@@ -205,6 +86,6 @@
 			android:layout_height="wrap_content" />
 		<View
 			android:layout_width="match_parent"
-			android:layout_height="24dp" />
+			android:layout_height="@dimen/screen_bottom_gap" />
 	</LinearLayout>
 </ScrollView>

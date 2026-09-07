@@ -9,17 +9,12 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
-		android:paddingLeft="16dp"
-		android:paddingRight="16dp">
+		android:paddingLeft="@dimen/screen_gutter"
+		android:paddingRight="@dimen/screen_gutter">
 		<ImageButton
 			android:id="@+id/back_button"
-			android:layout_width="44dp"
-			android:layout_height="44dp"
-			android:layout_marginTop="4dp"
-			android:background="?attr/selectableItemBackgroundBorderless"
-			android:contentDescription="@string/back"
-			android:scaleType="center"
-			android:src="@drawable/ic_back" />
+			style="@style/Widget.MedBook.BackButton"
+			android:contentDescription="@string/back" />
 
 		<!-- The wordmark, as on the home screen: Gabarito at colorPrimary. This screen
 		     is the one place in the app that names the build it is running. -->
@@ -27,8 +22,8 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="8dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
+			android:paddingStart="@dimen/row_gutter"
+			android:paddingEnd="@dimen/row_gutter"
 			android:fontFamily="@font/gabarito_extrabold"
 			android:text="@string/app_name"
 			android:textAppearance="@style/TextAppearance.MedBook.Wordmark"
@@ -38,99 +33,56 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="2dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
+			android:paddingStart="@dimen/row_gutter"
+			android:paddingEnd="@dimen/row_gutter"
 			android:textAppearance="@style/TextAppearance.MedBook.Caption"
 			android:textColor="?colorOnSurfaceVariant"
 			tools:text="0.4.0-alpha.1 (58)" />
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			style="@style/Widget.MedBook.Body"
 			android:layout_marginTop="10dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
 			android:text="@string/about_tagline"
-			android:textAppearance="@style/TextAppearance.MedBook.Body"
 			android:textColor="?colorOnSurface" />
 
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="24dp"
-			android:layout_marginBottom="6dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/about_directory_heading"
-			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-			android:textColor="?colorSecondary" />
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/about_directory_heading" />
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			style="@style/Widget.MedBook.Body"
 			android:layout_marginBottom="16dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:lineSpacingExtra="3dp"
-			android:text="@string/about_directory_body"
-			android:textAppearance="@style/TextAppearance.MedBook.Body"
-			android:textColor="?colorOnSurfaceVariant" />
+			android:text="@string/about_directory_body" />
 
-		<View
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:layout_marginStart="12dp"
-			android:layout_marginEnd="12dp"
-			android:background="?colorOutlineVariant" />
+		<View style="@style/Widget.MedBook.Divider" />
 		<include
 			android:id="@+id/privacy_row"
 			layout="@layout/setting_row"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content" />
-		<View
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:layout_marginStart="12dp"
-			android:layout_marginEnd="12dp"
-			android:background="?colorOutlineVariant" />
+		<View style="@style/Widget.MedBook.Divider" />
 		<include
 			android:id="@+id/licences_row"
 			layout="@layout/setting_row"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content" />
-		<View
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:layout_marginStart="12dp"
-			android:layout_marginEnd="12dp"
-			android:background="?colorOutlineVariant" />
+		<View style="@style/Widget.MedBook.Divider" />
 		<include
 			android:id="@+id/source_row"
 			layout="@layout/setting_row"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content" />
-		<View
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:layout_marginStart="12dp"
-			android:layout_marginEnd="12dp"
-			android:background="?colorOutlineVariant" />
+		<View style="@style/Widget.MedBook.Divider" />
 		<include
 			android:id="@+id/security_row"
 			layout="@layout/setting_row"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content" />
-		<View
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:layout_marginStart="12dp"
-			android:layout_marginEnd="12dp"
-			android:background="?colorOutlineVariant" />
 
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="20dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
+			android:paddingStart="@dimen/row_gutter"
+			android:paddingEnd="@dimen/row_gutter"
 			android:text="@string/about_licence"
 			android:textAppearance="@style/TextAppearance.MedBook.Caption"
 			android:textColor="?colorOnSurfaceVariant" />
@@ -138,9 +90,9 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="4dp"
-			android:layout_marginBottom="24dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
+			android:layout_marginBottom="@dimen/screen_bottom_gap"
+			android:paddingStart="@dimen/row_gutter"
+			android:paddingEnd="@dimen/row_gutter"
 			android:text="@string/about_author"
 			android:textAppearance="@style/TextAppearance.MedBook.Caption"
 			android:textColor="?colorOnSurfaceVariant" />

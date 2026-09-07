@@ -4,8 +4,8 @@
 	android:layout_height="match_parent"
 	android:background="?colorSurface"
 	android:orientation="vertical"
-	android:paddingLeft="16dp"
-	android:paddingRight="16dp">
+	android:paddingLeft="@dimen/screen_gutter"
+	android:paddingRight="@dimen/screen_gutter">
 	<!--
 	  The content scrolls and the button does not. On a short screen the last point
 	  would otherwise push Continue off the bottom, which on the one screen a person
@@ -24,8 +24,8 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="32dp"
-				android:paddingStart="12dp"
-				android:paddingEnd="12dp"
+				android:paddingStart="@dimen/row_gutter"
+				android:paddingEnd="@dimen/row_gutter"
 				android:fontFamily="@font/gabarito_extrabold"
 				android:text="@string/app_name"
 				android:textAppearance="@style/TextAppearance.MedBook.Wordmark"
@@ -35,122 +35,48 @@
 				android:layout_height="wrap_content"
 				android:layout_marginTop="20dp"
 				android:layout_marginBottom="8dp"
-				android:paddingStart="12dp"
-				android:paddingEnd="12dp"
+				android:paddingStart="@dimen/row_gutter"
+				android:paddingEnd="@dimen/row_gutter"
 				android:text="@string/welcome_title"
 				android:textAppearance="@style/TextAppearance.MedBook.Title"
 				android:textColor="?colorOnSurface" />
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="14dp"
-				android:orientation="horizontal"
-				android:paddingStart="12dp"
-				android:paddingEnd="12dp">
+			<LinearLayout style="@style/Widget.MedBook.BulletRow">
+				<TextView style="@style/Widget.MedBook.Bullet" />
 				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginEnd="10dp"
-					android:text="@string/bullet"
-					android:textAppearance="@style/TextAppearance.MedBook.Body"
-					android:textColor="?colorPrimary" />
-				<TextView
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:lineSpacingExtra="3dp"
-					android:text="@string/welcome_point_permissions"
-					android:textAppearance="@style/TextAppearance.MedBook.Body"
-					android:textColor="?colorOnSurfaceVariant" />
+					style="@style/Widget.MedBook.BulletText"
+					android:text="@string/welcome_point_permissions" />
 			</LinearLayout>
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="14dp"
-				android:orientation="horizontal"
-				android:paddingStart="12dp"
-				android:paddingEnd="12dp">
+			<LinearLayout style="@style/Widget.MedBook.BulletRow">
+				<TextView style="@style/Widget.MedBook.Bullet" />
 				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginEnd="10dp"
-					android:text="@string/bullet"
-					android:textAppearance="@style/TextAppearance.MedBook.Body"
-					android:textColor="?colorPrimary" />
-				<TextView
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:lineSpacingExtra="3dp"
-					android:text="@string/welcome_point_offline"
-					android:textAppearance="@style/TextAppearance.MedBook.Body"
-					android:textColor="?colorOnSurfaceVariant" />
+					style="@style/Widget.MedBook.BulletText"
+					android:text="@string/welcome_point_offline" />
 			</LinearLayout>
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="14dp"
-				android:orientation="horizontal"
-				android:paddingStart="12dp"
-				android:paddingEnd="12dp">
+			<LinearLayout style="@style/Widget.MedBook.BulletRow">
+				<TextView style="@style/Widget.MedBook.Bullet" />
 				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginEnd="10dp"
-					android:text="@string/bullet"
-					android:textAppearance="@style/TextAppearance.MedBook.Body"
-					android:textColor="?colorPrimary" />
-				<TextView
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:lineSpacingExtra="3dp"
-					android:text="@string/welcome_point_leaves"
-					android:textAppearance="@style/TextAppearance.MedBook.Body"
-					android:textColor="?colorOnSurfaceVariant" />
+					style="@style/Widget.MedBook.BulletText"
+					android:text="@string/welcome_point_leaves" />
 			</LinearLayout>
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="14dp"
-				android:orientation="horizontal"
-				android:paddingStart="12dp"
-				android:paddingEnd="12dp">
+			<LinearLayout style="@style/Widget.MedBook.BulletRow">
+				<TextView style="@style/Widget.MedBook.Bullet" />
 				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginEnd="10dp"
-					android:text="@string/bullet"
-					android:textAppearance="@style/TextAppearance.MedBook.Body"
-					android:textColor="?colorPrimary" />
-				<TextView
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:lineSpacingExtra="3dp"
-					android:text="@string/welcome_point_listings"
-					android:textAppearance="@style/TextAppearance.MedBook.Body"
-					android:textColor="?colorOnSurfaceVariant" />
+					style="@style/Widget.MedBook.BulletText"
+					android:text="@string/welcome_point_listings" />
 			</LinearLayout>
 
 			<View
-				android:layout_width="match_parent"
-				android:layout_height="1dp"
-				android:layout_marginStart="12dp"
-				android:layout_marginEnd="12dp"
-				android:layout_marginTop="24dp"
-				android:background="?colorOutlineVariant" />
+				style="@style/Widget.MedBook.Divider"
+				android:layout_marginTop="24dp" />
 			<include
 				android:id="@+id/full_notice_row"
 				layout="@layout/setting_row"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content" />
-			<View
-				android:layout_width="match_parent"
-				android:layout_height="1dp"
-				android:layout_marginStart="12dp"
-				android:layout_marginEnd="12dp"
-				android:background="?colorOutlineVariant" />
 			<View
 				android:layout_width="match_parent"
 				android:layout_height="16dp" />

@@ -8,29 +8,17 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
-		android:paddingLeft="16dp"
-		android:paddingRight="16dp">
+		android:paddingLeft="@dimen/screen_gutter"
+		android:paddingRight="@dimen/screen_gutter">
 		<!-- Same chrome as the department and doctor screens: the theme is NoActionBar
 		     and a 44dp back button is the whole of it. -->
 		<ImageButton
 			android:id="@+id/back_button"
-			android:layout_width="44dp"
-			android:layout_height="44dp"
-			android:layout_marginTop="4dp"
-			android:background="?attr/selectableItemBackgroundBorderless"
-			android:contentDescription="@string/back"
-			android:scaleType="center"
-			android:src="@drawable/ic_back" />
+			style="@style/Widget.MedBook.BackButton"
+			android:contentDescription="@string/back" />
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="4dp"
-			android:layout_marginBottom="8dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/settings"
-			android:textAppearance="@style/TextAppearance.MedBook.Title"
-			android:textColor="?colorOnSurface" />
+			style="@style/Widget.MedBook.ScreenTitle"
+			android:text="@string/settings" />
 
 		<!--
 		  Theme and language are collapsed rows rather than open radio groups. Nine
@@ -39,26 +27,14 @@
 		  its own current value says the same thing in two lines and holds its size.
 		-->
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="16dp"
-			android:layout_marginBottom="4dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/settings_appearance"
-			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-			android:textColor="?colorSecondary" />
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/settings_appearance" />
 		<include
 			android:id="@+id/theme_row"
 			layout="@layout/setting_row"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content" />
-		<View
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:layout_marginStart="12dp"
-			android:layout_marginEnd="12dp"
-			android:background="?colorOutlineVariant" />
+		<View style="@style/Widget.MedBook.Divider" />
 		<include
 			android:id="@+id/language_row"
 			layout="@layout/setting_row"
@@ -66,77 +42,38 @@
 			android:layout_height="wrap_content" />
 
 		<!-- Demo mode. Off unless it is switched on here, and when it is off nothing
-		     anywhere else in the app shows any sign that it exists. -->
+		     anywhere else in the app shows any sign that it exists. One row, the same
+		     shape as every other row: the disclosure ("nothing is booked") sits as
+		     the switch's own summary line rather than a separate caption underneath,
+		     because attached to the control it describes it is harder to miss. -->
 		<TextView
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/settings_demo" />
+		<include
+			android:id="@+id/demo_row"
+			layout="@layout/setting_row_switch"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="24dp"
-			android:layout_marginBottom="4dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/settings_demo"
-			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-			android:textColor="?colorSecondary" />
-		<com.google.android.material.materialswitch.MaterialSwitch
-			android:id="@+id/demo_switch"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:minHeight="48dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/settings_demo_toggle"
-			android:textAppearance="@style/TextAppearance.MedBook.Label"
-			android:textColor="?colorOnSurface" />
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginBottom="10dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/settings_demo_note"
-			android:textAppearance="@style/TextAppearance.MedBook.Caption"
-			android:textColor="?colorOnSurfaceVariant" />
-		<View
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:layout_marginStart="12dp"
-			android:layout_marginEnd="12dp"
-			android:background="?colorOutlineVariant" />
+			android:layout_height="wrap_content" />
+		<View style="@style/Widget.MedBook.Divider" />
 		<include
 			android:id="@+id/demo_reset_row"
 			layout="@layout/setting_row"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content" />
 
+		<!-- One row: About MedBook. Privacy and licences moved inside it, so this is
+		     the only route to either - see AboutActivity. -->
 		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="24dp"
-			android:layout_marginBottom="4dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/settings_about"
-			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-			android:textColor="?colorSecondary" />
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/settings_about" />
 		<include
 			android:id="@+id/about_row"
-			layout="@layout/setting_row"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content" />
-		<View
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:layout_marginStart="12dp"
-			android:layout_marginEnd="12dp"
-			android:background="?colorOutlineVariant" />
-		<include
-			android:id="@+id/privacy_row"
 			layout="@layout/setting_row"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content" />
 
 		<View
 			android:layout_width="match_parent"
-			android:layout_height="24dp" />
+			android:layout_height="@dimen/screen_bottom_gap" />
 	</LinearLayout>
 </ScrollView>
