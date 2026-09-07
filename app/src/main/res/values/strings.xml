@@ -147,11 +147,24 @@
 		<item>Golam M.</item>
 	</string-array>
 
+	<!-- The first-launch notice. Shown once, before the home screen can be used, and
+	     again only if PRIVACY_NOTICE_VERSION goes up because the wording changed
+	     materially. There is no decline: MedBook requests no permission and collects
+	     nothing, so a button that closed the app would imply it wanted something it
+	     does not. Each point below is a claim the privacy screen states in full. -->
+	<string name="welcome_title">Before you start</string>
+	<string name="bullet" translatable="false">•</string>
+	<string name="welcome_point_permissions">MedBook asks for no permissions, not even internet access.</string>
+	<string name="welcome_point_offline">The doctor directory is bundled in the app and read with no connection.</string>
+	<string name="welcome_point_leaves">Nothing you do here leaves this phone. There is no account, no server and no analytics.</string>
+	<string name="welcome_point_listings">Doctor details are published professional listings, not medical records.</string>
+	<string name="welcome_read_full">Read the full privacy notice</string>
+	<string name="welcome_continue">Continue</string>
+
 	<!-- About. Deliberately carries no doctor or chamber counts: a checkout without the
 	     private dataset builds an app whose directory is empty, and a number compiled
 	     in here would be a false statement in exactly that build. The README keeps the
 	     statistics, where they can be true of one snapshot at a time. -->
-	<string name="about_title">About</string>
 	<string name="about_tagline">Your Health, Your Schedule.</string>
 	<!-- %1$s is the version name, %2$d the version code. -->
 	<string name="about_version" translatable="false">%1$s (%2$d)</string>

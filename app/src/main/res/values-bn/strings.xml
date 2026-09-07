@@ -129,9 +129,17 @@
 		<item>গোলাম ম.</item>
 	</string-array>
 
+	<!-- The first-launch notice. -->
+	<string name="welcome_title">শুরু করার আগে</string>
+	<string name="welcome_point_permissions">মেডবুক কোনো অনুমতি চায় না, এমনকি ইন্টারনেট ব্যবহারেরও নয়।</string>
+	<string name="welcome_point_offline">ডাক্তার ডিরেক্টরি অ্যাপের ভেতরেই আছে, কোনো সংযোগ ছাড়াই পড়া হয়।</string>
+	<string name="welcome_point_leaves">এখানে আপনি যা করেন তার কিছুই এই ফোন ছেড়ে যায় না। কোনো অ্যাকাউন্ট নেই, সার্ভার নেই, অ্যানালিটিক্সও নেই।</string>
+	<string name="welcome_point_listings">ডাক্তারের তথ্য প্রকাশিত পেশাগত তালিকা, চিকিৎসা-নথি নয়।</string>
+	<string name="welcome_read_full">সম্পূর্ণ গোপনীয়তা নোটিশ পড়ুন</string>
+	<string name="welcome_continue">চালিয়ে যান</string>
+
 	<!-- About. The author and the publisher stay in Latin script, as the doctor names
 	     in the directory do, and for the same reason. -->
-	<string name="about_title">সম্পর্কে</string>
 	<string name="about_tagline">আপনার স্বাস্থ্য, আপনার সময়সূচি।</string>
 	<string name="about_directory_heading">ডিরেক্টরি</string>
 	<string name="about_directory_body">মেডবুকে রয়েছে প্রকাশিত ডাক্তার প্রোফাইলের একটি ডিরেক্টরি — নাম, ডিগ্রি, চেম্বার, বসার সময় ও অ্যাপয়েন্টমেন্ট নম্বর — যা অফলাইনে তৈরি করে অ্যাপের ভেতরেই দেওয়া আছে। কোনো সার্ভার নেই, কোনো নেটওয়ার্ক কল নেই: মেডবুক কোনো অনুমতিই চায় না, এমনকি ইন্টারনেট ব্যবহারেরও নয়।</string>

@@ -41,5 +41,10 @@ public final class MedBookApp extends Application {
 		SettingsStore _settings = SettingsStore.get(this);
 		AppCompatDelegate.setDefaultNightMode(_settings.nightMode());
 		LocaleController.applyAtStartup(_settings);
+		// Registers a listener and reads nothing further here. The notice is put up
+		// from the first activity that resumes, whichever one that turns out to be --
+		// which, after a process death, is not necessarily HomeActivity. See
+		// PrivacyGate, which exists for the same reason as the two lines above it.
+		PrivacyGate.install(this, _settings);
 	}
 }

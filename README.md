@@ -104,6 +104,14 @@ advisory form. It carries no doctor count on purpose: a checkout without the
 private dataset builds an app whose directory is empty, and a number compiled in
 would be false in exactly that build.
 
+**Welcome** (`WelcomeActivity`) — shown once, before MedBook can be used, and
+again only if the notice's wording changes materially. Four points and a
+Continue: there is no decline, because the app requests no permission and
+collects nothing, and a button that closed it would imply otherwise. Back leaves
+the app rather than dismissing it — a notice that can be swiped past unread is
+not a notice. It is put up by `PrivacyGate` rather than by `HomeActivity`, so a
+restore after process death that lands on a doctor's profile still shows it.
+
 **Privacy** (`PrivacyActivity`) — the notice in full, the same text as
 [PRIVACY.md](PRIVACY.md). An excerpt is shown once before first use. Everything
 it claims is enforced somewhere a reader can check, and it says where.

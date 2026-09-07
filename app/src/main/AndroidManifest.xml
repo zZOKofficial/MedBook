@@ -54,6 +54,13 @@
 			android:parentActivityName=".HomeActivity"
 			android:screenOrientation="portrait"
 			android:exported="false" />
+		<!-- The privacy notice, put up by PrivacyGate before anything else can be used.
+		     No parentActivityName: it is a gate rather than a place in the hierarchy,
+		     and back leaves the app rather than walking up out of it. -->
+		<activity
+			android:name=".WelcomeActivity"
+			android:screenOrientation="portrait"
+			android:exported="false" />
 		<!-- All three only read: a version string, the privacy notice, and the
 		     licences MedBook ships under. None of them touch the directory. -->
 		<activity
