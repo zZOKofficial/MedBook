@@ -1,0 +1,22 @@
+# Normalise text files to LF in the repo; Git still checks them out as CRLF on
+# Windows if core.autocrlf is true locally, but the repo's own line endings stop
+# moving on every commit -- which is what was producing a "modified" warning
+# and a full-file diff on files nobody touched.
+* text=auto eol=lf
+
+# Windows-only entry points keep the line ending Windows actually wants.
+*.bat text eol=crlf
+
+# gradlew is a POSIX shell script read by bash even on Windows; CRLF there
+# breaks the shebang.
+gradlew text eol=lf
+
+# Binary. Never diffed, never line-ending-converted.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ttf binary
+*.otf binary
+*.jar binary
+*.dat binary

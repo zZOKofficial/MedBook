@@ -1,0 +1,91 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/privacy_root"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="?colorSurface"
+	android:fillViewport="true">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:paddingLeft="@dimen/screen_gutter"
+		android:paddingRight="@dimen/screen_gutter">
+		<ImageButton
+			android:id="@+id/back_button"
+			style="@style/Widget.MedBook.BackButton"
+			android:contentDescription="@string/back" />
+		<TextView
+			style="@style/Widget.MedBook.ScreenTitle"
+			android:text="@string/privacy_title" />
+
+		<TextView
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/privacy_collect_heading" />
+		<TextView
+			style="@style/Widget.MedBook.Body"
+			android:text="@string/privacy_collect_body" />
+
+		<TextView
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/privacy_network_heading" />
+		<TextView
+			style="@style/Widget.MedBook.Body"
+			android:text="@string/privacy_network_body" />
+
+		<TextView
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/privacy_stored_heading" />
+		<TextView
+			style="@style/Widget.MedBook.Body"
+			android:text="@string/privacy_stored_body" />
+
+		<TextView
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/privacy_directory_heading" />
+		<TextView
+			style="@style/Widget.MedBook.Body"
+			android:text="@string/privacy_directory_body" />
+
+		<TextView
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/privacy_backup_heading" />
+		<TextView
+			style="@style/Widget.MedBook.Body"
+			android:text="@string/privacy_backup_body" />
+
+		<TextView
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/privacy_calls_heading" />
+		<TextView
+			style="@style/Widget.MedBook.Body"
+			android:text="@string/privacy_calls_body" />
+
+		<TextView
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/privacy_demo_heading" />
+		<TextView
+			style="@style/Widget.MedBook.Body"
+			android:text="@string/privacy_demo_body" />
+
+		<TextView
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/privacy_corrections_heading" />
+		<TextView
+			style="@style/Widget.MedBook.Body"
+			android:text="@string/privacy_corrections_body" />
+
+		<!-- The only way out of this screen. Everything above it is a statement; this
+		     is the one thing a reader might need to act on. -->
+		<View
+			style="@style/Widget.MedBook.Divider"
+			android:layout_marginTop="12dp" />
+		<include
+			android:id="@+id/corrections_row"
+			layout="@layout/setting_row"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/screen_bottom_gap" />
+	</LinearLayout>
+</ScrollView>

@@ -85,6 +85,16 @@ android {
 		viewBinding true
 		buildConfig true
 	}
+
+	// abortOnError and MissingTranslation's error severity are both lint defaults
+	// already, verified by running lintDebug clean before this block existed. What
+	// this actually changes: checkDependencies stays off, so lint does not descend
+	// into the four AndroidX libraries on every run, and textReport puts the failure
+	// in CI's own log instead of only in an HTML artifact nobody opens.
+	lint {
+		checkDependencies false
+		textReport true
+	}
 }
 
 dependencies {

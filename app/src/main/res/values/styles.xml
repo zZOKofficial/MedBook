@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
 	<!--
 	  Typography is defined once here as a scale, not applied per view at runtime.
@@ -14,7 +14,10 @@
 	<style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
 		<item name="android:statusBarColor">@android:color/transparent</item>
 		<item name="android:navigationBarColor">@android:color/transparent</item>
-		<item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+		<!-- No-op below API 23, where the attribute does not exist yet; the platform
+		     ignores an unknown style item rather than erroring, so this is safe
+		     unconditionally and targetApi only silences lint about it. -->
+		<item name="android:windowLightStatusBar" tools:targetApi="23">?attr/isLightTheme</item>
 
 		<!--
 		  The M3 colour scheme, seeded from #1976D2. Without these the theme
@@ -89,6 +92,96 @@
 		<item name="android:textAllCaps">false</item>
 	</style>
 
+	<!--
+	  A screen's chrome and its repeating rows, factored out once instead of retyped on
+	  every "back button, title, divider, section header, body paragraph" screen. Each
+	  one carries its own layout params - see dimens.xml - so a call site is a style
+	  reference plus whatever content the view actually holds, not the full attribute
+	  list. Applying a style cannot set defStyleAttr-supplied layout params (that path
+	  needs generateLayoutParams to know the widget's own attrs, which a bare style
+	  reference does not provide), so none of these are wired as theme-level default
+	  styles - each stays an explicit style="@style/..." at the call site.
+	-->
+
+	<style name="Widget.MedBook.BackButton" parent="">
+		<item name="android:layout_width">@dimen/back_button_size</item>
+		<item name="android:layout_height">@dimen/back_button_size</item>
+		<item name="android:layout_marginTop">4dp</item>
+		<item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+		<item name="android:scaleType">center</item>
+		<item name="android:src">@drawable/ic_back</item>
+	</style>
+	<!-- contentDescription stays at the call site rather than in the style above:
+	     lint's ContentDescription check reads the XML attribute directly and does not
+	     resolve styles, so baking it in here would leave every call site flagged. -->
+
+	<style name="Widget.MedBook.ScreenTitle" parent="">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginTop">4dp</item>
+		<item name="android:paddingStart">@dimen/row_gutter</item>
+		<item name="android:paddingEnd">@dimen/row_gutter</item>
+		<item name="android:textAppearance">@style/TextAppearance.MedBook.Title</item>
+		<item name="android:textColor">?colorOnSurface</item>
+	</style>
+
+	<style name="Widget.MedBook.SectionHeader" parent="">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginTop">@dimen/section_gap</item>
+		<item name="android:layout_marginBottom">@dimen/section_header_gap</item>
+		<item name="android:paddingStart">@dimen/row_gutter</item>
+		<item name="android:paddingEnd">@dimen/row_gutter</item>
+		<item name="android:textAppearance">@style/TextAppearance.MedBook.SectionHeader</item>
+		<item name="android:textColor">?colorSecondary</item>
+	</style>
+
+	<style name="Widget.MedBook.Body" parent="">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:paddingStart">@dimen/row_gutter</item>
+		<item name="android:paddingEnd">@dimen/row_gutter</item>
+		<item name="android:lineSpacingExtra">@dimen/body_line_spacing</item>
+		<item name="android:textAppearance">@style/TextAppearance.MedBook.Body</item>
+		<item name="android:textColor">?colorOnSurfaceVariant</item>
+	</style>
+
+	<style name="Widget.MedBook.Divider" parent="">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">@dimen/divider_thickness</item>
+		<item name="android:layout_marginStart">@dimen/row_gutter</item>
+		<item name="android:layout_marginEnd">@dimen/row_gutter</item>
+		<item name="android:background">?colorOutlineVariant</item>
+	</style>
+
+	<style name="Widget.MedBook.BulletRow" parent="">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginTop">14dp</item>
+		<item name="android:orientation">horizontal</item>
+		<item name="android:paddingStart">@dimen/row_gutter</item>
+		<item name="android:paddingEnd">@dimen/row_gutter</item>
+	</style>
+
+	<!-- The glyph is always the same string, so it is baked into the style: a bullet
+	     row's first child needs no attributes of its own at all. -->
+	<style name="Widget.MedBook.Bullet" parent="">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginEnd">@dimen/bullet_gap</item>
+		<item name="android:text">@string/bullet</item>
+		<item name="android:textAppearance">@style/TextAppearance.MedBook.Body</item>
+		<item name="android:textColor">?colorPrimary</item>
+	</style>
+
+	<style name="Widget.MedBook.BulletText" parent="">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:lineSpacingExtra">@dimen/body_line_spacing</item>
+		<item name="android:textAppearance">@style/TextAppearance.MedBook.Body</item>
+		<item name="android:textColor">?colorOnSurfaceVariant</item>
+	</style>
+
 	<style name="TextAppearance.MedBook.SectionHeader" parent="TextAppearance.Material3.LabelMedium">
 		<item name="fontFamily">@font/hind_siliguri_bold</item>
 		<item name="android:fontFamily">@font/hind_siliguri_bold</item>
@@ -152,10 +245,4 @@
 		<item name="postSplashScreenTheme">@style/AppTheme</item>
 	</style>
 
-	<style name="AppTheme.FullScreen" parent="AppTheme">
-		<item name="android:windowFullscreen">true</item>
-		<item name="android:windowContentOverlay">@null</item>
-	</style>
-	<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.Material3" />
-	<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.Material3" />
 </resources>

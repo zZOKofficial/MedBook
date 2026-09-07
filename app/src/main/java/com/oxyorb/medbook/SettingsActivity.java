@@ -1,25 +1,29 @@
 package com.oxyorb.medbook;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
 import android.widget.CompoundButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
+import androidx.core.view.AccessibilityDelegateCompat;
 import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.oxyorb.medbook.databinding.SettingsBinding;
 import com.oxyorb.medbook.demo.DemoStore;
 import com.oxyorb.medbook.settings.LocaleController;
+import com.oxyorb.medbook.settings.SettingsLabels;
 import com.oxyorb.medbook.settings.SettingsStore;
 
 /**
@@ -27,18 +31,22 @@ import com.oxyorb.medbook.settings.SettingsStore;
  *
  * The preference library brings its own list, its own row styling and its own
  * ActionBar assumptions, all of which fight a NoActionBar theme whose chrome-free
- * look the rest of the app treats as the point. Three radio buttons in a
- * ScrollView need none of that, and skip a dependency the app does not otherwise
- * carry.
+ * look the rest of the app treats as the point. Rows in a ScrollView need none of
+ * that, and skip a dependency the app does not otherwise carry.
+ *
+ * Theme and language used to sit here as open radio groups -- nine rows, every choice
+ * shown at once, at the same visual level as the headings above them. They are now one
+ * row each, naming their own current value and opening a single-choice dialog. The
+ * screen stops growing by three rows per setting, which is the only reason the change
+ * was worth making.
  */
 public class SettingsActivity extends AppCompatActivity {
 
+	/** Dialog order for the language picker, and so the order of its labels. */
+	private static final String[] LANGUAGE_TAGS = {"", "en", "bn"};
+
 	private SettingsBinding binding;
 	private SettingsStore settings;
-	/** Guard the listeners while a stored value is being reflected into the UI. */
-	private boolean bindingTheme;
-	private boolean bindingLanguage;
-	private boolean bindingDemo;
 
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -58,77 +66,113 @@ public class SettingsActivity extends AppCompatActivity {
 		bindTheme();
 		bindLanguage();
 		bindDemo();
+		bindAbout();
 	}
 
-	private void bindTheme() {
-		// "Follow the device" is honest from API 29 on. Below it there is no system
-		// dark setting, so the choice falls back to the battery saver and the note
-		// says so rather than letting the label quietly overpromise.
-		binding.themeSystemNote.setVisibility(
-			Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ? View.GONE : View.VISIBLE);
-
-		bindingTheme = true;
-		switch (settings.theme()) {
-			case SettingsStore.THEME_LIGHT:
-				binding.themeGroup.check(R.id.theme_light);
-				break;
-			case SettingsStore.THEME_DARK:
-				binding.themeGroup.check(R.id.theme_dark);
-				break;
-			default:
-				binding.themeGroup.check(R.id.theme_system);
-				break;
-		}
-		bindingTheme = false;
-
-		binding.themeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+	/** The one way out of settings, to a screen that only ever reads -- and from
+	 *  which Privacy and Licences are both a further tap away. */
+	private void bindAbout() {
+		binding.aboutRow.rowTitle.setText(R.string.settings_about_app);
+		binding.aboutRow.getRoot().setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onCheckedChanged(RadioGroup _group, int _checkedId) {
-				if (bindingTheme) {
-					return;
-				}
-				int _theme = SettingsStore.THEME_SYSTEM;
-				if (_checkedId == R.id.theme_light) {
-					_theme = SettingsStore.THEME_LIGHT;
-				} else if (_checkedId == R.id.theme_dark) {
-					_theme = SettingsStore.THEME_DARK;
-				}
-				settings.setTheme(_theme);
-				// Store first, then apply: this recreates every live activity,
-				// including this one, and the choice must already be durable when
-				// the new instance reads it back.
-				AppCompatDelegate.setDefaultNightMode(settings.nightMode());
+			public void onClick(View _view) {
+				startActivity(new Intent(SettingsActivity.this, AboutActivity.class));
 			}
 		});
+	}
+
+	/**
+	 * The theme row. There is no listener to guard here any more: the row only ever
+	 * displays what is stored, and the dialog is the only thing that writes.
+	 */
+	private void bindTheme() {
+		binding.themeRow.rowTitle.setText(R.string.settings_theme);
+		binding.themeRow.rowSummary.setText(
+			SettingsLabels.themeLabel(settings.theme(), Build.VERSION.SDK_INT));
+		binding.themeRow.rowSummary.setVisibility(View.VISIBLE);
+		binding.themeRow.getRoot().setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				showThemeDialog();
+			}
+		});
+	}
+
+	/**
+	 * Three labels, the stored one pre-checked, applied on tap.
+	 *
+	 * Dismiss first, then store, then apply. setSingleChoiceItems does not dismiss
+	 * itself -- unlike setItems -- and setDefaultNightMode recreates every live
+	 * activity including this one. A dialog still showing when its host is destroyed
+	 * is a leaked window, so the order is not cosmetic. Storing before applying is the
+	 * older rule and still holds: the recreated activity reads the preference back.
+	 */
+	private void showThemeDialog() {
+		final int _current = settings.theme();
+		CharSequence[] _labels = new CharSequence[3];
+		for (int _i = 0; _i < _labels.length; _i++) {
+			_labels[_i] = getString(SettingsLabels.themeLabel(_i, Build.VERSION.SDK_INT));
+		}
+		new MaterialAlertDialogBuilder(this)
+			.setTitle(R.string.settings_theme)
+			.setNegativeButton(R.string.cancel, null)
+			.setSingleChoiceItems(_labels, _current, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface _dialog, int _which) {
+					_dialog.dismiss();
+					if (_which == _current) {
+						return;
+					}
+					settings.setTheme(_which);
+					AppCompatDelegate.setDefaultNightMode(settings.nightMode());
+				}
+			})
+			.show();
 	}
 
 	private void bindLanguage() {
-		String _tag = settings.localeTag();
-		bindingLanguage = true;
-		if ("bn".equals(_tag)) {
-			binding.languageGroup.check(R.id.language_bengali);
-		} else if ("en".equals(_tag)) {
-			binding.languageGroup.check(R.id.language_english);
-		} else {
-			binding.languageGroup.check(R.id.language_system);
-		}
-		bindingLanguage = false;
-
-		binding.languageGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+		binding.languageRow.rowTitle.setText(R.string.settings_language);
+		binding.languageRow.rowSummary.setText(
+			SettingsLabels.languageLabel(settings.localeTag()));
+		binding.languageRow.rowSummary.setVisibility(View.VISIBLE);
+		binding.languageRow.getRoot().setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onCheckedChanged(RadioGroup _group, int _checkedId) {
-				if (bindingLanguage) {
-					return;
-				}
-				String _choice = "";
-				if (_checkedId == R.id.language_english) {
-					_choice = "en";
-				} else if (_checkedId == R.id.language_bengali) {
-					_choice = "bn";
-				}
-				LocaleController.set(settings, _choice);
+			public void onClick(View _view) {
+				showLanguageDialog();
 			}
 		});
+	}
+
+	/** As {@link #showThemeDialog()}: dismiss, store, apply, in that order. */
+	private void showLanguageDialog() {
+		final int _current = indexOfLanguage(settings.localeTag());
+		CharSequence[] _labels = new CharSequence[LANGUAGE_TAGS.length];
+		for (int _i = 0; _i < _labels.length; _i++) {
+			_labels[_i] = getString(SettingsLabels.languageLabel(LANGUAGE_TAGS[_i]));
+		}
+		new MaterialAlertDialogBuilder(this)
+			.setTitle(R.string.settings_language)
+			.setNegativeButton(R.string.cancel, null)
+			.setSingleChoiceItems(_labels, _current, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface _dialog, int _which) {
+					_dialog.dismiss();
+					if (_which == _current) {
+						return;
+					}
+					LocaleController.set(settings, LANGUAGE_TAGS[_which]);
+				}
+			})
+			.show();
+	}
+
+	private static int indexOfLanguage(String _tag) {
+		for (int _i = 0; _i < LANGUAGE_TAGS.length; _i++) {
+			if (LANGUAGE_TAGS[_i].equals(_tag)) {
+				return _i;
+			}
+		}
+		return 0;
 	}
 
 	/**
@@ -139,30 +183,68 @@ public class SettingsActivity extends AppCompatActivity {
 	 * bearing: anyone can find this, so nothing behind it may look like a real
 	 * booking. Turning it off leaves the bookings alone -- switching back on should
 	 * find the demo where it was left, mid-pitch, rather than wiped.
+	 *
+	 * The row, not the switch, is the click target -- see setting_row_switch.xml --
+	 * so the switch reflects the stored value before its own listener is registered
+	 * below, exactly as bindTheme()/bindLanguage() never guard against an initial
+	 * setChecked firing a listener that is not there to fire yet.
+	 *
+	 * The switch is importantForAccessibility="no" in the layout, which leaves
+	 * TalkBack nothing to focus but the row -- and a plain clickable row reports no
+	 * checked state of its own. The delegate below is what makes it announce as a
+	 * switch rather than a silent label.
 	 */
 	private void bindDemo() {
-		bindingDemo = true;
-		binding.demoSwitch.setChecked(settings.demoEnabled());
-		bindingDemo = false;
-		binding.demoReset.setEnabled(settings.demoEnabled());
+		binding.demoRow.rowTitle.setText(R.string.settings_demo_toggle);
+		binding.demoRow.rowSummary.setText(R.string.settings_demo_note);
+		binding.demoRow.rowSummary.setVisibility(View.VISIBLE);
+		binding.demoRow.rowSwitch.setChecked(settings.demoEnabled());
 
-		binding.demoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		ViewCompat.setAccessibilityDelegate(binding.demoRow.getRoot(), new AccessibilityDelegateCompat() {
+			@Override
+			public void onInitializeAccessibilityNodeInfo(View _host, AccessibilityNodeInfoCompat _info) {
+				super.onInitializeAccessibilityNodeInfo(_host, _info);
+				_info.setClassName("android.widget.Switch");
+				_info.setCheckable(true);
+				_info.setChecked(binding.demoRow.rowSwitch.isChecked());
+			}
+		});
+		binding.demoRow.getRoot().setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				binding.demoRow.rowSwitch.toggle();
+			}
+		});
+		binding.demoRow.rowSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton _button, boolean _checked) {
-				if (bindingDemo) {
-					return;
-				}
 				settings.setDemoEnabled(_checked);
-				binding.demoReset.setEnabled(_checked);
+				setResetEnabled(_checked);
+				binding.demoRow.getRoot().sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED);
 			}
 		});
 
-		binding.demoReset.setOnClickListener(new View.OnClickListener() {
+		binding.demoResetRow.rowTitle.setText(R.string.settings_demo_reset);
+		// An action, not a way into another screen, so it carries no chevron.
+		binding.demoResetRow.rowChevron.setVisibility(View.GONE);
+		binding.demoResetRow.getRoot().setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
 				confirmReset();
 			}
 		});
+		setResetEnabled(settings.demoEnabled());
+	}
+
+	/**
+	 * A disabled row rather than a hidden one: with nothing to reset the action is
+	 * still worth showing, so that turning the demo on does not appear to add a
+	 * control out of nowhere. A disabled View does not dispatch clicks, so the alpha
+	 * is the whole of what has to be said.
+	 */
+	private void setResetEnabled(boolean _enabled) {
+		binding.demoResetRow.getRoot().setEnabled(_enabled);
+		binding.demoResetRow.getRoot().setAlpha(_enabled ? 1f : 0.38f);
 	}
 
 	/**

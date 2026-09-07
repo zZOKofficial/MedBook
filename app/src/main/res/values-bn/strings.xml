@@ -48,7 +48,7 @@
 	<string name="settings_appearance">চেহারা</string>
 	<string name="settings_theme">থিম</string>
 	<string name="theme_system">ডিভাইস অনুযায়ী</string>
-	<string name="theme_system_legacy_note">অ্যান্ড্রয়েডের এই সংস্করণে সিস্টেম ডার্ক মোড নেই, তাই মেডবুক ব্যাটারি সেভার অনুসরণ করবে।</string>
+	<string name="theme_system_battery">ব্যাটারি সেভার অনুযায়ী</string>
 	<string name="theme_light">লাইট</string>
 	<string name="theme_dark">ডার্ক</string>
 	<string name="settings_language">ভাষা</string>
@@ -62,6 +62,9 @@
 	<string name="settings_demo_reset_message">ডেমোতে নেওয়া সব অ্যাপয়েন্টমেন্ট মুছে যাবে। ডেমোর অন্য কিছু বদলাবে না।</string>
 	<string name="settings_demo_reset_done">ডেমো বুকিং মুছে ফেলা হয়েছে।</string>
 	<string name="settings_demo_reset_empty">মুছে ফেলার মতো কোনো ডেমো বুকিং নেই।</string>
+	<string name="settings_about">সম্পর্কে</string>
+	<string name="settings_about_app">মেডবুক সম্পর্কে</string>
+	<string name="settings_privacy">গোপনীয়তা</string>
 
 	<string name="demo_badge">ডেমো</string>
 	<string name="demo_banner">নমুনা। কিছুই বুক হয় না এবং কোনো চেম্বারে জানানো হয় না।</string>
@@ -125,6 +128,55 @@
 		<item>তসলিমা ন.</item>
 		<item>গোলাম ম.</item>
 	</string-array>
+
+	<!-- The first-launch notice. -->
+	<string name="welcome_title">শুরু করার আগে</string>
+	<string name="welcome_point_permissions">মেডবুক কোনো অনুমতি চায় না, এমনকি ইন্টারনেট ব্যবহারেরও নয়।</string>
+	<string name="welcome_point_offline">ডাক্তার ডিরেক্টরি অ্যাপের ভেতরেই আছে, কোনো সংযোগ ছাড়াই পড়া হয়।</string>
+	<string name="welcome_point_leaves">এখানে আপনি যা করেন তার কিছুই এই ফোন ছেড়ে যায় না। কোনো অ্যাকাউন্ট নেই, সার্ভার নেই, অ্যানালিটিক্সও নেই।</string>
+	<string name="welcome_point_listings">ডাক্তারের তথ্য প্রকাশিত পেশাগত তালিকা, চিকিৎসা-নথি নয়।</string>
+	<string name="welcome_read_full">সম্পূর্ণ গোপনীয়তা নোটিশ পড়ুন</string>
+	<string name="welcome_continue">চালিয়ে যান</string>
+
+	<!-- About. The author and the publisher stay in Latin script, as the doctor names
+	     in the directory do, and for the same reason. -->
+	<string name="about_tagline">আপনার স্বাস্থ্য, আপনার সময়সূচি।</string>
+	<string name="about_directory_heading">ডিরেক্টরি</string>
+	<string name="about_directory_body">মেডবুকে রয়েছে প্রকাশিত ডাক্তার প্রোফাইলের একটি ডিরেক্টরি — নাম, ডিগ্রি, চেম্বার, বসার সময় ও অ্যাপয়েন্টমেন্ট নম্বর — যা অফলাইনে তৈরি করে অ্যাপের ভেতরেই দেওয়া আছে। কোনো সার্ভার নেই, কোনো নেটওয়ার্ক কল নেই: মেডবুক কোনো অনুমতিই চায় না, এমনকি ইন্টারনেট ব্যবহারেরও নয়।</string>
+	<string name="about_source">সোর্স কোড</string>
+	<string name="about_security">নিরাপত্তা সমস্যা জানান</string>
+	<string name="about_security_summary">গোপনে, গিটহাবের অ্যাডভাইজরি ফর্মের মাধ্যমে</string>
+	<string name="about_licence">GNU Affero General Public License v3.0 এর অধীনে প্রকাশিত।</string>
+	<string name="about_author">ডেভেলপ করেছেন Md. Maruf Hossain, প্রকাশ করেছে OxyOrb।</string>
+	<string name="no_browser">এই ডিভাইসের কোনো অ্যাপ লিংক খুলতে পারে না।</string>
+
+	<!-- The privacy notice. -->
+	<string name="privacy_title">গোপনীয়তা</string>
+	<string name="privacy_collect_heading">মেডবুক কী সংগ্রহ করে</string>
+	<string name="privacy_collect_body">কিছুই না। কোনো অ্যাকাউন্ট নেই, সাইন-ইন নেই, অ্যানালিটিক্স নেই, ক্র্যাশ রিপোর্টও নেই। মেডবুক আপনার কাছে কখনো নাম, নম্বর বা ঠিকানা চায়নি, আর পাঠানোর জায়গাও তার নেই।</string>
+	<string name="privacy_network_heading">আপনার ফোন থেকে কী বাইরে যায়</string>
+	<string name="privacy_network_body">কিছুই না। মেডবুকের ইন্টারনেট অনুমতি নেই, তাই চাইলেও সে কোনো নেটওয়ার্ক কল করতে পারে না। ডিরেক্টরি পড়া হয় অ্যাপের নিজস্ব সংরক্ষণ থেকে, কোনো সংযোগ ছাড়াই।</string>
+	<string name="privacy_stored_heading">আপনার ফোনে কী জমা থাকে</string>
+	<string name="privacy_stored_body">তিনটি জিনিস, সবই মেডবুকের ব্যক্তিগত সংরক্ষণে: প্রথমবার চালু করার সময় অ্যাপ থেকে খোলা ডাক্তার ডিরেক্টরি; আপনার থিম ও ভাষা; এবং ডেমো মোড চালু করে থাকলে সেখানে নেওয়া অ্যাপয়েন্টমেন্টগুলো।</string>
+	<string name="privacy_directory_heading">ডিরেক্টরি কোথা থেকে এসেছে</string>
+	<string name="privacy_directory_body">প্রকাশিত পেশাগত প্রোফাইল থেকে — নাম, ডিগ্রি, চেম্বারের ঠিকানা, বসার সময়, অ্যাপয়েন্টমেন্ট নম্বর ও বিএমডিসি নিবন্ধন নম্বর, যেভাবে তাদের উৎস প্রকাশ করেছে। এটি ডাক্তারদের সম্পর্কে প্রকাশিত তথ্য, আপনার সম্পর্কে কোনো রেকর্ড নয়, আর এর কিছুই চিকিৎসা-নথি নয়।</string>
+	<string name="privacy_backup_heading">ব্যাকআপ</string>
+	<string name="privacy_backup_body">আপনার থিম ও ভাষা নতুন ফোনে আপনার সঙ্গে যাবে, যেমনটা আপনি আশা করবেন। ডিরেক্টরি যাবে না: সেটি অ্যাপ থেকেই আবার তৈরি হয়। ডেমো বুকিং আর এই নোটিশ দেখানোর হিসাব ক্লাউড ব্যাকআপের বাইরে রাখা হয়, যাতে অন্য কারো ফোনে রিস্টোর হলে তাকে এই নোটিশ এড়িয়ে না গিয়ে দেখানো হয়।</string>
+	<string name="privacy_calls_heading">চেম্বারে ফোন করা</string>
+	<string name="privacy_calls_body">অ্যাপয়েন্টমেন্ট নম্বরে চাপ দিলে সেটি আপনার ফোনের নিজস্ব ডায়ালারে চলে যায়। মেডবুক কোনো কল করে না, আর আপনি যে চাপ দিয়েছেন তার কোনো হিসাবও রাখে না।</string>
+	<string name="privacy_demo_heading">ডেমো মোড</string>
+	<string name="privacy_demo_body">আপনি চালু না করলে বন্ধ। এর পেছনের সবকিছুই বানানো: কোনো অ্যাপয়েন্টমেন্ট হয় না, কোনো চেম্বারকে কিছু জানানো হয় না, আর চেম্বার ভিউয়ের রোগীরাও কাল্পনিক। তারা কারো নাম নয়।</string>
+	<string name="privacy_corrections_heading">সংশোধন</string>
+	<string name="privacy_corrections_body">আপনি ডিরেক্টরিতে আছেন এবং আপনার সম্পর্কে কিছু ভুল থাকলে, কিংবা আপনি একেবারেই তালিকাভুক্ত থাকতে না চাইলে, রিপোজিটরিতে একটি ইস্যু খুলুন — পরের ডেটাসেটে তা সংশোধন করা হবে।</string>
+	<string name="privacy_corrections_action">ইস্যু খুলুন</string>
+
+	<!-- Open source licences. The chrome is localised; the licence texts are not. -->
+	<string name="licences_title">ওপেন সোর্স লাইসেন্স</string>
+	<string name="licences_app_body">মেডবুক GNU Affero General Public License v3.0 এর অধীনে মুক্ত সফটওয়্যার। এই লাইসেন্স অনুযায়ী কেউ পরিবর্তিত সংস্করণ নেটওয়ার্কে চালালে তাকে তার ব্যবহারকারীদের জন্য সোর্স উন্মুক্ত করতে হয়।</string>
+	<string name="licences_app_action">লাইসেন্স পড়ুন</string>
+	<string name="licences_fonts_heading">ফন্ট</string>
+	<string name="licences_libraries_heading">লাইব্রেরি</string>
+	<string name="licences_libraries_body">AndroidX ও Material Components, Apache License 2.0 এর অধীনে। মেডবুকে অন্য কোনো তৃতীয় পক্ষের কোড নেই।</string>
 
 	<!-- Department and family names. Medical terminology rather than
 	     translation: where Bangladeshi practice says a term in English, it

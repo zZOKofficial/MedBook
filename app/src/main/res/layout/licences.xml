@@ -1,0 +1,91 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/licences_root"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="?colorSurface"
+	android:fillViewport="true">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:paddingLeft="@dimen/screen_gutter"
+		android:paddingRight="@dimen/screen_gutter">
+		<ImageButton
+			android:id="@+id/back_button"
+			style="@style/Widget.MedBook.BackButton"
+			android:contentDescription="@string/back" />
+		<TextView
+			style="@style/Widget.MedBook.ScreenTitle"
+			android:text="@string/licences_title" />
+
+		<TextView
+			style="@style/Widget.MedBook.Body"
+			android:layout_marginTop="20dp"
+			android:text="@string/licences_app_body" />
+		<View
+			style="@style/Widget.MedBook.Divider"
+			android:layout_marginTop="12dp" />
+		<include
+			android:id="@+id/agpl_row"
+			layout="@layout/setting_row"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+
+		<!--
+		  The two font licences in full, not as links. The OFL requires the licence to
+		  accompany the fonts it covers, and MedBook redistributes subsets of both
+		  faces inside the APK - a URL is not accompaniment. They are read from
+		  res/raw at 8.8KB the pair, and stay English: they are the licences as
+		  granted, not interface copy.
+		-->
+		<TextView
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/licences_fonts_heading" />
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingStart="@dimen/row_gutter"
+			android:paddingEnd="@dimen/row_gutter"
+			android:text="@string/licences_gabarito"
+			android:textAppearance="@style/TextAppearance.MedBook.Label"
+			android:textColor="?colorOnSurface" />
+		<TextView
+			android:id="@+id/gabarito_text"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="6dp"
+			android:paddingStart="@dimen/row_gutter"
+			android:paddingEnd="@dimen/row_gutter"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOnSurfaceVariant"
+			tools:text="Copyright 2023 The Gabarito Project Authors" />
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="20dp"
+			android:paddingStart="@dimen/row_gutter"
+			android:paddingEnd="@dimen/row_gutter"
+			android:text="@string/licences_hind_siliguri"
+			android:textAppearance="@style/TextAppearance.MedBook.Label"
+			android:textColor="?colorOnSurface" />
+		<TextView
+			android:id="@+id/hind_siliguri_text"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="6dp"
+			android:paddingStart="@dimen/row_gutter"
+			android:paddingEnd="@dimen/row_gutter"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOnSurfaceVariant"
+			tools:text="Copyright (c) 2015 Indian Type Foundry" />
+
+		<TextView
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/licences_libraries_heading" />
+		<TextView
+			style="@style/Widget.MedBook.Body"
+			android:layout_marginBottom="@dimen/screen_bottom_gap"
+			android:text="@string/licences_libraries_body" />
+	</LinearLayout>
+</ScrollView>

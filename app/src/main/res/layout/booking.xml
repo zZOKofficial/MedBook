@@ -9,13 +9,8 @@
 	android:paddingRight="16dp">
 	<ImageButton
 		android:id="@+id/back_button"
-		android:layout_width="44dp"
-		android:layout_height="44dp"
-		android:layout_marginTop="4dp"
-		android:background="?attr/selectableItemBackgroundBorderless"
-		android:contentDescription="@string/back"
-		android:scaleType="center"
-		android:src="@drawable/ic_back" />
+		style="@style/Widget.MedBook.BackButton"
+		android:contentDescription="@string/back" />
 	<!-- The error colour role, which nothing else in the app uses. A simulated
 	     booking against a real doctor with a real published number is the one thing
 	     on this screen a person must not misread, so it gets the loudest role there

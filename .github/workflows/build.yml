@@ -1,0 +1,38 @@
+# Builds, lints and tests every push and pull request against a checkout with neither
+# of the two private files the repo runs without: dataset.properties and
+# keystore.properties are both gitignored, and app/build.gradle already degrades to an
+# unsigned APK with an empty directory when they are absent, so this needs no secrets.
+name: Build
+
+on:
+  push:
+    branches: ["main", "release/**"]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Matches gradle/gradle-daemon-jvm.properties: JetBrains, 25. Temurin would fail
+      # that vendor match and send Gradle to download its own JBR through the wrapper's
+      # own retries=0 / 10s network timeout on every run.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: jetbrains
+          java-version: "25"
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
+      - name: Lint
+        run: ./gradlew lintDebug --console=plain
+
+      - name: Unit tests
+        run: ./gradlew testDebugUnitTest --console=plain
+
+      - name: Assemble debug
+        run: ./gradlew assembleDebug --console=plain

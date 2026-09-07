@@ -1,0 +1,93 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/welcome_root"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="?colorSurface"
+	android:orientation="vertical"
+	android:paddingLeft="@dimen/screen_gutter"
+	android:paddingRight="@dimen/screen_gutter">
+	<!--
+	  The content scrolls and the button does not. On a short screen the last point
+	  would otherwise push Continue off the bottom, which on the one screen a person
+	  cannot get past is the worst place for it to happen.
+	-->
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:fillViewport="true">
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="32dp"
+				android:paddingStart="@dimen/row_gutter"
+				android:paddingEnd="@dimen/row_gutter"
+				android:fontFamily="@font/gabarito_extrabold"
+				android:text="@string/app_name"
+				android:textAppearance="@style/TextAppearance.MedBook.Wordmark"
+				android:textColor="?colorPrimary" />
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="20dp"
+				android:layout_marginBottom="8dp"
+				android:paddingStart="@dimen/row_gutter"
+				android:paddingEnd="@dimen/row_gutter"
+				android:text="@string/welcome_title"
+				android:textAppearance="@style/TextAppearance.MedBook.Title"
+				android:textColor="?colorOnSurface" />
+
+			<LinearLayout style="@style/Widget.MedBook.BulletRow">
+				<TextView style="@style/Widget.MedBook.Bullet" />
+				<TextView
+					style="@style/Widget.MedBook.BulletText"
+					android:text="@string/welcome_point_permissions" />
+			</LinearLayout>
+
+			<LinearLayout style="@style/Widget.MedBook.BulletRow">
+				<TextView style="@style/Widget.MedBook.Bullet" />
+				<TextView
+					style="@style/Widget.MedBook.BulletText"
+					android:text="@string/welcome_point_offline" />
+			</LinearLayout>
+
+			<LinearLayout style="@style/Widget.MedBook.BulletRow">
+				<TextView style="@style/Widget.MedBook.Bullet" />
+				<TextView
+					style="@style/Widget.MedBook.BulletText"
+					android:text="@string/welcome_point_leaves" />
+			</LinearLayout>
+
+			<LinearLayout style="@style/Widget.MedBook.BulletRow">
+				<TextView style="@style/Widget.MedBook.Bullet" />
+				<TextView
+					style="@style/Widget.MedBook.BulletText"
+					android:text="@string/welcome_point_listings" />
+			</LinearLayout>
+
+			<View
+				style="@style/Widget.MedBook.Divider"
+				android:layout_marginTop="24dp" />
+			<include
+				android:id="@+id/full_notice_row"
+				layout="@layout/setting_row"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" />
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="16dp" />
+		</LinearLayout>
+	</ScrollView>
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/continue_button"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:layout_marginBottom="20dp"
+		android:minHeight="52dp"
+		android:text="@string/welcome_continue" />
+</LinearLayout>

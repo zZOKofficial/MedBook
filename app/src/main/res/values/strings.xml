@@ -45,9 +45,11 @@
 	<string name="settings_appearance">Appearance</string>
 	<string name="settings_theme">Theme</string>
 	<string name="theme_system">Follow the device</string>
-	<!-- Shown under "Follow the device" only below Android 10, where there is no
-	     system-wide dark setting to follow and the battery saver is the nearest thing. -->
-	<string name="theme_system_legacy_note">This version of Android has no system dark mode, so MedBook follows the battery saver instead.</string>
+	<!-- Replaces "Follow the device" below Android 10, in the row and in the dialog
+	     both. There is no system-wide dark setting to follow that far back, so the
+	     option is renamed to what it actually does rather than carrying a footnote a
+	     collapsed row has no room for. See settings/SettingsLabels. -->
+	<string name="theme_system_battery">Follow the battery saver</string>
 	<string name="theme_light">Light</string>
 	<string name="theme_dark">Dark</string>
 	<string name="settings_language">Language</string>
@@ -66,6 +68,9 @@
 	<string name="settings_demo_reset_message">Every appointment taken in the demo will be forgotten. Nothing else about the demo changes.</string>
 	<string name="settings_demo_reset_done">Demo bookings cleared.</string>
 	<string name="settings_demo_reset_empty">There are no demo bookings to clear.</string>
+	<string name="settings_about">About</string>
+	<string name="settings_about_app">About MedBook</string>
+	<string name="settings_privacy">Privacy</string>
 
 	<!-- Shown on every demo screen, and deliberately hard to miss. -->
 	<string name="demo_badge">DEMO</string>
@@ -141,6 +146,76 @@
 		<item>Taslima N.</item>
 		<item>Golam M.</item>
 	</string-array>
+
+	<!-- The first-launch notice. Shown once, before the home screen can be used, and
+	     again only if PRIVACY_NOTICE_VERSION goes up because the wording changed
+	     materially. There is no decline: MedBook requests no permission and collects
+	     nothing, so a button that closed the app would imply it wanted something it
+	     does not. Each point below is a claim the privacy screen states in full. -->
+	<string name="welcome_title">Before you start</string>
+	<string name="bullet" translatable="false">•</string>
+	<string name="welcome_point_permissions">MedBook asks for no permissions, not even internet access.</string>
+	<string name="welcome_point_offline">The doctor directory is bundled in the app and read with no connection.</string>
+	<string name="welcome_point_leaves">Nothing you do here leaves this phone. There is no account, no server and no analytics.</string>
+	<string name="welcome_point_listings">Doctor details are published professional listings, not medical records.</string>
+	<string name="welcome_read_full">Read the full privacy notice</string>
+	<string name="welcome_continue">Continue</string>
+
+	<!-- About. Deliberately carries no doctor or chamber counts: a checkout without the
+	     private dataset builds an app whose directory is empty, and a number compiled
+	     in here would be a false statement in exactly that build. The README keeps the
+	     statistics, where they can be true of one snapshot at a time. -->
+	<string name="about_tagline">Your Health, Your Schedule.</string>
+	<!-- %1$s is the version name, %2$d the version code. -->
+	<string name="about_version" translatable="false">%1$s (%2$d)</string>
+	<string name="about_directory_heading">The directory</string>
+	<string name="about_directory_body">MedBook carries a directory of publicly listed doctor profiles — names, qualifications, chambers, visiting hours and appointment numbers — built offline and bundled into the app. There is no server and no network call: MedBook requests no permissions at all, not even internet access.</string>
+	<string name="about_source">Source code</string>
+	<string name="about_source_summary" translatable="false">github.com/zZOKofficial/MedBook</string>
+	<string name="about_security">Report a security issue</string>
+	<!-- There is no security address to link: SECURITY.md routes reports through
+	     GitHub\'s private advisory form instead, so that is what this opens. -->
+	<string name="about_security_summary">Privately, through GitHub\'s advisory form</string>
+	<string name="about_licence">Licensed under the GNU Affero General Public License v3.0.</string>
+	<!-- The author and the publisher are written in Latin script in every locale, as
+	     the doctor names in the directory are, and for the same reason. -->
+	<string name="about_author">Developed by Md. Maruf Hossain, and published under OxyOrb.</string>
+	<string name="no_browser">No app on this device can open links.</string>
+
+	<!-- The privacy notice. Shown in full here, excerpted on first launch, and kept in
+	     step with PRIVACY.md at the root of the repository. Everything it claims is
+	     enforced somewhere the reader can check: the empty permission list in
+	     AndroidManifest.xml, and the exclusions in backup_rules.xml. -->
+	<string name="privacy_title">Privacy</string>
+	<string name="privacy_collect_heading">What MedBook collects</string>
+	<string name="privacy_collect_body">Nothing. There is no account, no sign-in, no analytics and no crash reporting. MedBook has never asked you for a name, a number or an address, and has nowhere to send one.</string>
+	<string name="privacy_network_heading">What leaves your phone</string>
+	<string name="privacy_network_body">Nothing. MedBook holds no internet permission, so it cannot make a network call even if it were asked to. The directory is read from the app\'s own storage, with no connection at all.</string>
+	<string name="privacy_stored_heading">What is stored on your phone</string>
+	<string name="privacy_stored_body">Three things, all in MedBook\'s private storage: the doctor directory, unpacked from the app on first launch; your theme and language; and, only if you switched demo mode on, the appointments you took in it.</string>
+	<string name="privacy_directory_heading">Where the directory came from</string>
+	<string name="privacy_directory_body">Publicly listed professional profiles — names, qualifications, chamber addresses, visiting hours, appointment numbers and BMDC registration numbers, as their sources published them. It is published information about doctors, not records about you, and nothing in it is a medical record.</string>
+	<string name="privacy_backup_heading">Backups</string>
+	<string name="privacy_backup_body">Your theme and language follow you to a new phone, which is what you would expect them to do. The directory does not: it is rebuilt from the app. Demo bookings and the record that this notice was shown are kept out of cloud backup, so a restore onto someone else\'s phone shows them this notice rather than skipping it.</string>
+	<string name="privacy_calls_heading">Calling a chamber</string>
+	<string name="privacy_calls_body">Tapping an appointment number hands it to your phone\'s own dialer. MedBook places no call, and keeps no record that you tapped it.</string>
+	<string name="privacy_demo_heading">Demo mode</string>
+	<string name="privacy_demo_body">Off unless you switch it on. Everything behind it is invented: no appointment is made, no chamber is told anything, and the patients in the chamber view are made up. They name nobody.</string>
+	<string name="privacy_corrections_heading">Corrections</string>
+	<string name="privacy_corrections_body">If you are listed in the directory and something about you is wrong, or you would rather not be listed at all, open an issue on the repository and it will be corrected in the next dataset.</string>
+	<string name="privacy_corrections_action">Open an issue</string>
+	<string name="privacy_corrections_summary" translatable="false">github.com/zZOKofficial/MedBook/issues</string>
+
+	<!-- Open source licences. The chrome is localised; the licence texts below it are
+	     not, and are not meant to be - they are the licences as granted. -->
+	<string name="licences_title">Open source licences</string>
+	<string name="licences_app_body">MedBook is free software under the GNU Affero General Public License v3.0. It requires that anyone who runs a modified version over a network make their source available to its users.</string>
+	<string name="licences_app_action">Read the licence</string>
+	<string name="licences_fonts_heading">Fonts</string>
+	<string name="licences_libraries_heading">Libraries</string>
+	<string name="licences_libraries_body">AndroidX and Material Components, under the Apache License 2.0. MedBook carries no other third-party code.</string>
+	<string name="licences_gabarito" translatable="false">Gabarito — SIL Open Font License 1.1</string>
+	<string name="licences_hind_siliguri" translatable="false">Hind Siliguri — SIL Open Font License 1.1</string>
 
 	<!-- Department and family names, mirroring the dataset exactly.
 	     They exist as resources so values-bn can carry a Bengali name per key.

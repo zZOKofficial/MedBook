@@ -1,0 +1,100 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/about_root"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="?colorSurface"
+	android:fillViewport="true">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:paddingLeft="@dimen/screen_gutter"
+		android:paddingRight="@dimen/screen_gutter">
+		<ImageButton
+			android:id="@+id/back_button"
+			style="@style/Widget.MedBook.BackButton"
+			android:contentDescription="@string/back" />
+
+		<!-- The wordmark, as on the home screen: Gabarito at colorPrimary. This screen
+		     is the one place in the app that names the build it is running. -->
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:paddingStart="@dimen/row_gutter"
+			android:paddingEnd="@dimen/row_gutter"
+			android:fontFamily="@font/gabarito_extrabold"
+			android:text="@string/app_name"
+			android:textAppearance="@style/TextAppearance.MedBook.Wordmark"
+			android:textColor="?colorPrimary" />
+		<TextView
+			android:id="@+id/version_text"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="2dp"
+			android:paddingStart="@dimen/row_gutter"
+			android:paddingEnd="@dimen/row_gutter"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOnSurfaceVariant"
+			tools:text="0.4.0-alpha.1 (58)" />
+		<TextView
+			style="@style/Widget.MedBook.Body"
+			android:layout_marginTop="10dp"
+			android:text="@string/about_tagline"
+			android:textColor="?colorOnSurface" />
+
+		<TextView
+			style="@style/Widget.MedBook.SectionHeader"
+			android:text="@string/about_directory_heading" />
+		<TextView
+			style="@style/Widget.MedBook.Body"
+			android:layout_marginBottom="16dp"
+			android:text="@string/about_directory_body" />
+
+		<View style="@style/Widget.MedBook.Divider" />
+		<include
+			android:id="@+id/privacy_row"
+			layout="@layout/setting_row"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+		<View style="@style/Widget.MedBook.Divider" />
+		<include
+			android:id="@+id/licences_row"
+			layout="@layout/setting_row"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+		<View style="@style/Widget.MedBook.Divider" />
+		<include
+			android:id="@+id/source_row"
+			layout="@layout/setting_row"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+		<View style="@style/Widget.MedBook.Divider" />
+		<include
+			android:id="@+id/security_row"
+			layout="@layout/setting_row"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="20dp"
+			android:paddingStart="@dimen/row_gutter"
+			android:paddingEnd="@dimen/row_gutter"
+			android:text="@string/about_licence"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOnSurfaceVariant" />
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="4dp"
+			android:layout_marginBottom="@dimen/screen_bottom_gap"
+			android:paddingStart="@dimen/row_gutter"
+			android:paddingEnd="@dimen/row_gutter"
+			android:text="@string/about_author"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOnSurfaceVariant" />
+	</LinearLayout>
+</ScrollView>

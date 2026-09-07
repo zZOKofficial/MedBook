@@ -33,7 +33,9 @@ what they are looking at.
 | **Doctor directory** | **Working — 7,438 doctors and 9,350 chambers, offline** |
 | Doctor profiles | Working — degrees, chambers, verbatim hours, tap to dial |
 | Search | Working — full-text over names, specialties, workplaces and cities |
-| Settings | Working — reached from the home screen, theme and language |
+| Settings | Working — theme, language and demo, each one row that names its value |
+| About | Working — version, where the directory came from, licences, links out |
+| Privacy | Working — the notice in full, and shown once before first use |
 | Light and dark | Working — follows the device, or overridden per app |
 | Bangla | Working — the interface and all 45 departments; the directory stays English |
 | Launcher icon | Working — adaptive, with a monochrome layer for themed icons |
@@ -91,13 +93,48 @@ their initials rather than a stock photo.
 **Settings** (`SettingsActivity`) — reached from the gear beside the wordmark.
 Theme is Follow the device, Light or Dark, so someone on a light phone can still
 read MedBook in dark. Language is Follow the device, English or বাংলা. Both are
-remembered, and both survive a restart.
+remembered, and both survive a restart. Each is one row naming its current value,
+opening a single-choice dialog, so the screen does not grow by three rows every
+time a setting is added. Demo mode is a switch row, its disclosure carried as
+the switch's own summary line rather than a caption floating underneath it, and
+a reset row beside it. Every row on the screen — theme, language, demo, About —
+is the same object at the same 56dp, so the screen holds its shape as rows are
+added to it.
+
+**About** (`AboutActivity`) — which build this is, read from `BuildConfig` rather
+than written down a second time; what the directory is and where it came from;
+and the way to the privacy notice, the licences, the source and the security
+advisory form. It carries no doctor count on purpose: a checkout without the
+private dataset builds an app whose directory is empty, and a number compiled in
+would be false in exactly that build.
+
+**Welcome** (`WelcomeActivity`) — shown once, before MedBook can be used, and
+again only if the notice's wording changes materially. Four points and a
+Continue: there is no decline, because the app requests no permission and
+collects nothing, and a button that closed it would imply otherwise. Back leaves
+the app rather than dismissing it — a notice that can be swiped past unread is
+not a notice. It is put up by `PrivacyGate` rather than by `HomeActivity`, so a
+restore after process death that lands on a doctor's profile still shows it.
+
+**Privacy** (`PrivacyActivity`) — the notice in full, the same text as
+[PRIVACY.md](PRIVACY.md). An excerpt is shown once before first use. Everything
+it claims is enforced somewhere a reader can check, and it says where.
+
+**Open source licences** (`LicencesActivity`) — the AGPL MedBook is under, and the
+two SIL OFL font licences in full. Those are shipped in `res/raw` rather than
+linked: the OFL requires the licence to accompany the fonts, and a URL is not
+accompaniment in an app that works with no connection.
 
 **Booking** and **Chamber view** (`BookingActivity`, `ChamberConsoleActivity`) —
 only when demo mode is on. Described under [Demo mode](#demo-mode).
 
 Typography comes from the type scale in `values/styles.xml` — Gabarito for the
-wordmark, Hind Siliguri for everything else.
+wordmark, Hind Siliguri for everything else. Spacing is named the same way, once,
+in `values/dimens.xml`: a row's height, its gutters, the gap above a section
+header. A handful of `Widget.MedBook.*` styles in `styles.xml` carry those
+dimensions as layout params, so a divider or a section header is a single
+`style=` attribute at the call site rather than the same seven lines retyped
+on every screen that needs one.
 
 ## Demo mode
 
@@ -229,7 +266,7 @@ MedBook/
 │           ├── drawable/             # Splash mark, launcher layers, search, back arrow
 │           ├── mipmap-anydpi-v26/    # Adaptive launcher icon
 │           ├── mipmap-*/             # Legacy launcher bitmaps, API 21-25
-│           ├── values/               # colors.xml, colors_m3.xml, styles.xml, strings
+│           ├── values/               # colors.xml, colors_m3.xml, styles.xml, dimens.xml, strings
 │           ├── values-night/         # Dark overrides for both colour files
 │           ├── values-bn/            # Bengali interface and department names
 │           └── xml/                  # Backup rules and the locale config
@@ -355,6 +392,12 @@ Licensed under the **GNU Affero General Public License v3.0**. See
 
 The AGPL requires that anyone who runs a modified version of this software over
 a network make their source available to its users.
+
+## Privacy
+
+MedBook collects nothing, sends nothing, and requests no permissions. The full
+notice is in [PRIVACY.md](PRIVACY.md), and the app shows the same text under
+**Settings → Privacy**.
 
 ## Author
 

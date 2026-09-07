@@ -1,0 +1,26 @@
+<resources>
+
+	<!--
+	  The metrics setting_row.xml and item_department.xml already agreed on, named so
+	  every screen after them reaches for the same numbers instead of retyping them.
+	-->
+	<dimen name="screen_gutter">16dp</dimen>
+	<dimen name="row_gutter">12dp</dimen>
+	<dimen name="row_min_height">56dp</dimen>
+	<dimen name="row_padding_vertical">10dp</dimen>
+	<dimen name="row_summary_gap">2dp</dimen>
+	<dimen name="row_chevron_size">24dp</dimen>
+
+	<!-- 44dp, not the Material 48dp minimum: this is the app's existing back button,
+	     named for what it is rather than named touch_target, which would make 44dp
+	     read as the thing a future control should copy. -->
+	<dimen name="back_button_size">44dp</dimen>
+
+	<dimen name="divider_thickness">1dp</dimen>
+	<dimen name="section_gap">24dp</dimen>
+	<dimen name="section_header_gap">6dp</dimen>
+	<dimen name="body_line_spacing">3dp</dimen>
+	<dimen name="bullet_gap">10dp</dimen>
+	<dimen name="screen_bottom_gap">24dp</dimen>
+
+</resources>
