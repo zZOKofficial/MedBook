@@ -32,129 +32,46 @@
 			android:textAppearance="@style/TextAppearance.MedBook.Title"
 			android:textColor="?colorOnSurface" />
 
+		<!--
+		  Theme and language are collapsed rows rather than open radio groups. Nine
+		  rows used to sit here at one level, every choice shown at once, and the page
+		  grew by three more every time a three-way setting was added. A row that names
+		  its own current value says the same thing in two lines and holds its size.
+		-->
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="16dp"
+			android:layout_marginBottom="4dp"
 			android:paddingStart="12dp"
 			android:paddingEnd="12dp"
 			android:text="@string/settings_appearance"
 			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
 			android:textColor="?colorSecondary" />
-		<TextView
+		<include
+			android:id="@+id/theme_row"
+			layout="@layout/setting_row"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="8dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/settings_theme"
-			android:textAppearance="@style/TextAppearance.MedBook.Body"
-			android:textColor="?colorOnSurface" />
-		<RadioGroup
-			android:id="@+id/theme_group"
+			android:layout_height="wrap_content" />
+		<View
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="4dp"
-			android:orientation="vertical">
-			<RadioButton
-				android:id="@+id/theme_system"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:minHeight="48dp"
-				android:paddingStart="12dp"
-				android:paddingEnd="12dp"
-				android:text="@string/theme_system"
-				android:textAppearance="@style/TextAppearance.MedBook.Body"
-				android:textColor="?colorOnSurface" />
-			<RadioButton
-				android:id="@+id/theme_light"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:minHeight="48dp"
-				android:paddingStart="12dp"
-				android:paddingEnd="12dp"
-				android:text="@string/theme_light"
-				android:textAppearance="@style/TextAppearance.MedBook.Body"
-				android:textColor="?colorOnSurface" />
-			<RadioButton
-				android:id="@+id/theme_dark"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:minHeight="48dp"
-				android:paddingStart="12dp"
-				android:paddingEnd="12dp"
-				android:text="@string/theme_dark"
-				android:textAppearance="@style/TextAppearance.MedBook.Body"
-				android:textColor="?colorOnSurface" />
-		</RadioGroup>
-		<!-- Only visible below Android 10, where "Follow the device" cannot mean what
-		     it says: there is no system dark setting that far back. -->
-		<TextView
-			android:id="@+id/theme_system_note"
+			android:layout_height="1dp"
+			android:layout_marginStart="12dp"
+			android:layout_marginEnd="12dp"
+			android:background="?colorOutlineVariant" />
+		<include
+			android:id="@+id/language_row"
+			layout="@layout/setting_row"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="4dp"
-			android:layout_marginBottom="8dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/theme_system_legacy_note"
-			android:textAppearance="@style/TextAppearance.MedBook.Caption"
-			android:textColor="?colorOnSurfaceVariant"
-			android:visibility="gone" />
-
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="24dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/settings_language"
-			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-			android:textColor="?colorSecondary" />
-		<RadioGroup
-			android:id="@+id/language_group"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="8dp"
-			android:layout_marginBottom="24dp"
-			android:orientation="vertical">
-			<RadioButton
-				android:id="@+id/language_system"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:minHeight="48dp"
-				android:paddingStart="12dp"
-				android:paddingEnd="12dp"
-				android:text="@string/language_system"
-				android:textAppearance="@style/TextAppearance.MedBook.Body"
-				android:textColor="?colorOnSurface" />
-			<RadioButton
-				android:id="@+id/language_english"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:minHeight="48dp"
-				android:paddingStart="12dp"
-				android:paddingEnd="12dp"
-				android:text="@string/language_english"
-				android:textAppearance="@style/TextAppearance.MedBook.Body"
-				android:textColor="?colorOnSurface" />
-			<RadioButton
-				android:id="@+id/language_bengali"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:minHeight="48dp"
-				android:paddingStart="12dp"
-				android:paddingEnd="12dp"
-				android:text="@string/language_bengali"
-				android:textAppearance="@style/TextAppearance.MedBook.Body"
-				android:textColor="?colorOnSurface" />
-		</RadioGroup>
+			android:layout_height="wrap_content" />
 
 		<!-- Demo mode. Off unless it is switched on here, and when it is off nothing
 		     anywhere else in the app shows any sign that it exists. -->
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_marginTop="24dp"
+			android:layout_marginBottom="4dp"
 			android:paddingStart="12dp"
 			android:paddingEnd="12dp"
 			android:text="@string/settings_demo"
@@ -164,30 +81,35 @@
 			android:id="@+id/demo_switch"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="8dp"
 			android:minHeight="48dp"
 			android:paddingStart="12dp"
 			android:paddingEnd="12dp"
 			android:text="@string/settings_demo_toggle"
-			android:textAppearance="@style/TextAppearance.MedBook.Body"
+			android:textAppearance="@style/TextAppearance.MedBook.Label"
 			android:textColor="?colorOnSurface" />
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="2dp"
+			android:layout_marginBottom="10dp"
 			android:paddingStart="12dp"
 			android:paddingEnd="12dp"
 			android:text="@string/settings_demo_note"
 			android:textAppearance="@style/TextAppearance.MedBook.Caption"
 			android:textColor="?colorOnSurfaceVariant" />
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/demo_reset"
-			style="@style/Widget.Material3.Button.TonalButton"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
 			android:layout_marginStart="12dp"
-			android:layout_marginTop="12dp"
-			android:layout_marginBottom="24dp"
-			android:text="@string/settings_demo_reset" />
+			android:layout_marginEnd="12dp"
+			android:background="?colorOutlineVariant" />
+		<include
+			android:id="@+id/demo_reset_row"
+			layout="@layout/setting_row"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="24dp" />
 	</LinearLayout>
 </ScrollView>

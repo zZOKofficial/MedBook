@@ -1,0 +1,16 @@
+<!--
+  The trailing mark on a settings row. Deliberately not ic_back rotated: that one is
+  a full arrow tinted ?colorOnSurface, which reads as content. This is affordance, so
+  it is a bare chevron at ?colorOnSurfaceVariant and sits back from the label.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="24dp"
+	android:height="24dp"
+	android:viewportWidth="24"
+	android:viewportHeight="24"
+	android:tint="?colorOnSurfaceVariant"
+	android:autoMirrored="true">
+	<path
+		android:fillColor="@android:color/white"
+		android:pathData="M9.29,6.71a1,1 0,0 0,0 1.41L13.17,12l-3.88,3.88a1,1 0,1 0,1.42 1.41l4.58,-4.58a1,1 0,0 0,0 -1.42L10.71,6.71a1,1 0,0 0,-1.42 0z" />
+</vector>

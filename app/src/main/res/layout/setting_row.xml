@@ -1,0 +1,57 @@
+<!--
+  One settings row: a title, an optional second line carrying the current value, and
+  an optional chevron.
+
+  Included rather than made a custom view. viewBinding generates a nested binding per
+  <include android:id="...">, so binding.themeRow.rowSummary reaches the value line
+  directly and no declare-styleable, no attribute parsing and no R8 keep path is
+  needed - none of which this project has any precedent for. Text is set in code
+  because an <include> cannot pass android:text down to a child.
+
+  Metrics come from item_department.xml, so a settings row and a department row are
+  the same object: 56dp minimum, 12dp horizontal padding, selectableItemBackground.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="?attr/selectableItemBackground"
+	android:gravity="center_vertical"
+	android:minHeight="56dp"
+	android:orientation="horizontal"
+	android:paddingStart="12dp"
+	android:paddingEnd="12dp"
+	android:paddingTop="10dp"
+	android:paddingBottom="10dp">
+	<LinearLayout
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:orientation="vertical">
+		<TextView
+			android:id="@+id/row_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textAppearance="@style/TextAppearance.MedBook.Label"
+			android:textColor="?colorOnSurface"
+			tools:text="Theme" />
+		<!-- Gone until something is put in it: a row with no value is one line tall. -->
+		<TextView
+			android:id="@+id/row_summary"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="2dp"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOnSurfaceVariant"
+			android:visibility="gone"
+			tools:text="Follow the device"
+			tools:visibility="visible" />
+	</LinearLayout>
+	<ImageView
+		android:id="@+id/row_chevron"
+		android:layout_width="24dp"
+		android:layout_height="24dp"
+		android:layout_marginStart="12dp"
+		android:contentDescription="@null"
+		android:src="@drawable/ic_chevron" />
+</LinearLayout>

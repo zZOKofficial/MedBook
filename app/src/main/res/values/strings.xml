@@ -45,9 +45,11 @@
 	<string name="settings_appearance">Appearance</string>
 	<string name="settings_theme">Theme</string>
 	<string name="theme_system">Follow the device</string>
-	<!-- Shown under "Follow the device" only below Android 10, where there is no
-	     system-wide dark setting to follow and the battery saver is the nearest thing. -->
-	<string name="theme_system_legacy_note">This version of Android has no system dark mode, so MedBook follows the battery saver instead.</string>
+	<!-- Replaces "Follow the device" below Android 10, in the row and in the dialog
+	     both. There is no system-wide dark setting to follow that far back, so the
+	     option is renamed to what it actually does rather than carrying a footnote a
+	     collapsed row has no room for. See settings/SettingsLabels. -->
+	<string name="theme_system_battery">Follow the battery saver</string>
 	<string name="theme_light">Light</string>
 	<string name="theme_dark">Dark</string>
 	<string name="settings_language">Language</string>

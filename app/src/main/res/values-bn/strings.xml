@@ -48,7 +48,7 @@
 	<string name="settings_appearance">চেহারা</string>
 	<string name="settings_theme">থিম</string>
 	<string name="theme_system">ডিভাইস অনুযায়ী</string>
-	<string name="theme_system_legacy_note">অ্যান্ড্রয়েডের এই সংস্করণে সিস্টেম ডার্ক মোড নেই, তাই মেডবুক ব্যাটারি সেভার অনুসরণ করবে।</string>
+	<string name="theme_system_battery">ব্যাটারি সেভার অনুযায়ী</string>
 	<string name="theme_light">লাইট</string>
 	<string name="theme_dark">ডার্ক</string>
 	<string name="settings_language">ভাষা</string>
