@@ -1,5 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/settings_root"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/licences_root"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:background="?colorSurface"
@@ -10,8 +11,6 @@
 		android:orientation="vertical"
 		android:paddingLeft="16dp"
 		android:paddingRight="16dp">
-		<!-- Same chrome as the department and doctor screens: the theme is NoActionBar
-		     and a 44dp back button is the whole of it. -->
 		<ImageButton
 			android:id="@+id/back_button"
 			android:layout_width="44dp"
@@ -25,101 +24,31 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="4dp"
-			android:layout_marginBottom="8dp"
 			android:paddingStart="12dp"
 			android:paddingEnd="12dp"
-			android:text="@string/settings"
+			android:text="@string/licences_title"
 			android:textAppearance="@style/TextAppearance.MedBook.Title"
 			android:textColor="?colorOnSurface" />
 
-		<!--
-		  Theme and language are collapsed rows rather than open radio groups. Nine
-		  rows used to sit here at one level, every choice shown at once, and the page
-		  grew by three more every time a three-way setting was added. A row that names
-		  its own current value says the same thing in two lines and holds its size.
-		-->
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="16dp"
-			android:layout_marginBottom="4dp"
+			android:layout_marginTop="20dp"
 			android:paddingStart="12dp"
 			android:paddingEnd="12dp"
-			android:text="@string/settings_appearance"
-			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-			android:textColor="?colorSecondary" />
-		<include
-			android:id="@+id/theme_row"
-			layout="@layout/setting_row"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content" />
-		<View
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:layout_marginStart="12dp"
-			android:layout_marginEnd="12dp"
-			android:background="?colorOutlineVariant" />
-		<include
-			android:id="@+id/language_row"
-			layout="@layout/setting_row"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content" />
-
-		<!-- Demo mode. Off unless it is switched on here, and when it is off nothing
-		     anywhere else in the app shows any sign that it exists. -->
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="24dp"
-			android:layout_marginBottom="4dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/settings_demo"
-			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-			android:textColor="?colorSecondary" />
-		<com.google.android.material.materialswitch.MaterialSwitch
-			android:id="@+id/demo_switch"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:minHeight="48dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/settings_demo_toggle"
-			android:textAppearance="@style/TextAppearance.MedBook.Label"
-			android:textColor="?colorOnSurface" />
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginBottom="10dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/settings_demo_note"
-			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:lineSpacingExtra="3dp"
+			android:text="@string/licences_app_body"
+			android:textAppearance="@style/TextAppearance.MedBook.Body"
 			android:textColor="?colorOnSurfaceVariant" />
 		<View
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
 			android:layout_marginStart="12dp"
 			android:layout_marginEnd="12dp"
+			android:layout_marginTop="12dp"
 			android:background="?colorOutlineVariant" />
 		<include
-			android:id="@+id/demo_reset_row"
-			layout="@layout/setting_row"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content" />
-
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="24dp"
-			android:layout_marginBottom="4dp"
-			android:paddingStart="12dp"
-			android:paddingEnd="12dp"
-			android:text="@string/settings_about"
-			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
-			android:textColor="?colorSecondary" />
-		<include
-			android:id="@+id/about_row"
+			android:id="@+id/agpl_row"
 			layout="@layout/setting_row"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content" />
@@ -129,14 +58,81 @@
 			android:layout_marginStart="12dp"
 			android:layout_marginEnd="12dp"
 			android:background="?colorOutlineVariant" />
-		<include
-			android:id="@+id/privacy_row"
-			layout="@layout/setting_row"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content" />
 
-		<View
+		<!--
+		  The two font licences in full, not as links. The OFL requires the licence to
+		  accompany the fonts it covers, and MedBook redistributes subsets of both
+		  faces inside the APK - a URL is not accompaniment. They are read from
+		  res/raw at 8.8KB the pair, and stay English: they are the licences as
+		  granted, not interface copy.
+		-->
+		<TextView
 			android:layout_width="match_parent"
-			android:layout_height="24dp" />
+			android:layout_height="wrap_content"
+			android:layout_marginTop="24dp"
+			android:layout_marginBottom="6dp"
+			android:paddingStart="12dp"
+			android:paddingEnd="12dp"
+			android:text="@string/licences_fonts_heading"
+			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
+			android:textColor="?colorSecondary" />
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingStart="12dp"
+			android:paddingEnd="12dp"
+			android:text="@string/licences_gabarito"
+			android:textAppearance="@style/TextAppearance.MedBook.Label"
+			android:textColor="?colorOnSurface" />
+		<TextView
+			android:id="@+id/gabarito_text"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="6dp"
+			android:paddingStart="12dp"
+			android:paddingEnd="12dp"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOnSurfaceVariant"
+			tools:text="Copyright 2023 The Gabarito Project Authors" />
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="20dp"
+			android:paddingStart="12dp"
+			android:paddingEnd="12dp"
+			android:text="@string/licences_hind_siliguri"
+			android:textAppearance="@style/TextAppearance.MedBook.Label"
+			android:textColor="?colorOnSurface" />
+		<TextView
+			android:id="@+id/hind_siliguri_text"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="6dp"
+			android:paddingStart="12dp"
+			android:paddingEnd="12dp"
+			android:textAppearance="@style/TextAppearance.MedBook.Caption"
+			android:textColor="?colorOnSurfaceVariant"
+			tools:text="Copyright (c) 2015 Indian Type Foundry" />
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="24dp"
+			android:layout_marginBottom="6dp"
+			android:paddingStart="12dp"
+			android:paddingEnd="12dp"
+			android:text="@string/licences_libraries_heading"
+			android:textAppearance="@style/TextAppearance.MedBook.SectionHeader"
+			android:textColor="?colorSecondary" />
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="24dp"
+			android:paddingStart="12dp"
+			android:paddingEnd="12dp"
+			android:lineSpacingExtra="3dp"
+			android:text="@string/licences_libraries_body"
+			android:textAppearance="@style/TextAppearance.MedBook.Body"
+			android:textColor="?colorOnSurfaceVariant" />
 	</LinearLayout>
 </ScrollView>

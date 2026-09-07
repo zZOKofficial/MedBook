@@ -54,6 +54,23 @@
 			android:parentActivityName=".HomeActivity"
 			android:screenOrientation="portrait"
 			android:exported="false" />
+		<!-- All three only read: a version string, the privacy notice, and the
+		     licences MedBook ships under. None of them touch the directory. -->
+		<activity
+			android:name=".AboutActivity"
+			android:parentActivityName=".SettingsActivity"
+			android:screenOrientation="portrait"
+			android:exported="false" />
+		<activity
+			android:name=".PrivacyActivity"
+			android:parentActivityName=".AboutActivity"
+			android:screenOrientation="portrait"
+			android:exported="false" />
+		<activity
+			android:name=".LicencesActivity"
+			android:parentActivityName=".AboutActivity"
+			android:screenOrientation="portrait"
+			android:exported="false" />
 		<provider
 			android:name="androidx.startup.InitializationProvider"
 			android:authorities="${applicationId}.androidx-startup"

@@ -33,7 +33,9 @@ what they are looking at.
 | **Doctor directory** | **Working — 7,438 doctors and 9,350 chambers, offline** |
 | Doctor profiles | Working — degrees, chambers, verbatim hours, tap to dial |
 | Search | Working — full-text over names, specialties, workplaces and cities |
-| Settings | Working — reached from the home screen, theme and language |
+| Settings | Working — theme, language and demo, each one row that names its value |
+| About | Working — version, where the directory came from, licences, links out |
+| Privacy | Working — the notice in full, and shown once before first use |
 | Light and dark | Working — follows the device, or overridden per app |
 | Bangla | Working — the interface and all 45 departments; the directory stays English |
 | Launcher icon | Working — adaptive, with a monochrome layer for themed icons |
@@ -91,7 +93,25 @@ their initials rather than a stock photo.
 **Settings** (`SettingsActivity`) — reached from the gear beside the wordmark.
 Theme is Follow the device, Light or Dark, so someone on a light phone can still
 read MedBook in dark. Language is Follow the device, English or বাংলা. Both are
-remembered, and both survive a restart.
+remembered, and both survive a restart. Each is one row naming its current value,
+opening a single-choice dialog, so the screen does not grow by three rows every
+time a setting is added.
+
+**About** (`AboutActivity`) — which build this is, read from `BuildConfig` rather
+than written down a second time; what the directory is and where it came from;
+and the way to the privacy notice, the licences, the source and the security
+advisory form. It carries no doctor count on purpose: a checkout without the
+private dataset builds an app whose directory is empty, and a number compiled in
+would be false in exactly that build.
+
+**Privacy** (`PrivacyActivity`) — the notice in full, the same text as
+[PRIVACY.md](PRIVACY.md). An excerpt is shown once before first use. Everything
+it claims is enforced somewhere a reader can check, and it says where.
+
+**Open source licences** (`LicencesActivity`) — the AGPL MedBook is under, and the
+two SIL OFL font licences in full. Those are shipped in `res/raw` rather than
+linked: the OFL requires the licence to accompany the fonts, and a URL is not
+accompaniment in an app that works with no connection.
 
 **Booking** and **Chamber view** (`BookingActivity`, `ChamberConsoleActivity`) —
 only when demo mode is on. Described under [Demo mode](#demo-mode).
@@ -355,6 +375,12 @@ Licensed under the **GNU Affero General Public License v3.0**. See
 
 The AGPL requires that anyone who runs a modified version of this software over
 a network make their source available to its users.
+
+## Privacy
+
+MedBook collects nothing, sends nothing, and requests no permissions. The full
+notice is in [PRIVACY.md](PRIVACY.md), and the app shows the same text under
+**Settings → Privacy**.
 
 ## Author
 

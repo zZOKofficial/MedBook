@@ -1,6 +1,7 @@
 package com.oxyorb.medbook;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -64,6 +65,25 @@ public class SettingsActivity extends AppCompatActivity {
 		bindTheme();
 		bindLanguage();
 		bindDemo();
+		bindAbout();
+	}
+
+	/** Two ways out of settings, both to screens that only ever read. */
+	private void bindAbout() {
+		binding.aboutRow.rowTitle.setText(R.string.settings_about_app);
+		binding.aboutRow.getRoot().setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				startActivity(new Intent(SettingsActivity.this, AboutActivity.class));
+			}
+		});
+		binding.privacyRow.rowTitle.setText(R.string.settings_privacy);
+		binding.privacyRow.getRoot().setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				startActivity(new Intent(SettingsActivity.this, PrivacyActivity.class));
+			}
+		});
 	}
 
 	/**
