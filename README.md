@@ -95,7 +95,11 @@ Theme is Follow the device, Light or Dark, so someone on a light phone can still
 read MedBook in dark. Language is Follow the device, English or বাংলা. Both are
 remembered, and both survive a restart. Each is one row naming its current value,
 opening a single-choice dialog, so the screen does not grow by three rows every
-time a setting is added.
+time a setting is added. Demo mode is a switch row, its disclosure carried as
+the switch's own summary line rather than a caption floating underneath it, and
+a reset row beside it. Every row on the screen — theme, language, demo, About —
+is the same object at the same 56dp, so the screen holds its shape as rows are
+added to it.
 
 **About** (`AboutActivity`) — which build this is, read from `BuildConfig` rather
 than written down a second time; what the directory is and where it came from;
@@ -125,7 +129,12 @@ accompaniment in an app that works with no connection.
 only when demo mode is on. Described under [Demo mode](#demo-mode).
 
 Typography comes from the type scale in `values/styles.xml` — Gabarito for the
-wordmark, Hind Siliguri for everything else.
+wordmark, Hind Siliguri for everything else. Spacing is named the same way, once,
+in `values/dimens.xml`: a row's height, its gutters, the gap above a section
+header. A handful of `Widget.MedBook.*` styles in `styles.xml` carry those
+dimensions as layout params, so a divider or a section header is a single
+`style=` attribute at the call site rather than the same seven lines retyped
+on every screen that needs one.
 
 ## Demo mode
 
@@ -257,7 +266,7 @@ MedBook/
 │           ├── drawable/             # Splash mark, launcher layers, search, back arrow
 │           ├── mipmap-anydpi-v26/    # Adaptive launcher icon
 │           ├── mipmap-*/             # Legacy launcher bitmaps, API 21-25
-│           ├── values/               # colors.xml, colors_m3.xml, styles.xml, strings
+│           ├── values/               # colors.xml, colors_m3.xml, styles.xml, dimens.xml, strings
 │           ├── values-night/         # Dark overrides for both colour files
 │           ├── values-bn/            # Bengali interface and department names
 │           └── xml/                  # Backup rules and the locale config

@@ -73,6 +73,9 @@ Tag each version as `v<version>`, e.g. `v0.1.0-alpha.1`. Tags do not travel with
 - Use the generated `binding.*` accessors, not `findViewById`.
 - Typography comes from the type scale in `values/styles.xml`. Do not call
   `setTypeface` per view — that is what the project was rebuilt to remove.
+- Spacing comes from `values/dimens.xml` and the `Widget.MedBook.*` styles in
+  `values/styles.xml` — a row's height, its gutters, a divider, a section header.
+  Do not retype a literal that already has a name there.
 - Keep user-facing strings in `values/strings.xml` so Bangla localisation stays
   possible.
 
@@ -80,6 +83,8 @@ Tag each version as `v<version>`, e.g. `v0.1.0-alpha.1`. Tags do not travel with
 
 - `./gradlew assembleDebug` succeeds.
 - `./gradlew assembleRelease` succeeds if you touched anything R8 might strip.
+- `./gradlew lintDebug` and `./gradlew testDebugUnitTest` succeed — CI runs both
+  on every push and pull request, so a local run catches it first.
 - One concern per pull request.
 - Say what you changed **and how you verified it**.
 
